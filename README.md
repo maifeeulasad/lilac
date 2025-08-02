@@ -257,9 +257,9 @@ The editor uses CSS custom properties for easy theming. All styles are scoped to
 
 ## 🗺️ Roadmap
 
-- [ ] 🔧 Rich text toolbar (Bold, Italic, Underline, etc.)
+- [x] 🔧 Rich text toolbar (Bold, Italic, Underline, etc.)
 - [ ] 📋 Copy/Paste enhancements
-- [ ] 🔗 Link insertion and management
+- [x] 🔗 Link insertion and management
 - [ ] 🖼️ Image upload and embedding
 - [ ] 📝 Markdown support
 - [ ] 🔍 Find and replace
