@@ -13,3 +13,20 @@ export type {
 } from './types';
 export { useEditorState } from './hooks';
 export { cn, debounce, throttle, isValidUrl, sanitizeHtml, extractTextFromHtml, executeFormatCommand, getActiveFormats, insertLink, insertImage } from './utils';
+
+// Plugin System
+export { 
+  PluginManager, 
+  pluginManager,
+  emojiPlugin,
+} from './plugins';
+export type {
+  EditorPlugin,
+  EditorContext,
+  ToolbarButton,
+  ContextMenuItem,
+  EditorPanel,
+  KeyboardShortcut,
+  ContentTransformer,
+  PluginManager as IPluginManager
+} from './types/plugin';
