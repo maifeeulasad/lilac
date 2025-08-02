@@ -9,6 +9,7 @@
 ## ✨ Features
 
 - **🎨 Beautiful Design**: Clean, calming interface with elegant typography
+- **📝 Rich Text Editing**: Full WYSIWYG editor with formatting toolbar
 - **⚡ Modern Stack**: Built with React 18, TypeScript, and Vite
 - **🔧 Fully Typed**: Strict TypeScript configuration for better development experience
 - **📱 Responsive**: Works seamlessly across desktop, tablet, and mobile devices
@@ -16,7 +17,8 @@
 - **♿ Accessible**: WCAG compliant with proper ARIA attributes
 - **⚙️ Configurable**: Extensive customization options
 - **🔄 Undo/Redo**: Full history management with keyboard shortcuts
-- **📝 Rich Text**: Support for headings, lists, quotes, and more (coming soon)
+- **⌨️ Keyboard Shortcuts**: Full support for common formatting shortcuts
+- **🛠️ Extensible Toolbar**: Customizable toolbar with rich formatting options
 - **🎯 Framework Agnostic**: Designed to work with multiple frameworks (React first, more coming)
 
 ## 🚀 Quick Start
@@ -42,12 +44,18 @@ function MyApp() {
 
   return (
     <Editor
-      initialContent="Start typing..."
+      initialContent="<h1>Welcome to Lilac!</h1><p>Start typing...</p>"
       placeholder="Enter your text here..."
       onChange={setContent}
       theme="light"
       autoFocus
+      toolbar={{
+        show: true,
+        tools: ['bold', 'italic', 'underline', 'separator', 'heading1', 'heading2']
+      }}
     />
+  );
+}
   );
 }
 ```
@@ -99,11 +107,11 @@ function MyApp() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `initialContent` | `string` | `''` | Initial content of the editor |
+| `initialContent` | `string` | `''` | Initial content of the editor (HTML for rich text) |
 | `placeholder` | `string` | `'Start writing...'` | Placeholder text when editor is empty |
 | `readOnly` | `boolean` | `false` | Whether the editor is read-only |
 | `autoFocus` | `boolean` | `false` | Auto-focus editor on mount |
-| `maxLength` | `number` | `undefined` | Maximum character limit |
+| `maxLength` | `number` | `undefined` | Maximum character limit (plain text mode only) |
 | `theme` | `'light' \| 'dark' \| 'auto'` | `'light'` | Editor theme |
 | `className` | `string` | `undefined` | Additional CSS class |
 | `style` | `CSSProperties` | `undefined` | Inline styles |
@@ -112,6 +120,61 @@ function MyApp() {
 | `onFocus` | `() => void` | `undefined` | Focus event callback |
 | `onBlur` | `() => void` | `undefined` | Blur event callback |
 | `toolbar` | `ToolbarConfig` | `undefined` | Toolbar configuration |
+
+### ToolbarConfig
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `show` | `boolean` | `false` | Whether to show the toolbar |
+| `tools` | `ToolbarTool[]` | Default tools | Array of toolbar tools to display |
+| `position` | `'top' \| 'bottom' \| 'floating'` | `'top'` | Toolbar position (top only for now) |
+
+### Available Toolbar Tools
+
+| Tool | Description | Keyboard Shortcut |
+|------|-------------|-------------------|
+| `'bold'` | Bold text formatting | Ctrl/Cmd + B |
+| `'italic'` | Italic text formatting | Ctrl/Cmd + I |
+| `'underline'` | Underline text formatting | Ctrl/Cmd + U |
+| `'strikethrough'` | Strikethrough text formatting | - |
+| `'heading1'` | Heading 1 format | - |
+| `'heading2'` | Heading 2 format | - |
+| `'heading3'` | Heading 3 format | - |
+| `'paragraph'` | Paragraph format | - |
+| `'bulletList'` | Bullet list | - |
+| `'orderedList'` | Numbered list | - |
+| `'blockquote'` | Block quote | - |
+| `'codeBlock'` | Code block | - |
+| `'link'` | Insert/edit link | Ctrl/Cmd + K |
+| `'image'` | Insert image | - |
+| `'separator'` | Visual separator | - |
+
+### Example Toolbar Configuration
+
+```tsx
+<Editor
+  toolbar={{
+    show: true,
+    tools: [
+      'bold',
+      'italic',
+      'underline',
+      'separator',
+      'heading1',
+      'heading2',
+      'heading3',
+      'paragraph',
+      'separator',
+      'bulletList',
+      'orderedList',
+      'blockquote',
+      'separator',
+      'link',
+      'codeBlock'
+    ]
+  }}
+/>
+```
 
 ### EditorRef Methods
 
