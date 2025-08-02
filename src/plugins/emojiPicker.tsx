@@ -107,8 +107,7 @@ export const emojiPlugin: EditorPlugin = {
         // Render emoji picker
         const container = modal.querySelector('#lilac-emoji-picker-container');
         if (container) {
-            // @ts-ignore
-          const picker = React.createElement(EmojiPicker, {
+          React.createElement(EmojiPicker, {
             onEmojiSelect: (emoji: string) => {
               context.insertContent(emoji);
               closeModal();
