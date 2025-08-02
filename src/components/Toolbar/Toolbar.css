@@ -195,3 +195,42 @@
     transition: none;
   }
 }
+
+/* Plugin button styles */
+.lilac-toolbar__button--plugin {
+  position: relative;
+}
+
+.lilac-toolbar__button--plugin:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--lilac-color-tooltip-bg, rgba(0, 0, 0, 0.9));
+  color: var(--lilac-color-tooltip-text, white);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.lilac-toolbar__button--plugin::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 3px solid transparent;
+  border-top-color: var(--lilac-color-tooltip-bg, rgba(0, 0, 0, 0.9));
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 1001;
+}
+
+.lilac-toolbar__button--plugin:hover::before {
+  opacity: 1;
+}
