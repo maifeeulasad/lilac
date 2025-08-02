@@ -19,6 +19,7 @@
 - **🔄 Undo/Redo**: Full history management with keyboard shortcuts
 - **⌨️ Keyboard Shortcuts**: Full support for common formatting shortcuts
 - **🛠️ Extensible Toolbar**: Customizable toolbar with rich formatting options
+- **🔌 Plugin System**: Powerful extension system with built-in plugins
 - **🎯 Framework Agnostic**: Designed to work with multiple frameworks (React first, more coming)
 
 ## 🚀 Quick Start
@@ -56,6 +57,28 @@ function MyApp() {
     />
   );
 }
+```
+
+### Using Built-in Plugins
+
+```tsx
+import React from 'react';
+import { Editor, wordCountPlugin, emojiPlugin, tablePlugin } from 'lilac-editor';
+
+function MyApp() {
+  const [content, setContent] = useState('');
+
+  return (
+    <Editor
+      initialContent="<h1>Welcome to Lilac!</h1><p>Start typing...</p>"
+      onChange={setContent}
+      plugins={[
+        wordCountPlugin,    // Document statistics panel
+        emojiPlugin,        // Emoji picker with Ctrl+Shift+E
+        tablePlugin,        // Table inserter with Ctrl+Shift+T
+      ]}
+      toolbar={{ show: true }}
+    />
   );
 }
 ```
@@ -120,6 +143,7 @@ function MyApp() {
 | `onFocus` | `() => void` | `undefined` | Focus event callback |
 | `onBlur` | `() => void` | `undefined` | Blur event callback |
 | `toolbar` | `ToolbarConfig` | `undefined` | Toolbar configuration |
+| `plugins` | `EditorPlugin[]` | `[]` | Array of plugins to install |
 
 ### ToolbarConfig
 
@@ -189,11 +213,170 @@ function MyApp() {
 | `canUndo` | `boolean` | Whether undo is available |
 | `canRedo` | `boolean` | Whether redo is available |
 
+## 🔌 Plugin System
+
+Lilac features a powerful plugin system that allows you to extend the editor with custom functionality. The system supports toolbar buttons, side panels, keyboard shortcuts, content transformers, and more.
+
+### Built-in Plugins
+
+#### 📊 Word Count Plugin
+Displays real-time document statistics in a side panel.
+
+```tsx
+import { wordCountPlugin } from 'lilac-editor';
+
+<Editor plugins={[wordCountPlugin]} />
+```
+
+**Features:**
+- Words, characters, paragraphs count
+- Real-time updates
+- Right sidebar panel
+- Clean, organized display
+
+#### 😊 Emoji Picker Plugin
+Add emojis to your content with an easy-to-use picker.
+
+```tsx
+import { emojiPlugin } from 'lilac-editor';
+
+<Editor plugins={[emojiPlugin]} />
+```
+
+**Features:**
+- Categorized emoji selection (Smileys, Nature, Food, Travel, Objects)
+- Toolbar button integration
+- Keyboard shortcut: `Ctrl+Shift+E`
+- Modal interface with search
+
+#### 📋 Table Inserter Plugin
+Insert and customize HTML tables with an interactive dialog.
+
+```tsx
+import { tablePlugin } from 'lilac-editor';
+
+<Editor plugins={[tablePlugin]} />
+```
+
+**Features:**
+- Configurable rows and columns
+- Header row option
+- Border toggle
+- Live preview
+- Keyboard shortcut: `Ctrl+Shift+T`
+
+### Creating Custom Plugins
+
+Create your own plugins by implementing the `EditorPlugin` interface:
+
+```tsx
+import { EditorPlugin, EditorContext } from 'lilac-editor';
+import { MyIcon } from 'lucide-react';
+
+export const myCustomPlugin: EditorPlugin = {
+  id: 'my-custom-plugin',
+  name: 'My Custom Plugin',
+  version: '1.0.0',
+  description: 'A custom plugin that does amazing things',
+  
+  // Add toolbar buttons
+  toolbarButtons: [
+    {
+      id: 'my-button',
+      icon: <MyIcon size={16} />,
+      label: 'My Tool',
+      tooltip: 'My custom tool (Ctrl+M)',
+      onClick: (context: EditorContext) => {
+        context.insertContent('<strong>Custom content!</strong>');
+      },
+    },
+  ],
+  
+  // Add keyboard shortcuts
+  keyboardShortcuts: [
+    {
+      key: 'm',
+      ctrlKey: true,
+      action: (context: EditorContext) => {
+        context.insertContent('<em>Shortcut triggered!</em>');
+      },
+    },
+  ],
+  
+  // Add custom styles
+  styles: `
+    .my-custom-styles {
+      color: #ff6b6b;
+      font-weight: bold;
+    }
+  `,
+  
+  // Lifecycle hooks
+  onInstall: (context) => console.log('Plugin installed'),
+  onContentChange: (content, context) => {
+    // React to content changes
+  },
+};
+```
+
+### Plugin Capabilities
+
+| Feature | Description |
+|---------|-------------|
+| **Toolbar Buttons** | Add custom formatting tools and actions |
+| **Side Panels** | Create custom UI panels (left, right, bottom) |
+| **Keyboard Shortcuts** | Define custom hotkey combinations |
+| **Content Transformers** | Process and transform content automatically |
+| **Lifecycle Hooks** | React to editor events (mount, unmount, content changes) |
+| **Custom Styles** | Inject CSS for plugin-specific styling |
+| **Context Menu** | Add right-click menu items |
+
+### Plugin Manager
+
+Access the plugin manager for programmatic control:
+
+```tsx
+import { pluginManager } from 'lilac-editor';
+
+// Install a plugin
+pluginManager.install(myCustomPlugin);
+
+// Check if installed
+if (pluginManager.isInstalled('my-plugin-id')) {
+  console.log('Plugin is active');
+}
+
+// Get all plugins
+const allPlugins = pluginManager.getAllPlugins();
+
+// Uninstall a plugin
+pluginManager.uninstall('my-plugin-id');
+```
+
+### Plugin API Exports
+
+```tsx
+// Plugin system
+import { 
+  PluginManager, 
+  pluginManager,
+  EditorPlugin,
+  EditorContext 
+} from 'lilac-editor';
+
+// Built-in plugins
+import { 
+  wordCountPlugin,
+  emojiPlugin,
+  tablePlugin 
+} from 'lilac-editor';
+```
+
 ## 🛠️ Development
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+, recommended 20+ LTS
 - npm, yarn, or pnpm
 
 ### Setup
@@ -227,9 +410,19 @@ npm run typecheck
 ```
 src/
 ├── components/          # React components
-│   └── Editor/         # Main editor component
+│   ├── Editor/         # Main editor component
+│   └── Toolbar/        # Toolbar component
 ├── hooks/              # Custom React hooks
+├── plugins/            # Plugin system and built-in plugins
+│   ├── PluginManager.ts    # Plugin manager
+│   ├── wordCount.tsx       # Word count plugin
+│   ├── emojiPicker.tsx     # Emoji picker plugin
+│   ├── tableInserter.tsx   # Table inserter plugin
+│   └── index.ts            # Plugin exports
 ├── types/              # TypeScript type definitions
+│   ├── editor.ts           # Core editor types
+│   ├── plugin.ts           # Plugin system types
+│   └── index.ts            # Type exports
 ├── utils/              # Utility functions
 ├── App.tsx             # Demo application
 ├── main.tsx            # Entry point
@@ -258,16 +451,17 @@ The editor uses CSS custom properties for easy theming. All styles are scoped to
 ## 🗺️ Roadmap
 
 - [x] 🔧 Rich text toolbar (Bold, Italic, Underline, etc.)
-- [ ] 📋 Copy/Paste enhancements
+- [x] � Emoji support (via Emoji Picker plugin)
+- [ ] �📋 Copy/Paste enhancements
 - [x] 🔗 Link insertion and management
 - [ ] 🖼️ Image upload and embedding
 - [ ] 📝 Markdown support
 - [ ] 🔍 Find and replace
-- [ ] 📊 Table support
+- [x] 📊 Table support
 - [ ] 🎯 Vue.js integration
 - [ ] 🅰️ Angular integration
-- [ ] 🔌 Plugin system
-- [ ] 📱 Mobile optimizations
+- [x] � Plugin system
+- [ ] �📱 Mobile optimizations
 - [ ] 🎨 More themes
 - [ ] 🧪 Comprehensive test suite
 
