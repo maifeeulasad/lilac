@@ -1,0 +1,13 @@
+{
+    "editor.rulers": [
+        120
+    ],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.removeUnusedImports": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "editor.quickSuggestions": {
+        "strings": "on"
+    }
+}
