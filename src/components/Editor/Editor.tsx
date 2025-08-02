@@ -1,8 +1,10 @@
-import React, { forwardRef, useImperativeHandle, useRef, useState, useCallback } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef, useState, useCallback, useEffect } from 'react';
 import { useEditorState } from '@/hooks';
 import { cn, executeFormatCommand, getActiveFormats, insertLink, insertImage, getShortcutKey, keyboardShortcuts } from '@/utils';
 import { Toolbar } from '@/components/Toolbar';
+import { pluginManager } from '@/plugins';
 import type { EditorProps, ToolbarTool } from '@/types';
+import type { EditorContext } from '@/types/plugin';
 import './Editor.css';
 
 export interface EditorRef {
@@ -30,9 +32,11 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
   onFocus,
   onBlur,
   toolbar,
+  plugins = [],
 }, ref) => {
   const lastContentRef = useRef<string>('');
   const [activeTools, setActiveTools] = useState<Set<ToolbarTool>>(new Set());
+  const [pluginToolbarButtons, setPluginToolbarButtons] = useState<any[]>([]);
   
   const {
     state,
@@ -48,6 +52,80 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
     ...(onChange && { onChange }),
     ...(onSelectionChange && { onSelectionChange }),
   });
+
+  // Create editor context for plugins
+  const editorContext: EditorContext = {
+    state,
+    setState: (newState) => {
+      if (newState.content !== undefined) {
+        updateContent(newState.content);
+      }
+      // Handle other state updates as needed
+    },
+    element: editorRef.current,
+    focus: () => editorRef.current?.focus(),
+    blur: () => editorRef.current?.blur(),
+    insertContent: (content: string) => {
+      if (editorRef.current) {
+        editorRef.current.focus();
+        document.execCommand('insertHTML', false, content);
+        // We'll define updateContentFromDOM later in the component
+        setTimeout(() => {
+          if (editorRef.current) {
+            const newContent = editorRef.current.innerHTML || '';
+            lastContentRef.current = newContent;
+            updateContent(newContent);
+          }
+        }, 0);
+      }
+    },
+    formatSelection: (command: string, value?: string) => {
+      if (editorRef.current) {
+        document.execCommand(command, false, value);
+        setTimeout(() => {
+          if (editorRef.current) {
+            const newContent = editorRef.current.innerHTML || '';
+            lastContentRef.current = newContent;
+            updateContent(newContent);
+          }
+        }, 0);
+      }
+    },
+    getSelectedText: () => {
+      const selection = window.getSelection();
+      return selection ? selection.toString() : '';
+    },
+  };
+
+  // Install plugins on mount and when plugins change
+  useEffect(() => {
+    // Set editor context for plugin manager
+    pluginManager.setContext(editorContext);
+
+    // Install plugins
+    plugins.forEach(plugin => {
+      if (!pluginManager.isInstalled(plugin.id)) {
+        pluginManager.install(plugin);
+      }
+    });
+
+    // Update plugin toolbar buttons
+    setPluginToolbarButtons(pluginManager.getToolbarButtons());
+
+    // Execute onEditorMount hooks
+    pluginManager.executeHook('onEditorMount', editorContext);
+
+    return () => {
+      // Execute onEditorUnmount hooks
+      pluginManager.executeHook('onEditorUnmount', editorContext);
+    };
+  }, [plugins]);
+
+  // Update plugin context when editor state changes
+  useEffect(() => {
+    pluginManager.setContext(editorContext);
+    pluginManager.executeHook('onContentChange', state.content, editorContext);
+  }, [state.content]);
 
   // Update active formatting tools when selection changes
   const updateActiveTools = useCallback(() => {
@@ -300,6 +378,8 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
           onToolClick={handleToolClick}
           activeTools={activeTools}
           disabled={state.isReadOnly}
+          pluginButtons={pluginToolbarButtons}
+          editorContext={editorContext}
         />
       )}
       
