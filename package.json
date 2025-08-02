@@ -67,5 +67,12 @@
     "dist",
     "README.md",
     "LICENSE"
-  ]
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/lilac-editor.es.js",
+      "require": "./dist/lilac-editor.umd.js"
+    },
+    "./style.css": "./dist/style.css"
+  }
 }
