@@ -113,11 +113,11 @@ export const wordCountPlugin: EditorPlugin = {
     }
   `,
 
-  onInstall: (context: EditorContext) => {
+  onInstall: (_: EditorContext) => {
     console.log('Word Count plugin installed');
   },
 
-  onUninstall: (context: EditorContext) => {
+  onUninstall: (_: EditorContext) => {
     console.log('Word Count plugin uninstalled');
   },
 };

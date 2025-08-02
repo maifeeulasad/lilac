@@ -143,7 +143,7 @@ export const tablePlugin: EditorPlugin = {
       key: 't',
       ctrlKey: true,
       shiftKey: true,
-      action: (context: EditorContext) => {
+      action: (_: EditorContext) => {
         const tableButton = document.querySelector('[data-tooltip="Insert table (Ctrl+Shift+T)"]') as HTMLElement;
         if (tableButton) {
           tableButton.click();
@@ -357,11 +357,12 @@ export const tablePlugin: EditorPlugin = {
     }
   `,
 
-  onInstall: (context: EditorContext) => {
+  // The context argument is required by the plugin interface, but not used here
+  onInstall: (_context: EditorContext) => {
     console.log('Table Inserter plugin installed');
   },
 
-  onUninstall: (context: EditorContext) => {
+  onUninstall: (_context: EditorContext) => {
     console.log('Table Inserter plugin uninstalled');
   },
 };
