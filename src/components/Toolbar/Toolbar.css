@@ -11,6 +11,10 @@
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  position: sticky;
+  top: 0;
+  z-index: 10; /* Ensure toolbar stays above content */
+  flex-shrink: 0; /* Prevent toolbar from shrinking */
 }
 
 .lilac-toolbar::-webkit-scrollbar {
