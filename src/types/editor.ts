@@ -1,5 +1,6 @@
 // Core types for the Lilac editor
 import type { CSSProperties } from 'react';
+import type { EditorPlugin } from './plugin';
 
 export interface EditorState {
   content: string;
@@ -59,4 +60,5 @@ export interface EditorProps extends EditorConfig {
   onFocus?: () => void;
   onBlur?: () => void;
   toolbar?: ToolbarConfig;
+  plugins?: EditorPlugin[];
 }
