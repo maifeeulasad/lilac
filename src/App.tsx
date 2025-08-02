@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Editor, type EditorRef } from './index';
-import { emojiPlugin } from './plugins';
+import { wordCountPlugin, emojiPlugin, tablePlugin } from './plugins';
 import './App.css';
 
 function App() {
@@ -16,7 +16,9 @@ function App() {
   });
 
   const availablePlugins = [
+    { plugin: wordCountPlugin, key: 'wordCount', name: 'Word Count' },
     { plugin: emojiPlugin, key: 'emoji', name: 'Emoji Picker' },
+    { plugin: tablePlugin, key: 'table', name: 'Table Inserter' },
   ];
 
   const activePlugins = availablePlugins
