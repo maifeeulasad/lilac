@@ -26,11 +26,12 @@ export default defineConfig(({ mode }) => ({
       fileName: (format) => `lilac-editor.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          'react/jsx-runtime': 'ReactJsxRuntime',
         },
       },
     },
