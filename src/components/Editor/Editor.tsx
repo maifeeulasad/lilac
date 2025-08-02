@@ -1,7 +1,7 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle, useEffect, useRef } from 'react';
 import { useEditorState } from '@/hooks';
 import { cn } from '@/utils';
-import type { EditorProps, EditorState } from '@/types';
+import type { EditorProps } from '@/types';
 import './Editor.css';
 
 export interface EditorRef {
@@ -30,6 +30,8 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
   onBlur,
   toolbar,
 }, ref) => {
+  const lastContentRef = useRef<string>('');
+  
   const {
     state,
     editorRef,
@@ -41,8 +43,8 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
     setReadOnly,
   } = useEditorState({
     initialContent,
-    onChange,
-    onSelectionChange,
+    ...(onChange && { onChange }),
+    ...(onSelectionChange && { onSelectionChange }),
   });
 
   // Set read-only state when prop changes
@@ -57,10 +59,71 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
     }
   }, [autoFocus]);
 
+  // Initialize content on first render only
+  React.useEffect(() => {
+    if (editorRef.current && initialContent && !lastContentRef.current) {
+      editorRef.current.textContent = initialContent;
+      lastContentRef.current = initialContent;
+    }
+  }, [initialContent]);
+
+  // Update content when changed externally (like undo/redo) but preserve cursor
+  React.useEffect(() => {
+    if (editorRef.current && state.content !== lastContentRef.current) {
+      const currentContent = editorRef.current.textContent || '';
+      
+      // Only update if content actually differs from DOM
+      if (currentContent !== state.content) {
+        // Save cursor position
+        const selection = window.getSelection();
+        let cursorPos = 0;
+        
+        if (selection && selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          cursorPos = range.startOffset;
+        }
+        
+        // Update content
+        editorRef.current.textContent = state.content;
+        lastContentRef.current = state.content;
+        
+        // Restore cursor position
+        if (selection && state.content) {
+          try {
+            const textNode = editorRef.current.firstChild || editorRef.current;
+            const range = document.createRange();
+            const maxPos = state.content.length;
+            const safePos = Math.min(cursorPos, maxPos);
+            
+            if (textNode.nodeType === Node.TEXT_NODE) {
+              range.setStart(textNode, safePos);
+              range.setEnd(textNode, safePos);
+            } else {
+              range.setStart(textNode, 0);
+              range.setEnd(textNode, 0);
+            }
+            
+            selection.removeAllRanges();
+            selection.addRange(range);
+          } catch (e) {
+            // If cursor restoration fails, just place it at the end
+            editorRef.current.focus();
+          }
+        }
+      }
+    }
+  }, [state.content]);
+
   // Expose methods through ref
   useImperativeHandle(ref, () => ({
     getContent: () => state.content,
-    setContent: (content: string) => updateContent(content),
+    setContent: (content: string) => {
+      updateContent(content);
+      if (editorRef.current) {
+        editorRef.current.textContent = content;
+        lastContentRef.current = content;
+      }
+    },
     focus: () => editorRef.current?.focus(),
     blur: () => editorRef.current?.blur(),
     undo,
@@ -75,9 +138,15 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
     
     // Check max length
     if (maxLength && newContent.length > maxLength) {
+      // Restore previous content
+      target.textContent = lastContentRef.current;
       return;
     }
 
+    // Update our tracking ref
+    lastContentRef.current = newContent;
+    
+    // Update state without causing re-render of DOM content
     updateContent(newContent);
   };
 
@@ -155,9 +224,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
           aria-multiline="true"
           aria-label="Text editor"
           data-testid="lilac-editor-content"
-        >
-          {state.content}
-        </div>
+        />
       </div>
       
       {maxLength && (
