@@ -7,6 +7,7 @@ function App() {
   const [content, setContent] = useState('');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [readOnly, setReadOnly] = useState(false);
+  const [showToolbar, setShowToolbar] = useState(true);
 
   const handleContentChange = (newContent: string) => {
     setContent(newContent);
@@ -26,6 +27,21 @@ function App() {
 
   const handleSetContent = () => {
     editorRef.current?.setContent('This is some sample content set programmatically!');
+  };
+
+  const handleSetRichContent = () => {
+    const richContent = `<h1>Welcome to Lilac Editor!</h1>
+<p>This is a <strong>rich text</strong> example with <em>formatting</em>.</p>
+<h2>Features:</h2>
+<ul>
+<li><strong>Bold</strong> and <em>italic</em> text</li>
+<li>Headers and paragraphs</li>
+<li>Lists and quotes</li>
+</ul>
+<blockquote>
+<p>This is a beautiful quote with elegant styling.</p>
+</blockquote>`;
+    editorRef.current?.setContent(richContent);
   };
 
   const canUndo = editorRef.current?.canUndo ?? false;
@@ -68,7 +84,10 @@ function App() {
             Focus Editor
           </button>
           <button className="app__button" onClick={handleSetContent}>
-            Set Sample Content
+            Set Plain Content
+          </button>
+          <button className="app__button" onClick={handleSetRichContent}>
+            Set Rich Content
           </button>
         </div>
 
@@ -80,6 +99,15 @@ function App() {
               onChange={(e) => setReadOnly(e.target.checked)}
             />
             Read Only
+          </label>
+
+          <label className="app__checkbox">
+            <input
+              type="checkbox"
+              checked={showToolbar}
+              onChange={(e) => setShowToolbar(e.target.checked)}
+            />
+            Show Toolbar
           </label>
           
           <label className="app__select">
@@ -99,29 +127,65 @@ function App() {
         <div className="app__editor-container">
           <Editor
             ref={editorRef}
-            initialContent="Welcome to Lilac Editor! 🌸
+            initialContent={`<h1>Welcome to Lilac Editor! 🌸</h1>
 
-This is a modern WYSIWYG text editor built with React and TypeScript. 
+<p>This is a <strong>modern WYSIWYG text editor</strong> built with <em>React</em> and <em>TypeScript</em>.</p>
 
-Features:
-• Clean, calming interface
-• Elegant typography
-• Smooth interactions
-• Undo/Redo support
-• Keyboard shortcuts
-• Responsive design
-• Dark mode support
+<h2>✨ Features</h2>
+<ul>
+<li><strong>Rich text formatting</strong> with toolbar</li>
+<li>Clean, calming interface</li>
+<li>Elegant typography</li>
+<li>Smooth interactions</li>
+<li>Undo/Redo support</li>
+<li>Keyboard shortcuts</li>
+<li>Responsive design</li>
+<li>Dark mode support</li>
+</ul>
 
-Try typing, selecting text, and using Ctrl+Z/Ctrl+Y for undo/redo!"
+<h3>🎨 Try the formatting tools!</h3>
+<p>Select text and use the toolbar buttons or keyboard shortcuts:</p>
+<ul>
+<li><strong>Ctrl/Cmd + B</strong> for bold</li>
+<li><strong>Ctrl/Cmd + I</strong> for italic</li>
+<li><strong>Ctrl/Cmd + U</strong> for underline</li>
+<li><strong>Ctrl/Cmd + K</strong> for links</li>
+</ul>
+
+<blockquote>
+<p>"The best way to predict the future is to create it." - Peter Drucker</p>
+</blockquote>
+
+<p>Enjoy writing with Lilac! ✍️</p>`}
             placeholder="Start writing something beautiful..."
             theme={theme}
             readOnly={readOnly}
             autoFocus
-            maxLength={5000}
+            maxLength={10000}
             onChange={handleContentChange}
             onFocus={() => console.log('Editor focused')}
             onBlur={() => console.log('Editor blurred')}
-            toolbar={{ show: true }}
+            toolbar={{ 
+              show: showToolbar,
+              tools: [
+                'bold',
+                'italic', 
+                'underline',
+                'strikethrough',
+                'separator',
+                'heading1',
+                'heading2', 
+                'heading3',
+                'paragraph',
+                'separator',
+                'bulletList',
+                'orderedList',
+                'blockquote',
+                'separator',
+                'link',
+                'codeBlock'
+              ]
+            }}
             className="app__editor"
           />
         </div>
@@ -133,10 +197,13 @@ Try typing, selecting text, and using Ctrl+Z/Ctrl+Y for undo/redo!"
               <strong>Characters:</strong> {content.length}
             </div>
             <div className="app__info-item">
-              <strong>Words:</strong> {content.trim() ? content.trim().split(/\s+/).length : 0}
+              <strong>Words:</strong> {content.trim() ? content.replace(/<[^>]*>/g, '').trim().split(/\s+/).length : 0}
             </div>
             <div className="app__info-item">
               <strong>Lines:</strong> {content.split('\n').length}
+            </div>
+            <div className="app__info-item">
+              <strong>Format:</strong> {showToolbar ? 'Rich Text' : 'Plain Text'}
             </div>
           </div>
 
@@ -150,10 +217,26 @@ Try typing, selecting text, and using Ctrl+Z/Ctrl+Y for undo/redo!"
               <kbd>Ctrl/Cmd + Y</kbd>
               <span>Redo</span>
             </div>
-            <div className="app__shortcut">
-              <kbd>Ctrl/Cmd + Shift + Z</kbd>
-              <span>Redo (Alt)</span>
-            </div>
+            {showToolbar && (
+              <>
+                <div className="app__shortcut">
+                  <kbd>Ctrl/Cmd + B</kbd>
+                  <span>Bold</span>
+                </div>
+                <div className="app__shortcut">
+                  <kbd>Ctrl/Cmd + I</kbd>
+                  <span>Italic</span>
+                </div>
+                <div className="app__shortcut">
+                  <kbd>Ctrl/Cmd + U</kbd>
+                  <span>Underline</span>
+                </div>
+                <div className="app__shortcut">
+                  <kbd>Ctrl/Cmd + K</kbd>
+                  <span>Link</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </main>
