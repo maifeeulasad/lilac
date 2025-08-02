@@ -50,3 +50,6 @@ export function extractTextFromHtml(html: string): string {
   div.innerHTML = html;
   return div.textContent || div.innerText || '';
 }
+
+// Export formatting utilities
+export * from './formatting';
