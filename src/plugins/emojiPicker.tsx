@@ -107,6 +107,7 @@ export const emojiPlugin: EditorPlugin = {
         // Render emoji picker
         const container = modal.querySelector('#lilac-emoji-picker-container');
         if (container) {
+            // @ts-ignore
           const picker = React.createElement(EmojiPicker, {
             onEmojiSelect: (emoji: string) => {
               context.insertContent(emoji);
@@ -186,7 +187,7 @@ export const emojiPlugin: EditorPlugin = {
       key: 'e',
       ctrlKey: true,
       shiftKey: true,
-      action: (context: EditorContext) => {
+      action: (_: EditorContext) => {
         // Trigger emoji picker
         const emojiButton = document.querySelector('[data-tooltip="Insert emoji (Ctrl+Shift+E)"]') as HTMLElement;
         if (emojiButton) {
@@ -326,11 +327,11 @@ export const emojiPlugin: EditorPlugin = {
     }
   `,
 
-  onInstall: (context: EditorContext) => {
+  onInstall: (_: EditorContext) => {
     console.log('Emoji Picker plugin installed');
   },
 
-  onUninstall: (context: EditorContext) => {
+  onUninstall: (_: EditorContext) => {
     console.log('Emoji Picker plugin uninstalled');
   },
 };
