@@ -1,10 +1,18 @@
-import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
-import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  plugins: [react()],
+  plugins: [
+    react(),
+    dts({
+      insertTypesEntry: true,
+      outDir: 'dist',
+      include: ['src/index.ts', 'src/components/Editor/**', 'src/plugins/**'],
+    })
+  ],
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
