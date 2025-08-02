@@ -28,11 +28,8 @@ jobs:
       run: pnpm dev & sleep 10
     - name: 'Install playwright'
       run: pnpm dlx playwright install --with-deps
-    - name: 'Create snap directory'
-      run: npx tsc script/snap.ts && node script/snap.js
     - name: 'Take screenshot'
-      run: |
-        DISPLAY=:0 scrot snap/screenshot.png
+      run: npx tsc script/snap.ts && node script/snap.js
     - name: 'Push to GitHub'
       run: |
         git config user.name "github-actions[bot]"
