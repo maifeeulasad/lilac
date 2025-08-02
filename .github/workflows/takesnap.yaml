@@ -1,0 +1,42 @@
+name: Take Snap
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  snap:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: 'Installing build deps'    
+      run: npm i -g pnpm  
+    - name: 'Installing deps'    
+      run: pnpm i
+    - name: 'Run dev server'
+      run: pnpm dev & sleep 10
+    - name: 'Install playwright'
+      run: pnpm dlx playwright install --with-deps
+    - name: 'Create snap directory'
+      run: npx tsc script/snap.ts && node script/snap.js
+    - name: 'Take screenshot'
+      run: |
+        DISPLAY=:0 scrot snap/screenshot.png
+    - name: 'Push to GitHub'
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add -f snap/screenshot.png
+        git commit -m "[chores]: updated snap" || echo "No changes to commit"
+        git push
