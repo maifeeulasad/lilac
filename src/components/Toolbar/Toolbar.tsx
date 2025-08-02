@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/utils';
 import type { ToolbarTool } from '@/types';
+import type { ToolbarButton } from '@/types/plugin';
 import './Toolbar.css';
 
 interface ToolbarProps {
@@ -26,6 +27,8 @@ interface ToolbarProps {
   activeTools?: Set<ToolbarTool>;
   disabled?: boolean;
   className?: string;
+  pluginButtons?: ToolbarButton[];
+  editorContext?: any; // We'll type this properly later
 }
 
 const toolIcons: Record<ToolbarTool, React.ReactNode> = {
@@ -88,6 +91,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   activeTools = new Set(),
   disabled = false,
   className,
+  pluginButtons = [],
+  editorContext,
 }) => {
   const handleToolClick = (tool: ToolbarTool) => {
     if (disabled || tool === 'separator') return;
@@ -130,6 +135,34 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           </button>
         );
       })}
+      
+      {/* Plugin buttons */}
+      {pluginButtons.length > 0 && (
+        <>
+          <div className="lilac-toolbar__separator" aria-hidden="true" />
+          {pluginButtons.map((button) => (
+            <button
+              key={button.id}
+              type="button"
+              className={cn(
+                'lilac-toolbar__button',
+                'lilac-toolbar__button--plugin',
+                {
+                  'lilac-toolbar__button--active': button.isActive?.(editorContext),
+                  'lilac-toolbar__button--disabled': disabled,
+                }
+              )}
+              onClick={() => !disabled && button.onClick(editorContext)}
+              disabled={disabled}
+              title={button.tooltip || button.label}
+              aria-label={button.label}
+              data-tooltip={button.tooltip}
+            >
+              {button.icon}
+            </button>
+          ))}
+        </>
+      )}
     </div>
   );
 };
