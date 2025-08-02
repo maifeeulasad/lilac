@@ -51,6 +51,8 @@
   color: var(--lilac-color-text);
   transition: var(--lilac-transition);
   overflow: hidden;
+  height: 100%; /* Allow parent to control height */
+  max-height: 100%; /* Prevent overflow */
 }
 
 .lilac-editor:focus-within {
@@ -84,6 +86,9 @@
   position: relative;
   flex: 1;
   min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent wrapper from expanding */
 }
 
 /* Placeholder */
@@ -102,13 +107,36 @@
 /* Main Content Area */
 .lilac-editor__content {
   padding: 16px;
-  min-height: inherit;
+  flex: 1;
   outline: none;
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
   position: relative;
   z-index: 2;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  /* Custom scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: var(--lilac-color-border) transparent;
+}
+
+/* Custom scrollbar for webkit browsers */
+.lilac-editor__content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.lilac-editor__content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.lilac-editor__content::-webkit-scrollbar-thumb {
+  background: var(--lilac-color-border);
+  border-radius: 4px;
+}
+
+.lilac-editor__content::-webkit-scrollbar-thumb:hover {
+  background: var(--lilac-color-text-muted);
 }
 
 .lilac-editor__content:empty::before {
@@ -219,6 +247,10 @@
   background: var(--lilac-color-surface);
   border-top: 1px solid var(--lilac-color-border);
   font-size: 12px;
+  position: sticky;
+  bottom: 0;
+  z-index: 10; /* Ensure footer stays above content */
+  flex-shrink: 0; /* Prevent footer from shrinking */
 }
 
 .lilac-editor__char-count {
