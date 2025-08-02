@@ -19,6 +19,8 @@ export {
   PluginManager, 
   pluginManager,
   emojiPlugin,
+  wordCountPlugin,
+  tablePlugin,
 } from './plugins';
 export type {
   EditorPlugin,
