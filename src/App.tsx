@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Editor, type EditorRef } from './index';
+import { emojiPlugin } from './plugins';
 import './App.css';
 
 function App() {
@@ -8,6 +9,19 @@ function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [readOnly, setReadOnly] = useState(false);
   const [showToolbar, setShowToolbar] = useState(true);
+  const [enabledPlugins, setEnabledPlugins] = useState({
+    wordCount: true,
+    emoji: true,
+    table: true,
+  });
+
+  const availablePlugins = [
+    { plugin: emojiPlugin, key: 'emoji', name: 'Emoji Picker' },
+  ];
+
+  const activePlugins = availablePlugins
+    .filter(({ key }) => enabledPlugins[key as keyof typeof enabledPlugins])
+    .map(({ plugin }) => plugin);
 
   const handleContentChange = (newContent: string) => {
     setContent(newContent);
@@ -121,6 +135,23 @@ function App() {
             </select>
           </label>
         </div>
+
+        <div className="app__control-group">
+          <h3 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '600' }}>Plugins:</h3>
+          {availablePlugins.map(({ key, name }) => (
+            <label key={key} className="app__checkbox">
+              <input
+                type="checkbox"
+                checked={enabledPlugins[key as keyof typeof enabledPlugins]}
+                onChange={(e) => setEnabledPlugins(prev => ({
+                  ...prev,
+                  [key]: e.target.checked
+                }))}
+              />
+              {name}
+            </label>
+          ))}
+        </div>
       </div>
 
       <main className="app__main">
@@ -186,6 +217,7 @@ function App() {
                 'codeBlock'
               ]
             }}
+            plugins={activePlugins}
             className="app__editor"
           />
         </div>
