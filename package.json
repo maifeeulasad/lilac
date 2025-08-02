@@ -1,6 +1,6 @@
 {
   "name": "lilac-edtior",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Lilac — a smooth, modern WYSIWYG text editor with a clean interface, elegant typography, and a calming editing experience.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
