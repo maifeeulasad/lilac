@@ -8,12 +8,13 @@ interface UseEditorStateProps {
   onSelectionChange?: (selection: SelectionRange | null) => void;
 }
 
-export const useEditorState = ({
-  initialContent = '',
-  maxHistorySize = 50,
-  onChange,
-  onSelectionChange,
-}: UseEditorStateProps = {}) => {
+export const useEditorState = (props: UseEditorStateProps = {}) => {
+  const {
+    initialContent = '',
+    maxHistorySize = 50,
+    onChange,
+    onSelectionChange,
+  } = props;
   const [state, setState] = useState<EditorState>(() => ({
     content: initialContent,
     selection: null,
@@ -63,7 +64,7 @@ export const useEditorState = ({
       const { undoStack, redoStack } = prevState.history;
       if (undoStack.length === 0) return prevState;
 
-      const previousContent = undoStack[undoStack.length - 1];
+      const previousContent = undoStack[undoStack.length - 1] || '';
       const newUndoStack = undoStack.slice(0, -1);
       const newRedoStack = [...redoStack, prevState.content];
 
@@ -87,7 +88,7 @@ export const useEditorState = ({
       const { undoStack, redoStack } = prevState.history;
       if (redoStack.length === 0) return prevState;
 
-      const nextContent = redoStack[redoStack.length - 1];
+      const nextContent = redoStack[redoStack.length - 1] || '';
       const newRedoStack = redoStack.slice(0, -1);
       const newUndoStack = [...undoStack, prevState.content];
 
