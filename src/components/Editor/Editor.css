@@ -16,7 +16,7 @@
   --lilac-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
   --lilac-shadow-focus: 0 0 0 3px rgba(139, 124, 216, 0.1);
   --lilac-transition: all 0.2s ease-in-out;
-  
+
   /* Typography */
   --lilac-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --lilac-font-size: 16px;
@@ -51,8 +51,10 @@
   color: var(--lilac-color-text);
   transition: var(--lilac-transition);
   overflow: hidden;
-  height: 100%; /* Allow parent to control height */
-  max-height: 100%; /* Prevent overflow */
+  height: 100%;
+  /* Allow parent to control height */
+  max-height: 100%;
+  /* Prevent overflow */
 }
 
 .lilac-editor:focus-within {
@@ -88,7 +90,8 @@
   min-height: 120px;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Prevent wrapper from expanding */
+  overflow: hidden;
+  /* Prevent wrapper from expanding */
 }
 
 /* Placeholder */
@@ -114,8 +117,10 @@
   white-space: pre-wrap;
   position: relative;
   z-index: 2;
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
   /* Custom scrollbar styling */
   scrollbar-width: thin;
   scrollbar-color: var(--lilac-color-border) transparent;
@@ -167,12 +172,29 @@
   margin-top: 0;
 }
 
-.lilac-editor__content h1 { font-size: 2em; }
-.lilac-editor__content h2 { font-size: 1.5em; }
-.lilac-editor__content h3 { font-size: 1.25em; }
-.lilac-editor__content h4 { font-size: 1.1em; }
-.lilac-editor__content h5 { font-size: 1em; }
-.lilac-editor__content h6 { font-size: 0.9em; }
+.lilac-editor__content h1 {
+  font-size: 2em;
+}
+
+.lilac-editor__content h2 {
+  font-size: 1.5em;
+}
+
+.lilac-editor__content h3 {
+  font-size: 1.25em;
+}
+
+.lilac-editor__content h4 {
+  font-size: 1.1em;
+}
+
+.lilac-editor__content h5 {
+  font-size: 1em;
+}
+
+.lilac-editor__content h6 {
+  font-size: 0.9em;
+}
 
 .lilac-editor__content p {
   margin: 0 0 1em 0;
@@ -249,8 +271,10 @@
   font-size: 12px;
   position: sticky;
   bottom: 0;
-  z-index: 10; /* Ensure footer stays above content */
-  flex-shrink: 0; /* Prevent footer from shrinking */
+  z-index: 10;
+  /* Ensure footer stays above content */
+  flex-shrink: 0;
+  /* Prevent footer from shrinking */
 }
 
 .lilac-editor__char-count {
@@ -271,19 +295,20 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .lilac-editor {
-    --lilac-font-size: 16px; /* Prevent zoom on iOS */
+    --lilac-font-size: 16px;
+    /* Prevent zoom on iOS */
     border-radius: var(--lilac-border-radius-small);
   }
-  
+
   .lilac-editor__content {
     padding: 12px;
   }
-  
+
   .lilac-editor__placeholder {
     top: 12px;
     left: 12px;
   }
-  
+
   .lilac-editor__toolbar {
     padding: 8px 12px;
   }
@@ -295,6 +320,7 @@
     opacity: 0;
     transform: translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -310,7 +336,7 @@
   .lilac-editor {
     border-width: 2px;
   }
-  
+
   .lilac-editor:focus-within {
     outline: 2px solid var(--lilac-color-border-focus);
     outline-offset: 2px;
@@ -319,6 +345,7 @@
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
+
   .lilac-editor,
   .lilac-editor__content {
     transition: none;

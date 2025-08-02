@@ -1,10 +1,10 @@
-import React, { forwardRef, useImperativeHandle, useRef, useState, useCallback, useEffect } from 'react';
-import { useEditorState } from '@/hooks';
-import { cn, executeFormatCommand, getActiveFormats, insertLink, insertImage, getShortcutKey, keyboardShortcuts } from '@/utils';
 import { Toolbar } from '@/components/Toolbar';
+import { useEditorState } from '@/hooks';
 import { pluginManager } from '@/plugins';
 import type { EditorProps, ToolbarTool } from '@/types';
 import type { EditorContext } from '@/types/plugin';
+import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '@/utils';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import './Editor.css';
 
 export interface EditorRef {
@@ -37,7 +37,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
   const lastContentRef = useRef<string>('');
   const [activeTools, setActiveTools] = useState<Set<ToolbarTool>>(new Set());
   const [pluginToolbarButtons, setPluginToolbarButtons] = useState<any[]>([]);
-  
+
   const {
     state,
     editorRef,
@@ -130,7 +130,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
   // Update active formatting tools when selection changes
   const updateActiveTools = useCallback(() => {
     if (!editorRef.current || !toolbar?.tools) return;
-    
+
     const tools = toolbar.tools.filter(tool => tool !== 'separator');
     const active = getActiveFormats(tools);
     setActiveTools(active);
@@ -166,7 +166,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
   // Update content from DOM (for rich text formatting)
   const updateContentFromDOM = useCallback(() => {
     if (!editorRef.current) return;
-    
+
     const newContent = editorRef.current.innerHTML || '';
     lastContentRef.current = newContent;
     updateContent(newContent);
@@ -200,21 +200,21 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
   // Update content when changed externally (like undo/redo) but preserve cursor
   React.useEffect(() => {
     if (editorRef.current && state.content !== lastContentRef.current) {
-      const currentContent = toolbar?.show ? 
-        (editorRef.current.innerHTML || '') : 
+      const currentContent = toolbar?.show ?
+        (editorRef.current.innerHTML || '') :
         (editorRef.current.textContent || '');
-      
+
       // Only update if content actually differs from DOM
       if (currentContent !== state.content) {
         // Save cursor position
         const selection = window.getSelection();
         let cursorPos = 0;
-        
+
         if (selection && selection.rangeCount > 0) {
           const range = selection.getRangeAt(0);
           cursorPos = range.startOffset;
         }
-        
+
         // Update content
         if (toolbar?.show) {
           editorRef.current.innerHTML = state.content;
@@ -222,7 +222,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
           editorRef.current.textContent = state.content;
         }
         lastContentRef.current = state.content;
-        
+
         // Restore cursor position
         if (selection && state.content) {
           try {
@@ -230,7 +230,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
             const range = document.createRange();
             const maxPos = toolbar?.show ? state.content.length : state.content.length;
             const safePos = Math.min(cursorPos, maxPos);
-            
+
             if (textNode.nodeType === Node.TEXT_NODE) {
               range.setStart(textNode, safePos);
               range.setEnd(textNode, safePos);
@@ -238,7 +238,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
               range.setStart(textNode, 0);
               range.setEnd(textNode, 0);
             }
-            
+
             selection.removeAllRanges();
             selection.addRange(range);
           } catch (e) {
@@ -246,7 +246,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
             editorRef.current.focus();
           }
         }
-        
+
         // Update active tools if toolbar is enabled
         if (toolbar?.show) {
           setTimeout(updateActiveTools, 0);
@@ -275,10 +275,10 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
 
   const handleInput = (event: React.FormEvent<HTMLDivElement>) => {
     const target = event.currentTarget;
-    const newContent = toolbar?.show ? 
-      (target.innerHTML || '') : 
+    const newContent = toolbar?.show ?
+      (target.innerHTML || '') :
       (target.textContent || '');
-    
+
     // Check max length (for plain text mode only)
     if (maxLength && !toolbar?.show && newContent.length > maxLength) {
       // Restore previous content
@@ -288,10 +288,10 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
 
     // Update our tracking ref
     lastContentRef.current = newContent;
-    
+
     // Update state without causing re-render of DOM content
     updateContent(newContent);
-    
+
     // Update active tools if toolbar is enabled
     if (toolbar?.show) {
       setTimeout(updateActiveTools, 0);
@@ -360,7 +360,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
   const showPlaceholder = isEmpty && placeholder;
 
   return (
-    <div 
+    <div
       className={cn(
         'lilac-editor',
         `lilac-editor--${theme}`,
@@ -382,14 +382,14 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
           editorContext={editorContext}
         />
       )}
-      
+
       <div className="lilac-editor__content-wrapper">
         {showPlaceholder && (
           <div className="lilac-editor__placeholder">
             {placeholder}
           </div>
         )}
-        
+
         <div
           ref={editorRef}
           className="lilac-editor__content"
@@ -407,7 +407,7 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
           data-testid="lilac-editor-content"
         />
       </div>
-      
+
       {maxLength && (
         <div className="lilac-editor__footer">
           <span className="lilac-editor__char-count">

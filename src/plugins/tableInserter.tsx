@@ -1,27 +1,27 @@
-import React from 'react';
 import { Table } from 'lucide-react';
-import { EditorPlugin, EditorContext, ToolbarButton } from '../types/plugin';
+import React from 'react';
+import { EditorContext, EditorPlugin, ToolbarButton } from '../types/plugin';
 
 export const tablePlugin: EditorPlugin = {
-  id: 'table-inserter',
-  name: 'Table Inserter',
-  version: '1.0.0',
-  description: 'Insert and manage HTML tables',
-  author: 'Lilac Editor',
+    id: 'table-inserter',
+    name: 'Table Inserter',
+    version: '1.0.0',
+    description: 'Insert and manage HTML tables',
+    author: 'Lilac Editor',
 
-  toolbarButtons: [
-    {
-      id: 'insert-table',
-      icon: React.createElement(Table, { size: 16 }),
-      label: 'Insert Table',
-      tooltip: 'Insert table (Ctrl+Shift+T)',
-      group: 'insert',
-      shortcut: 'Ctrl+Shift+T',
-      onClick: (context: EditorContext) => {
-        // Create table insertion modal
-        const modal = document.createElement('div');
-        modal.className = 'lilac-table-modal';
-        modal.innerHTML = `
+    toolbarButtons: [
+        {
+            id: 'insert-table',
+            icon: React.createElement(Table, { size: 16 }),
+            label: 'Insert Table',
+            tooltip: 'Insert table (Ctrl+Shift+T)',
+            group: 'insert',
+            shortcut: 'Ctrl+Shift+T',
+            onClick: (context: EditorContext) => {
+                // Create table insertion modal
+                const modal = document.createElement('div');
+                modal.className = 'lilac-table-modal';
+                modal.innerHTML = `
           <div class="lilac-table-modal-backdrop">
             <div class="lilac-table-modal-content">
               <div class="lilac-table-modal-header">
@@ -62,97 +62,97 @@ export const tablePlugin: EditorPlugin = {
           </div>
         `;
 
-        document.body.appendChild(modal);
+                document.body.appendChild(modal);
 
-        const rowsInput = modal.querySelector('#table-rows') as HTMLInputElement;
-        const colsInput = modal.querySelector('#table-cols') as HTMLInputElement;
-        const headerCheck = modal.querySelector('#table-header') as HTMLInputElement;
-        const bordersCheck = modal.querySelector('#table-borders') as HTMLInputElement;
-        const previewContainer = modal.querySelector('#table-preview-container') as HTMLElement;
-        const closeBtn = modal.querySelector('.lilac-table-modal-close') as HTMLElement;
-        const cancelBtn = modal.querySelector('#table-cancel') as HTMLElement;
-        const insertBtn = modal.querySelector('#table-insert') as HTMLElement;
-        const backdrop = modal.querySelector('.lilac-table-modal-backdrop') as HTMLElement;
+                const rowsInput = modal.querySelector('#table-rows') as HTMLInputElement;
+                const colsInput = modal.querySelector('#table-cols') as HTMLInputElement;
+                const headerCheck = modal.querySelector('#table-header') as HTMLInputElement;
+                const bordersCheck = modal.querySelector('#table-borders') as HTMLInputElement;
+                const previewContainer = modal.querySelector('#table-preview-container') as HTMLElement;
+                const closeBtn = modal.querySelector('.lilac-table-modal-close') as HTMLElement;
+                const cancelBtn = modal.querySelector('#table-cancel') as HTMLElement;
+                const insertBtn = modal.querySelector('#table-insert') as HTMLElement;
+                const backdrop = modal.querySelector('.lilac-table-modal-backdrop') as HTMLElement;
 
-        const generateTableHTML = (): string => {
-          const rows = parseInt(rowsInput.value) || 3;
-          const cols = parseInt(colsInput.value) || 3;
-          const hasHeader = headerCheck.checked;
-          const hasBorders = bordersCheck.checked;
+                const generateTableHTML = (): string => {
+                    const rows = parseInt(rowsInput.value) || 3;
+                    const cols = parseInt(colsInput.value) || 3;
+                    const hasHeader = headerCheck.checked;
+                    const hasBorders = bordersCheck.checked;
 
-          let html = `<table class="lilac-table${hasBorders ? ' lilac-table-bordered' : ''}">`;
-          
-          if (hasHeader) {
-            html += '<thead><tr>';
-            for (let c = 0; c < cols; c++) {
-              html += `<th>Header ${c + 1}</th>`;
-            }
-            html += '</tr></thead>';
-          }
-          
-          html += '<tbody>';
-          const startRow = hasHeader ? 1 : 0;
-          const totalRows = hasHeader ? rows : rows;
-          
-          for (let r = startRow; r < totalRows + startRow; r++) {
-            html += '<tr>';
-            for (let c = 0; c < cols; c++) {
-              html += `<td>Cell ${r + 1}-${c + 1}</td>`;
-            }
-            html += '</tr>';
-          }
-          html += '</tbody></table>';
-          
-          return html;
-        };
+                    let html = `<table class="lilac-table${hasBorders ? ' lilac-table-bordered' : ''}">`;
 
-        const updatePreview = () => {
-          previewContainer.innerHTML = generateTableHTML();
-        };
+                    if (hasHeader) {
+                        html += '<thead><tr>';
+                        for (let c = 0; c < cols; c++) {
+                            html += `<th>Header ${c + 1}</th>`;
+                        }
+                        html += '</tr></thead>';
+                    }
 
-        const closeModal = () => {
-          document.body.removeChild(modal);
-        };
+                    html += '<tbody>';
+                    const startRow = hasHeader ? 1 : 0;
+                    const totalRows = hasHeader ? rows : rows;
 
-        // Event listeners
-        [rowsInput, colsInput, headerCheck, bordersCheck].forEach(input => {
-          input.addEventListener('change', updatePreview);
-          input.addEventListener('input', updatePreview);
-        });
+                    for (let r = startRow; r < totalRows + startRow; r++) {
+                        html += '<tr>';
+                        for (let c = 0; c < cols; c++) {
+                            html += `<td>Cell ${r + 1}-${c + 1}</td>`;
+                        }
+                        html += '</tr>';
+                    }
+                    html += '</tbody></table>';
 
-        closeBtn.addEventListener('click', closeModal);
-        cancelBtn.addEventListener('click', closeModal);
-        backdrop.addEventListener('click', (e) => {
-          if (e.target === backdrop) closeModal();
-        });
+                    return html;
+                };
 
-        insertBtn.addEventListener('click', () => {
-          const tableHTML = generateTableHTML();
-          context.insertContent(tableHTML);
-          closeModal();
-        });
+                const updatePreview = () => {
+                    previewContainer.innerHTML = generateTableHTML();
+                };
 
-        // Initial preview
-        updatePreview();
-      },
-    },
-  ] as ToolbarButton[],
+                const closeModal = () => {
+                    document.body.removeChild(modal);
+                };
 
-  keyboardShortcuts: [
-    {
-      key: 't',
-      ctrlKey: true,
-      shiftKey: true,
-      action: (_: EditorContext) => {
-        const tableButton = document.querySelector('[data-tooltip="Insert table (Ctrl+Shift+T)"]') as HTMLElement;
-        if (tableButton) {
-          tableButton.click();
-        }
-      },
-    },
-  ],
+                // Event listeners
+                [rowsInput, colsInput, headerCheck, bordersCheck].forEach(input => {
+                    input.addEventListener('change', updatePreview);
+                    input.addEventListener('input', updatePreview);
+                });
 
-  styles: `
+                closeBtn.addEventListener('click', closeModal);
+                cancelBtn.addEventListener('click', closeModal);
+                backdrop.addEventListener('click', (e) => {
+                    if (e.target === backdrop) closeModal();
+                });
+
+                insertBtn.addEventListener('click', () => {
+                    const tableHTML = generateTableHTML();
+                    context.insertContent(tableHTML);
+                    closeModal();
+                });
+
+                // Initial preview
+                updatePreview();
+            },
+        },
+    ] as ToolbarButton[],
+
+    keyboardShortcuts: [
+        {
+            key: 't',
+            ctrlKey: true,
+            shiftKey: true,
+            action: (_: EditorContext) => {
+                const tableButton = document.querySelector('[data-tooltip="Insert table (Ctrl+Shift+T)"]') as HTMLElement;
+                if (tableButton) {
+                    tableButton.click();
+                }
+            },
+        },
+    ],
+
+    styles: `
     .lilac-table-modal {
       position: fixed;
       top: 0;
@@ -357,12 +357,12 @@ export const tablePlugin: EditorPlugin = {
     }
   `,
 
-  // The context argument is required by the plugin interface, but not used here
-  onInstall: (_context: EditorContext) => {
-    console.log('Table Inserter plugin installed');
-  },
+    // The context argument is required by the plugin interface, but not used here
+    onInstall: (_context: EditorContext) => {
+        console.log('Table Inserter plugin installed');
+    },
 
-  onUninstall: (_context: EditorContext) => {
-    console.log('Table Inserter plugin uninstalled');
-  },
+    onUninstall: (_context: EditorContext) => {
+        console.log('Table Inserter plugin uninstalled');
+    },
 };

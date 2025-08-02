@@ -1,83 +1,83 @@
-import React from 'react';
 import { Smile } from 'lucide-react';
-import { EditorPlugin, EditorContext, ToolbarButton } from '../types/plugin';
+import React from 'react';
+import { EditorContext, EditorPlugin, ToolbarButton } from '../types/plugin';
 
 const EMOJI_CATEGORIES = {
-  smileys: {
-    name: 'Smileys & People',
-    emojis: ['😀', '😃', '😄', '😁', '😆', '😅', '😂', '🤣', '😊', '😇', '🙂', '🙃', '😉', '😌', '😍', '🥰', '😘', '😗', '😙', '😚', '😋', '😛', '😝', '😜', '🤪', '🤨', '🧐', '🤓', '😎', '🤩', '🥳', '😏', '😒', '😞', '😔', '😟', '😕', '🙁', '☹️', '😣', '😖', '😫', '😩', '🥺', '😢', '😭', '😤', '😠', '😡', '🤬', '🤯', '😳', '🥵', '🥶', '😱', '😨', '😰', '😥', '😓'],
-  },
-  nature: {
-    name: 'Animals & Nature',
-    emojis: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐽', '🐸', '🐵', '🙈', '🙉', '🙊', '🐒', '🐔', '🐧', '🐦', '🐤', '🐣', '🐥', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋', '🐌', '🐞', '🐜', '🦟', '🦗', '🕷️', '🕸️', '🦂', '🐢', '🐍', '🦎', '🦖', '🦕', '🐙', '🦑', '🦐', '🦞', '🦀', '🐡', '🐠', '🐟', '🐬', '🐳', '🐋', '🦈', '🐊', '🐅', '🐆', '🦓', '🦍', '🦧', '🐘', '🦛', '🦏', '🐪', '🐫', '🦒', '🦘', '🐃', '🐂', '🐄', '🐎', '🐖', '🐏', '🐑', '🦙', '🐐', '🦌', '🐕', '🐩', '🦮', '🐕‍🦺', '🐈', '🐓', '🦃', '🦚', '🦜', '🦢', '🦩', '🕊️', '🐇', '🦝', '🦨', '🦡', '🦦', '🦥', '🐁', '🐀', '🐿️'],
-  },
-  food: {
-    name: 'Food & Drink',
-    emojis: ['🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🫐', '🍈', '🍒', '🍑', '🥭', '🍍', '🥥', '🥝', '🍅', '🍆', '🥑', '🥦', '🥬', '🥒', '🌶️', '🫑', '🌽', '🥕', '🫒', '🧄', '🧅', '🥔', '🍠', '🥐', '🥯', '🍞', '🥖', '🥨', '🧀', '🥚', '🍳', '🧈', '🥞', '🧇', '🥓', '🥩', '🍗', '🍖', '🦴', '🌭', '🍔', '🍟', '🍕', '🫓', '🥪', '🥙', '🧆', '🌮', '🌯', '🫔', '🥗', '🥘', '🫕', '🥫', '🍝', '🍜', '🍲', '🍛', '🍣', '🍱', '🥟', '🦪', '🍤', '🍙', '🍚', '🍘', '🍥', '🥠', '🥮', '🍢', '🍡', '🍧', '🍨', '🍦', '🥧', '🧁', '🍰', '🎂', '🍮', '🍭', '🍬', '🍫', '🍿', '🍩', '🍪', '🌰', '🥜', '🍯'],
-  },
-  travel: {
-    name: 'Travel & Places',
-    emojis: ['🚗', '🚕', '🚙', '🚌', '🚎', '🏎️', '🚓', '🚑', '🚒', '🚐', '🛻', '🚚', '🚛', '🚜', '🏍️', '🛵', '🚲', '🛴', '🛹', '🛼', '🚁', '🛸', '✈️', '🛩️', '🛫', '🛬', '🪂', '💺', '🚀', '🛰️', '🚢', '⛵', '🚤', '🛥️', '🛳️', '⛴️', '🚂', '🚃', '🚄', '🚅', '🚆', '🚇', '🚈', '🚉', '🚊', '🚝', '🚞', '🚋', '🚌', '🚍', '🚎', '🚐', '🚑', '🚒', '🚓', '🚔', '🚕', '🚖', '🚗', '🚘', '🚙', '🚚', '🚛', '🚜'],
-  },
-  objects: {
-    name: 'Objects',
-    emojis: ['⌚', '📱', '📲', '💻', '⌨️', '🖥️', '🖨️', '🖱️', '🖽️', '💽', '💾', '💿', '📀', '📼', '📷', '📸', '📹', '🎥', '📽️', '🎞️', '📞', '☎️', '📟', '📠', '📺', '📻', '🎙️', '🎚️', '🎛️', '🧭', '⏱️', '⏲️', '⏰', '🕰️', '⌛', '⏳', '📡', '🔋', '🔌', '💡', '🔦', '🕯️', '🪔', '🧯', '🛢️', '💸', '💵', '💴', '💶', '💷', '💰', '💳', '💎', '⚖️', '🧰', '🔧', '🔨', '⚒️', '🛠️', '⛏️', '🔩', '⚙️', '🧱', '⛓️', '🧲', '🔫', '💣', '🧨', '🪓', '🔪', '🗡️', '⚔️', '🛡️', '🚬', '⚰️', '⚱️', '🏺', '🔮', '📿', '🧿', '💈', '⚗️', '🔭', '🔬', '🕳️', '🩹', '🩺', '💊', '💉', '🩸', '🧬', '🦠', '🧫', '🧪', '🌡️', '🧹', '🧺', '🧻', '🚽', '🚰', '🚿', '🛁', '🛀', '🧼', '🪒', '🧽', '🧴', '🛎️', '🔑', '🗝️', '🚪', '🪑', '🛋️', '🛏️', '🛌', '🧸', '🖼️', '🛍️', '🛒', '🎁', '🎈', '🎏', '🎀', '🎊', '🎉', '🎎', '🏮', '🎐', '🧧', '✉️', '📩', '📨', '📧', '💌', '📥', '📤', '📦', '🏷️', '📪', '📫', '📬', '📭', '📮', '📯', '📜', '📃', '📄', '📑', '🧾', '📊', '📈', '📉', '🗒️', '🗓️', '📆', '📅', '🗑️', '📇', '🗃️', '🗳️', '🗄️', '📋', '📁', '📂', '🗂️', '🗞️', '📰', '📓', '📔', '📒', '📕', '📗', '📘', '📙', '📚', '📖', '🔖', '🧷', '🔗', '📎', '🖇️', '📐', '📏', '🧮', '📌', '📍', '✂️', '🖊️', '🖋️', '✒️', '🖌️', '🖍️', '📝', '✏️', '🔍', '🔎', '🔏', '🔐', '🔒', '🔓'],
-  },
+    smileys: {
+        name: 'Smileys & People',
+        emojis: ['😀', '😃', '😄', '😁', '😆', '😅', '😂', '🤣', '😊', '😇', '🙂', '🙃', '😉', '😌', '😍', '🥰', '😘', '😗', '😙', '😚', '😋', '😛', '😝', '😜', '🤪', '🤨', '🧐', '🤓', '😎', '🤩', '🥳', '😏', '😒', '😞', '😔', '😟', '😕', '🙁', '☹️', '😣', '😖', '😫', '😩', '🥺', '😢', '😭', '😤', '😠', '😡', '🤬', '🤯', '😳', '🥵', '🥶', '😱', '😨', '😰', '😥', '😓'],
+    },
+    nature: {
+        name: 'Animals & Nature',
+        emojis: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐽', '🐸', '🐵', '🙈', '🙉', '🙊', '🐒', '🐔', '🐧', '🐦', '🐤', '🐣', '🐥', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋', '🐌', '🐞', '🐜', '🦟', '🦗', '🕷️', '🕸️', '🦂', '🐢', '🐍', '🦎', '🦖', '🦕', '🐙', '🦑', '🦐', '🦞', '🦀', '🐡', '🐠', '🐟', '🐬', '🐳', '🐋', '🦈', '🐊', '🐅', '🐆', '🦓', '🦍', '🦧', '🐘', '🦛', '🦏', '🐪', '🐫', '🦒', '🦘', '🐃', '🐂', '🐄', '🐎', '🐖', '🐏', '🐑', '🦙', '🐐', '🦌', '🐕', '🐩', '🦮', '🐕‍🦺', '🐈', '🐓', '🦃', '🦚', '🦜', '🦢', '🦩', '🕊️', '🐇', '🦝', '🦨', '🦡', '🦦', '🦥', '🐁', '🐀', '🐿️'],
+    },
+    food: {
+        name: 'Food & Drink',
+        emojis: ['🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🫐', '🍈', '🍒', '🍑', '🥭', '🍍', '🥥', '🥝', '🍅', '🍆', '🥑', '🥦', '🥬', '🥒', '🌶️', '🫑', '🌽', '🥕', '🫒', '🧄', '🧅', '🥔', '🍠', '🥐', '🥯', '🍞', '🥖', '🥨', '🧀', '🥚', '🍳', '🧈', '🥞', '🧇', '🥓', '🥩', '🍗', '🍖', '🦴', '🌭', '🍔', '🍟', '🍕', '🫓', '🥪', '🥙', '🧆', '🌮', '🌯', '🫔', '🥗', '🥘', '🫕', '🥫', '🍝', '🍜', '🍲', '🍛', '🍣', '🍱', '🥟', '🦪', '🍤', '🍙', '🍚', '🍘', '🍥', '🥠', '🥮', '🍢', '🍡', '🍧', '🍨', '🍦', '🥧', '🧁', '🍰', '🎂', '🍮', '🍭', '🍬', '🍫', '🍿', '🍩', '🍪', '🌰', '🥜', '🍯'],
+    },
+    travel: {
+        name: 'Travel & Places',
+        emojis: ['🚗', '🚕', '🚙', '🚌', '🚎', '🏎️', '🚓', '🚑', '🚒', '🚐', '🛻', '🚚', '🚛', '🚜', '🏍️', '🛵', '🚲', '🛴', '🛹', '🛼', '🚁', '🛸', '✈️', '🛩️', '🛫', '🛬', '🪂', '💺', '🚀', '🛰️', '🚢', '⛵', '🚤', '🛥️', '🛳️', '⛴️', '🚂', '🚃', '🚄', '🚅', '🚆', '🚇', '🚈', '🚉', '🚊', '🚝', '🚞', '🚋', '🚌', '🚍', '🚎', '🚐', '🚑', '🚒', '🚓', '🚔', '🚕', '🚖', '🚗', '🚘', '🚙', '🚚', '🚛', '🚜'],
+    },
+    objects: {
+        name: 'Objects',
+        emojis: ['⌚', '📱', '📲', '💻', '⌨️', '🖥️', '🖨️', '🖱️', '🖽️', '💽', '💾', '💿', '📀', '📼', '📷', '📸', '📹', '🎥', '📽️', '🎞️', '📞', '☎️', '📟', '📠', '📺', '📻', '🎙️', '🎚️', '🎛️', '🧭', '⏱️', '⏲️', '⏰', '🕰️', '⌛', '⏳', '📡', '🔋', '🔌', '💡', '🔦', '🕯️', '🪔', '🧯', '🛢️', '💸', '💵', '💴', '💶', '💷', '💰', '💳', '💎', '⚖️', '🧰', '🔧', '🔨', '⚒️', '🛠️', '⛏️', '🔩', '⚙️', '🧱', '⛓️', '🧲', '🔫', '💣', '🧨', '🪓', '🔪', '🗡️', '⚔️', '🛡️', '🚬', '⚰️', '⚱️', '🏺', '🔮', '📿', '🧿', '💈', '⚗️', '🔭', '🔬', '🕳️', '🩹', '🩺', '💊', '💉', '🩸', '🧬', '🦠', '🧫', '🧪', '🌡️', '🧹', '🧺', '🧻', '🚽', '🚰', '🚿', '🛁', '🛀', '🧼', '🪒', '🧽', '🧴', '🛎️', '🔑', '🗝️', '🚪', '🪑', '🛋️', '🛏️', '🛌', '🧸', '🖼️', '🛍️', '🛒', '🎁', '🎈', '🎏', '🎀', '🎊', '🎉', '🎎', '🏮', '🎐', '🧧', '✉️', '📩', '📨', '📧', '💌', '📥', '📤', '📦', '🏷️', '📪', '📫', '📬', '📭', '📮', '📯', '📜', '📃', '📄', '📑', '🧾', '📊', '📈', '📉', '🗒️', '🗓️', '📆', '📅', '🗑️', '📇', '🗃️', '🗳️', '🗄️', '📋', '📁', '📂', '🗂️', '🗞️', '📰', '📓', '📔', '📒', '📕', '📗', '📘', '📙', '📚', '📖', '🔖', '🧷', '🔗', '📎', '🖇️', '📐', '📏', '🧮', '📌', '📍', '✂️', '🖊️', '🖋️', '✒️', '🖌️', '🖍️', '📝', '✏️', '🔍', '🔎', '🔏', '🔐', '🔒', '🔓'],
+    },
 };
 
 const EmojiPicker: React.FC<{ onEmojiSelect: (emoji: string) => void }> = ({ onEmojiSelect }) => {
-  const [activeCategory, setActiveCategory] = React.useState<keyof typeof EMOJI_CATEGORIES>('smileys');
+    const [activeCategory, setActiveCategory] = React.useState<keyof typeof EMOJI_CATEGORIES>('smileys');
 
-  return (
-    <div className="lilac-emoji-picker">
-      <div className="lilac-emoji-categories">
-        {Object.entries(EMOJI_CATEGORIES).map(([key, category]) => (
-          <button
-            key={key}
-            className={`lilac-emoji-category ${activeCategory === key ? 'active' : ''}`}
-            onClick={() => setActiveCategory(key as keyof typeof EMOJI_CATEGORIES)}
-            title={category.name}
-          >
-            {category.emojis[0]}
-          </button>
-        ))}
-      </div>
-      <div className="lilac-emoji-grid">
-        {EMOJI_CATEGORIES[activeCategory].emojis.map((emoji, index) => (
-          <button
-            key={index}
-            className="lilac-emoji-button"
-            onClick={() => onEmojiSelect(emoji)}
-            title={emoji}
-          >
-            {emoji}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
+    return (
+        <div className="lilac-emoji-picker">
+            <div className="lilac-emoji-categories">
+                {Object.entries(EMOJI_CATEGORIES).map(([key, category]) => (
+                    <button
+                        key={key}
+                        className={`lilac-emoji-category ${activeCategory === key ? 'active' : ''}`}
+                        onClick={() => setActiveCategory(key as keyof typeof EMOJI_CATEGORIES)}
+                        title={category.name}
+                    >
+                        {category.emojis[0]}
+                    </button>
+                ))}
+            </div>
+            <div className="lilac-emoji-grid">
+                {EMOJI_CATEGORIES[activeCategory].emojis.map((emoji, index) => (
+                    <button
+                        key={index}
+                        className="lilac-emoji-button"
+                        onClick={() => onEmojiSelect(emoji)}
+                        title={emoji}
+                    >
+                        {emoji}
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
 };
 
 export const emojiPlugin: EditorPlugin = {
-  id: 'emoji-picker',
-  name: 'Emoji Picker',
-  version: '1.0.0',
-  description: 'Add emojis to your content with an easy-to-use picker',
-  author: 'Lilac Editor',
+    id: 'emoji-picker',
+    name: 'Emoji Picker',
+    version: '1.0.0',
+    description: 'Add emojis to your content with an easy-to-use picker',
+    author: 'Lilac Editor',
 
-  toolbarButtons: [
-    {
-      id: 'emoji-picker',
-      icon: React.createElement(Smile, { size: 16 }),
-      label: 'Insert Emoji',
-      tooltip: 'Insert emoji (Ctrl+Shift+E)',
-      group: 'insert',
-      shortcut: 'Ctrl+Shift+E',
-      onClick: (context: EditorContext) => {
-        // Create and show emoji picker modal
-        const modal = document.createElement('div');
-        modal.className = 'lilac-emoji-modal';
-        modal.innerHTML = `
+    toolbarButtons: [
+        {
+            id: 'emoji-picker',
+            icon: React.createElement(Smile, { size: 16 }),
+            label: 'Insert Emoji',
+            tooltip: 'Insert emoji (Ctrl+Shift+E)',
+            group: 'insert',
+            shortcut: 'Ctrl+Shift+E',
+            onClick: (context: EditorContext) => {
+                // Create and show emoji picker modal
+                const modal = document.createElement('div');
+                modal.className = 'lilac-emoji-modal';
+                modal.innerHTML = `
           <div class="lilac-emoji-modal-backdrop">
             <div class="lilac-emoji-modal-content">
               <div class="lilac-emoji-modal-header">
@@ -89,114 +89,114 @@ export const emojiPlugin: EditorPlugin = {
           </div>
         `;
 
-        document.body.appendChild(modal);
+                document.body.appendChild(modal);
 
-        // Add event listeners
-        const closeBtn = modal.querySelector('.lilac-emoji-modal-close') as HTMLElement;
-        const backdrop = modal.querySelector('.lilac-emoji-modal-backdrop') as HTMLElement;
-        
-        const closeModal = () => {
-          document.body.removeChild(modal);
-        };
+                // Add event listeners
+                const closeBtn = modal.querySelector('.lilac-emoji-modal-close') as HTMLElement;
+                const backdrop = modal.querySelector('.lilac-emoji-modal-backdrop') as HTMLElement;
 
-        closeBtn.addEventListener('click', closeModal);
-        backdrop.addEventListener('click', (e) => {
-          if (e.target === backdrop) closeModal();
-        });
+                const closeModal = () => {
+                    document.body.removeChild(modal);
+                };
 
-        // Render emoji picker
-        const container = modal.querySelector('#lilac-emoji-picker-container');
-        if (container) {
-          React.createElement(EmojiPicker, {
-            onEmojiSelect: (emoji: string) => {
-              context.insertContent(emoji);
-              closeModal();
-            }
-          });
-          
-          // Note: In a real implementation, you'd need to use ReactDOM.render here
-          // For now, we'll create a simple native implementation
-          container.innerHTML = `
+                closeBtn.addEventListener('click', closeModal);
+                backdrop.addEventListener('click', (e) => {
+                    if (e.target === backdrop) closeModal();
+                });
+
+                // Render emoji picker
+                const container = modal.querySelector('#lilac-emoji-picker-container');
+                if (container) {
+                    React.createElement(EmojiPicker, {
+                        onEmojiSelect: (emoji: string) => {
+                            context.insertContent(emoji);
+                            closeModal();
+                        }
+                    });
+
+                    // Note: In a real implementation, you'd need to use ReactDOM.render here
+                    // For now, we'll create a simple native implementation
+                    container.innerHTML = `
             <div class="lilac-emoji-picker">
               <div class="lilac-emoji-categories">
-                ${Object.entries(EMOJI_CATEGORIES).map(([key, category]) => 
-                  `<button class="lilac-emoji-category ${key === 'smileys' ? 'active' : ''}" data-category="${key}" title="${category.name}">
+                ${Object.entries(EMOJI_CATEGORIES).map(([key, category]) =>
+                        `<button class="lilac-emoji-category ${key === 'smileys' ? 'active' : ''}" data-category="${key}" title="${category.name}">
                     ${category.emojis[0]}
                   </button>`
-                ).join('')}
+                    ).join('')}
               </div>
               <div class="lilac-emoji-grid" id="emoji-grid">
-                ${EMOJI_CATEGORIES.smileys.emojis.map(emoji => 
-                  `<button class="lilac-emoji-button" data-emoji="${emoji}" title="${emoji}">${emoji}</button>`
-                ).join('')}
+                ${EMOJI_CATEGORIES.smileys.emojis.map(emoji =>
+                        `<button class="lilac-emoji-button" data-emoji="${emoji}" title="${emoji}">${emoji}</button>`
+                    ).join('')}
               </div>
             </div>
           `;
 
-          // Add category switching
-          container.querySelectorAll('.lilac-emoji-category').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-              const target = e.target as HTMLElement;
-              const category = target.dataset.category as keyof typeof EMOJI_CATEGORIES;
-              
-              // Update active state
-              container.querySelectorAll('.lilac-emoji-category').forEach(b => b.classList.remove('active'));
-              target.classList.add('active');
-              
-              // Update emoji grid
-              const grid = container.querySelector('#emoji-grid');
-              if (grid) {
-                grid.innerHTML = EMOJI_CATEGORIES[category].emojis.map(emoji => 
-                  `<button class="lilac-emoji-button" data-emoji="${emoji}" title="${emoji}">${emoji}</button>`
-                ).join('');
-                
-                // Re-add emoji click listeners
-                grid.querySelectorAll('.lilac-emoji-button').forEach(emojiBtn => {
-                  emojiBtn.addEventListener('click', (e) => {
-                    const target = e.target as HTMLElement;
-                    const emoji = target.dataset.emoji;
-                    if (emoji) {
-                      context.insertContent(emoji);
-                      closeModal();
-                    }
-                  });
-                });
-              }
-            });
-          });
+                    // Add category switching
+                    container.querySelectorAll('.lilac-emoji-category').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const target = e.target as HTMLElement;
+                            const category = target.dataset.category as keyof typeof EMOJI_CATEGORIES;
 
-          // Add emoji click listeners
-          container.querySelectorAll('.lilac-emoji-button').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-              const target = e.target as HTMLElement;
-              const emoji = target.dataset.emoji;
-              if (emoji) {
-                context.insertContent(emoji);
-                closeModal();
-              }
-            });
-          });
-        }
-      },
-    },
-  ] as ToolbarButton[],
+                            // Update active state
+                            container.querySelectorAll('.lilac-emoji-category').forEach(b => b.classList.remove('active'));
+                            target.classList.add('active');
 
-  keyboardShortcuts: [
-    {
-      key: 'e',
-      ctrlKey: true,
-      shiftKey: true,
-      action: (_: EditorContext) => {
-        // Trigger emoji picker
-        const emojiButton = document.querySelector('[data-tooltip="Insert emoji (Ctrl+Shift+E)"]') as HTMLElement;
-        if (emojiButton) {
-          emojiButton.click();
-        }
-      },
-    },
-  ],
+                            // Update emoji grid
+                            const grid = container.querySelector('#emoji-grid');
+                            if (grid) {
+                                grid.innerHTML = EMOJI_CATEGORIES[category].emojis.map(emoji =>
+                                    `<button class="lilac-emoji-button" data-emoji="${emoji}" title="${emoji}">${emoji}</button>`
+                                ).join('');
 
-  styles: `
+                                // Re-add emoji click listeners
+                                grid.querySelectorAll('.lilac-emoji-button').forEach(emojiBtn => {
+                                    emojiBtn.addEventListener('click', (e) => {
+                                        const target = e.target as HTMLElement;
+                                        const emoji = target.dataset.emoji;
+                                        if (emoji) {
+                                            context.insertContent(emoji);
+                                            closeModal();
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                    });
+
+                    // Add emoji click listeners
+                    container.querySelectorAll('.lilac-emoji-button').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const target = e.target as HTMLElement;
+                            const emoji = target.dataset.emoji;
+                            if (emoji) {
+                                context.insertContent(emoji);
+                                closeModal();
+                            }
+                        });
+                    });
+                }
+            },
+        },
+    ] as ToolbarButton[],
+
+    keyboardShortcuts: [
+        {
+            key: 'e',
+            ctrlKey: true,
+            shiftKey: true,
+            action: (_: EditorContext) => {
+                // Trigger emoji picker
+                const emojiButton = document.querySelector('[data-tooltip="Insert emoji (Ctrl+Shift+E)"]') as HTMLElement;
+                if (emojiButton) {
+                    emojiButton.click();
+                }
+            },
+        },
+    ],
+
+    styles: `
     .lilac-emoji-modal {
       position: fixed;
       top: 0;
@@ -326,11 +326,11 @@ export const emojiPlugin: EditorPlugin = {
     }
   `,
 
-  onInstall: (_: EditorContext) => {
-    console.log('Emoji Picker plugin installed');
-  },
+    onInstall: (_: EditorContext) => {
+        console.log('Emoji Picker plugin installed');
+    },
 
-  onUninstall: (_: EditorContext) => {
-    console.log('Emoji Picker plugin uninstalled');
-  },
+    onUninstall: (_: EditorContext) => {
+        console.log('Emoji Picker plugin uninstalled');
+    },
 };

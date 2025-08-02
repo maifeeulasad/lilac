@@ -226,24 +226,24 @@ body {
     gap: 1rem;
     padding: 1rem;
   }
-  
+
   .app__controls {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .app__control-group {
     justify-content: center;
   }
-  
+
   .app__title {
     font-size: 2rem;
   }
-  
+
   .app__subtitle {
     font-size: 1rem;
   }
-  
+
   .app__editor {
     height: 400px;
   }

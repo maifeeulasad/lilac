@@ -1,81 +1,81 @@
-import React from 'react';
 import { FileText } from 'lucide-react';
-import { EditorPlugin, EditorContext } from '../types/plugin';
+import React from 'react';
+import { EditorContext, EditorPlugin } from '../types/plugin';
 
 interface WordCountState {
-  words: number;
-  characters: number;
-  charactersNoSpaces: number;
-  paragraphs: number;
+    words: number;
+    characters: number;
+    charactersNoSpaces: number;
+    paragraphs: number;
 }
 
 const WordCountPanel: React.FC<{ context: EditorContext }> = ({ context }) => {
-  const [stats, setStats] = React.useState<WordCountState>({
-    words: 0,
-    characters: 0,
-    charactersNoSpaces: 0,
-    paragraphs: 0,
-  });
+    const [stats, setStats] = React.useState<WordCountState>({
+        words: 0,
+        characters: 0,
+        charactersNoSpaces: 0,
+        paragraphs: 0,
+    });
 
-  const calculateStats = React.useCallback((content: string): WordCountState => {
-    const text = content.replace(/<[^>]*>/g, ''); // Remove HTML tags
-    
-    return {
-      words: text.trim() ? text.trim().split(/\s+/).length : 0,
-      characters: text.length,
-      charactersNoSpaces: text.replace(/\s/g, '').length,
-      paragraphs: text.trim() ? text.split(/\n\s*\n/).length : 0,
-    };
-  }, []);
+    const calculateStats = React.useCallback((content: string): WordCountState => {
+        const text = content.replace(/<[^>]*>/g, ''); // Remove HTML tags
 
-  React.useEffect(() => {
-    setStats(calculateStats(context.state.content));
-  }, [context.state.content, calculateStats]);
+        return {
+            words: text.trim() ? text.trim().split(/\s+/).length : 0,
+            characters: text.length,
+            charactersNoSpaces: text.replace(/\s/g, '').length,
+            paragraphs: text.trim() ? text.split(/\n\s*\n/).length : 0,
+        };
+    }, []);
 
-  return (
-    <div className="lilac-word-count-panel">
-      <h3 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: 600 }}>Document Statistics</h3>
-      <div className="lilac-word-count-stats">
-        <div className="lilac-word-count-stat">
-          <span className="label">Words:</span>
-          <span className="value">{stats.words.toLocaleString()}</span>
+    React.useEffect(() => {
+        setStats(calculateStats(context.state.content));
+    }, [context.state.content, calculateStats]);
+
+    return (
+        <div className="lilac-word-count-panel">
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: 600 }}>Document Statistics</h3>
+            <div className="lilac-word-count-stats">
+                <div className="lilac-word-count-stat">
+                    <span className="label">Words:</span>
+                    <span className="value">{stats.words.toLocaleString()}</span>
+                </div>
+                <div className="lilac-word-count-stat">
+                    <span className="label">Characters:</span>
+                    <span className="value">{stats.characters.toLocaleString()}</span>
+                </div>
+                <div className="lilac-word-count-stat">
+                    <span className="label">Characters (no spaces):</span>
+                    <span className="value">{stats.charactersNoSpaces.toLocaleString()}</span>
+                </div>
+                <div className="lilac-word-count-stat">
+                    <span className="label">Paragraphs:</span>
+                    <span className="value">{stats.paragraphs.toLocaleString()}</span>
+                </div>
+            </div>
         </div>
-        <div className="lilac-word-count-stat">
-          <span className="label">Characters:</span>
-          <span className="value">{stats.characters.toLocaleString()}</span>
-        </div>
-        <div className="lilac-word-count-stat">
-          <span className="label">Characters (no spaces):</span>
-          <span className="value">{stats.charactersNoSpaces.toLocaleString()}</span>
-        </div>
-        <div className="lilac-word-count-stat">
-          <span className="label">Paragraphs:</span>
-          <span className="value">{stats.paragraphs.toLocaleString()}</span>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export const wordCountPlugin: EditorPlugin = {
-  id: 'word-count',
-  name: 'Word Count',
-  version: '1.0.0',
-  description: 'Displays word count and document statistics',
-  author: 'Lilac Editor',
+    id: 'word-count',
+    name: 'Word Count',
+    version: '1.0.0',
+    description: 'Displays word count and document statistics',
+    author: 'Lilac Editor',
 
-  panels: [
-    {
-      id: 'word-count-panel',
-      title: 'Word Count',
-      icon: React.createElement(FileText, { size: 16 }),
-      position: 'right',
-      defaultOpen: false,
-      component: WordCountPanel,
-    },
-  ],
+    panels: [
+        {
+            id: 'word-count-panel',
+            title: 'Word Count',
+            icon: React.createElement(FileText, { size: 16 }),
+            position: 'right',
+            defaultOpen: false,
+            component: WordCountPanel,
+        },
+    ],
 
-  styles: `
+    styles: `
     .lilac-word-count-panel {
       padding: 16px;
       font-family: var(--lilac-font-family);
@@ -113,11 +113,11 @@ export const wordCountPlugin: EditorPlugin = {
     }
   `,
 
-  onInstall: (_: EditorContext) => {
-    console.log('Word Count plugin installed');
-  },
+    onInstall: (_: EditorContext) => {
+        console.log('Word Count plugin installed');
+    },
 
-  onUninstall: (_: EditorContext) => {
-    console.log('Word Count plugin uninstalled');
-  },
+    onUninstall: (_: EditorContext) => {
+        console.log('Word Count plugin uninstalled');
+    },
 };

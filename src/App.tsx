@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
-import { Editor, type EditorRef } from './index';
-import { wordCountPlugin, emojiPlugin, tablePlugin } from './plugins';
 import './App.css';
+import { Editor, type EditorRef } from './index';
+import { emojiPlugin, tablePlugin, wordCountPlugin } from './plugins';
 
 function App() {
   const editorRef = useRef<EditorRef>(null);
@@ -125,11 +125,11 @@ function App() {
             />
             Show Toolbar
           </label>
-          
+
           <label className="app__select">
             Theme:
-            <select 
-              value={theme} 
+            <select
+              value={theme}
               onChange={(e) => setTheme(e.target.value as 'light' | 'dark')}
             >
               <option value="light">Light</option>
@@ -198,16 +198,16 @@ function App() {
             onChange={handleContentChange}
             onFocus={() => console.log('Editor focused')}
             onBlur={() => console.log('Editor blurred')}
-            toolbar={{ 
+            toolbar={{
               show: showToolbar,
               tools: [
                 'bold',
-                'italic', 
+                'italic',
                 'underline',
                 'strikethrough',
                 'separator',
                 'heading1',
-                'heading2', 
+                'heading2',
                 'heading3',
                 'paragraph',
                 'separator',

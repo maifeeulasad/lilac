@@ -36,7 +36,7 @@ export interface ToolbarConfig {
   position?: 'top' | 'bottom' | 'floating';
 }
 
-export type ToolbarTool = 
+export type ToolbarTool =
   | 'bold'
   | 'italic'
   | 'underline'

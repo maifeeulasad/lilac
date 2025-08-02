@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState, useEffect } from 'react';
-import type { EditorState, SelectionRange, HistoryState } from '@/types';
+import type { EditorState, HistoryState, SelectionRange } from '@/types';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface UseEditorStateProps {
   initialContent?: string;
@@ -32,13 +32,13 @@ export const useEditorState = (props: UseEditorStateProps = {}) => {
     setState(prevState => {
       const newHistory: HistoryState = addToHistory
         ? {
-            ...prevState.history,
-            undoStack: [
-              ...prevState.history.undoStack.slice(-(maxHistorySize - 1)),
-              prevState.content,
-            ],
-            redoStack: [], // Clear redo stack when new content is added
-          }
+          ...prevState.history,
+          undoStack: [
+            ...prevState.history.undoStack.slice(-(maxHistorySize - 1)),
+            prevState.content,
+          ],
+          redoStack: [], // Clear redo stack when new content is added
+        }
         : prevState.history;
 
       return {

@@ -1,34 +1,20 @@
 // Main entry point for the Lilac Editor library
-export { Editor } from './components';
-export { Toolbar } from './components';
+export { Editor, Toolbar } from './components';
 export type { EditorRef } from './components';
-export type { 
-  EditorProps, 
-  EditorState, 
-  EditorConfig, 
-  ToolbarConfig, 
-  ToolbarTool,
-  SelectionRange,
-  HistoryState
-} from './types';
 export { useEditorState } from './hooks';
-export { cn, debounce, throttle, isValidUrl, sanitizeHtml, extractTextFromHtml, executeFormatCommand, getActiveFormats, insertLink, insertImage } from './utils';
+export type {
+  EditorConfig, EditorProps,
+  EditorState, HistoryState, SelectionRange, ToolbarConfig,
+  ToolbarTool
+} from './types';
+export { cn, debounce, executeFormatCommand, extractTextFromHtml, getActiveFormats, insertImage, insertLink, isValidUrl, sanitizeHtml, throttle } from './utils';
 
 // Plugin System
-export { 
-  PluginManager, 
-  pluginManager,
-  emojiPlugin,
-  wordCountPlugin,
-  tablePlugin,
+export {
+  emojiPlugin, PluginManager,
+  pluginManager, tablePlugin, wordCountPlugin
 } from './plugins';
 export type {
-  EditorPlugin,
-  EditorContext,
-  ToolbarButton,
-  ContextMenuItem,
-  EditorPanel,
-  KeyboardShortcut,
-  ContentTransformer,
-  PluginManager as IPluginManager
+  ContentTransformer, ContextMenuItem, EditorContext, EditorPanel, EditorPlugin, PluginManager as IPluginManager, KeyboardShortcut, ToolbarButton
 } from './types/plugin';
+
