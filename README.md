@@ -453,8 +453,8 @@ The editor uses CSS custom properties for easy theming. All styles are scoped to
 ## 🗺️ Roadmap
 
 - [x] 🔧 Rich text toolbar (Bold, Italic, Underline, etc.)
-- [x] � Emoji support (via Emoji Picker plugin)
-- [ ] �📋 Copy/Paste enhancements
+- [x] 😉 Emoji support (via Emoji Picker plugin)
+- [ ] 📋 Copy/Paste enhancements
 - [x] 🔗 Link insertion and management
 - [ ] 🖼️ Image upload and embedding
 - [ ] 📝 Markdown support
@@ -462,8 +462,8 @@ The editor uses CSS custom properties for easy theming. All styles are scoped to
 - [x] 📊 Table support
 - [ ] 🎯 Vue.js integration
 - [ ] 🅰️ Angular integration
-- [x] � Plugin system
-- [ ] �📱 Mobile optimizations
+- [x] 🔌 Plugin system
+- [ ] 📱 Mobile optimizations
 - [ ] 🎨 More themes
 - [ ] 🧪 Comprehensive test suite
 
