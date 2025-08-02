@@ -1,5 +1,6 @@
 // Main entry point for the Lilac Editor library
 export { Editor } from './components';
+export { Toolbar } from './components';
 export type { EditorRef } from './components';
 export type { 
   EditorProps, 
@@ -11,4 +12,4 @@ export type {
   HistoryState
 } from './types';
 export { useEditorState } from './hooks';
-export { cn, debounce, throttle, isValidUrl, sanitizeHtml, extractTextFromHtml } from './utils';
+export { cn, debounce, throttle, isValidUrl, sanitizeHtml, extractTextFromHtml, executeFormatCommand, getActiveFormats, insertLink, insertImage } from './utils';
