@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "clsx": "^2.0.0",
+    "copy-clipboard-js": "^2.1.1",
     "lucide-react": "^0.263.1"
   },
   "devDependencies": {
