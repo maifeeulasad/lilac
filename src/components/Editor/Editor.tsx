@@ -261,7 +261,12 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
     setContent: (content: string) => {
       updateContent(content);
       if (editorRef.current) {
-        editorRef.current.textContent = content;
+        // For rich text, use innerHTML instead of textContent
+        if (toolbar?.show) {
+          editorRef.current.innerHTML = content;
+        } else {
+          editorRef.current.textContent = content;
+        }
         lastContentRef.current = content;
       }
     },
