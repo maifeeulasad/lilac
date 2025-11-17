@@ -24,6 +24,8 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
   readOnly = false,
   autoFocus = false,
   maxLength,
+  minHeight = 200,
+  maxHeight = 600,
   theme = 'light',
   className,
   style,
@@ -388,7 +390,13 @@ export const Editor = forwardRef<EditorRef, EditorProps>(({
         />
       )}
 
-      <div className="lilac-editor__content-wrapper">
+      <div
+        className="lilac-editor__content-wrapper"
+        style={{
+          minHeight: `${minHeight}px`,
+          maxHeight: `${maxHeight}px`
+        }}
+      >
         {showPlaceholder && (
           <div className="lilac-editor__placeholder">
             {placeholder}

@@ -126,6 +126,25 @@ function MyApp() {
 }
 ```
 
+### Custom Height and Scrolling
+
+```tsx
+import React from 'react';
+import { Editor } from 'lilac-editor';
+
+function MyApp() {
+  return (
+    <Editor
+      initialContent="<h1>Welcome to Lilac!</h1><p>This editor has custom height settings...</p>"
+      placeholder="Start typing..."
+      minHeight={300}
+      maxHeight={500}
+      toolbar={{ show: true }}
+    />
+  );
+}
+```
+
 ## 📖 API Reference
 
 ### EditorProps
@@ -137,6 +156,8 @@ function MyApp() {
 | `readOnly` | `boolean` | `false` | Whether the editor is read-only |
 | `autoFocus` | `boolean` | `false` | Auto-focus editor on mount |
 | `maxLength` | `number` | `undefined` | Maximum character limit (plain text mode only) |
+| `minHeight` | `number` | `200` | Minimum height of editor content area in pixels |
+| `maxHeight` | `number` | `600` | Maximum height of editor content area in pixels (enables scrolling) |
 | `theme` | `'light' \| 'dark' \| 'auto'` | `'light'` | Editor theme |
 | `className` | `string` | `undefined` | Additional CSS class |
 | `style` | `CSSProperties` | `undefined` | Inline styles |

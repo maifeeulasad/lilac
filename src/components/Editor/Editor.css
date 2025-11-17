@@ -87,7 +87,6 @@
 .lilac-editor__content-wrapper {
   position: relative;
   flex: 1;
-  min-height: 120px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -121,6 +120,8 @@
   /* Enable vertical scrolling */
   overflow-x: hidden;
   /* Prevent horizontal scrolling */
+  height: 100%;
+  /* Take full height of wrapper */
   /* Custom scrollbar styling */
   scrollbar-width: thin;
   scrollbar-color: var(--lilac-color-border) transparent;

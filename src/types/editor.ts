@@ -25,6 +25,8 @@ export interface EditorConfig {
   readOnly?: boolean;
   autoFocus?: boolean;
   maxLength?: number;
+  minHeight?: number;
+  maxHeight?: number;
   theme?: 'light' | 'dark' | 'auto';
   className?: string;
   style?: CSSProperties;
