@@ -294,24 +294,266 @@
 }
 
 /* Responsive Design */
+
+/* Large tablets and small desktops */
+@media (max-width: 1024px) {
+  .lilac-editor {
+    --lilac-border-radius: 10px;
+    --lilac-border-radius-small: 6px;
+  }
+
+  .lilac-editor__content {
+    padding: 14px;
+  }
+
+  .lilac-editor__placeholder {
+    top: 14px;
+    left: 14px;
+  }
+
+  .lilac-editor__toolbar {
+    padding: 10px 14px;
+    gap: 6px;
+  }
+
+  /* Adjust typography spacing for tablets */
+  .lilac-editor__content h1,
+  .lilac-editor__content h2,
+  .lilac-editor__content h3,
+  .lilac-editor__content h4,
+  .lilac-editor__content h5,
+  .lilac-editor__content h6 {
+    margin: 1.25em 0 0.625em 0;
+  }
+
+  .lilac-editor__content ul,
+  .lilac-editor__content ol {
+    padding-left: 1.75em;
+  }
+}
+
+/* Tablets and small screens */
 @media (max-width: 768px) {
   .lilac-editor {
     --lilac-font-size: 16px;
     /* Prevent zoom on iOS */
-    border-radius: var(--lilac-border-radius-small);
+    --lilac-border-radius: 8px;
+    --lilac-border-radius-small: 4px;
+    border-radius: var(--lilac-border-radius);
   }
 
   .lilac-editor__content {
     padding: 12px;
+    /* Improve touch scrolling on mobile */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 
   .lilac-editor__placeholder {
     top: 12px;
     left: 12px;
+    font-size: 15px;
+    /* Slightly smaller on mobile */
   }
 
   .lilac-editor__toolbar {
     padding: 8px 12px;
+    gap: 4px;
+    /* Enable horizontal scrolling on mobile */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hide toolbar scrollbar on mobile */
+  .lilac-editor__toolbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lilac-editor__toolbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  /* Adjust footer for mobile */
+  .lilac-editor__footer {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  /* Adjust typography spacing for mobile */
+  .lilac-editor__content h1,
+  .lilac-editor__content h2,
+  .lilac-editor__content h3,
+  .lilac-editor__content h4,
+  .lilac-editor__content h5,
+  .lilac-editor__content h6 {
+    margin: 1em 0 0.5em 0;
+  }
+
+  .lilac-editor__content h1 {
+    font-size: 1.75em;
+  }
+
+  .lilac-editor__content h2 {
+    font-size: 1.375em;
+  }
+
+  .lilac-editor__content h3 {
+    font-size: 1.125em;
+  }
+
+  .lilac-editor__content ul,
+  .lilac-editor__content ol {
+    margin: 0.75em 0;
+    padding-left: 1.5em;
+  }
+
+  .lilac-editor__content blockquote {
+    margin: 0.75em 0;
+    padding: 0.5em 0 0.5em 0.75em;
+  }
+
+  .lilac-editor__content pre {
+    padding: 0.75em;
+    margin: 0.75em 0;
+    border-radius: var(--lilac-border-radius-small);
+    font-size: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lilac-editor__content code {
+    font-size: 0.8em;
+    padding: 0.1em 0.2em;
+  }
+}
+
+/* Mobile phones - portrait */
+@media (max-width: 480px) {
+  .lilac-editor {
+    --lilac-font-size: 16px;
+    --lilac-line-height: 1.5;
+    border-radius: 6px;
+  }
+
+  .lilac-editor__content {
+    padding: 10px;
+    min-height: 120px;
+    /* Ensure minimum touch target */
+  }
+
+  .lilac-editor__placeholder {
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+  }
+
+  .lilac-editor__toolbar {
+    padding: 6px 10px;
+    gap: 2px;
+    /* Smaller buttons on very small screens */
+  }
+
+  .lilac-editor__footer {
+    padding: 4px 10px;
+    font-size: 10px;
+  }
+
+  /* Compact typography for small screens */
+  .lilac-editor__content h1 {
+    font-size: 1.5em;
+  }
+
+  .lilac-editor__content h2 {
+    font-size: 1.25em;
+  }
+
+  .lilac-editor__content h3 {
+    font-size: 1.1em;
+  }
+
+  .lilac-editor__content h4,
+  .lilac-editor__content h5,
+  .lilac-editor__content h6 {
+    font-size: 1em;
+  }
+
+  .lilac-editor__content p {
+    margin: 0 0 0.75em 0;
+  }
+
+  .lilac-editor__content ul,
+  .lilac-editor__content ol {
+    margin: 0.5em 0;
+    padding-left: 1.25em;
+  }
+
+  .lilac-editor__content li {
+    margin: 0.125em 0;
+  }
+
+  .lilac-editor__content blockquote {
+    margin: 0.5em 0;
+    padding: 0.375em 0 0.375em 0.5em;
+    font-size: 0.95em;
+  }
+
+  .lilac-editor__content pre {
+    padding: 0.5em;
+    margin: 0.5em 0;
+    font-size: 13px;
+  }
+
+  /* Custom scrollbar for mobile - thinner */
+  .lilac-editor__content::-webkit-scrollbar {
+    width: 4px;
+  }
+}
+
+/* Large mobile phones - landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+  .lilac-editor__content {
+    padding: 8px 12px;
+  }
+
+  .lilac-editor__placeholder {
+    top: 8px;
+    left: 12px;
+  }
+
+  .lilac-editor__toolbar {
+    padding: 4px 12px;
+  }
+
+  .lilac-editor__footer {
+    padding: 3px 12px;
+  }
+}
+
+/* Touch-friendly enhancements */
+@media (pointer: coarse) {
+
+  /* Ensure minimum touch targets */
+  .lilac-editor__content {
+    min-height: 44px;
+    /* iOS Human Interface Guidelines */
+  }
+
+  /* Improve text selection on touch devices */
+  .lilac-editor__content {
+    -webkit-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
+  }
+
+  /* Prevent accidental text selection outside editor */
+  .lilac-editor__toolbar,
+  .lilac-editor__footer {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
   }
 }
 
