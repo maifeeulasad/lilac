@@ -557,11 +557,11 @@
   }
 }
 
-/* Animation for smooth interactions */
+/* Lilac Smooth Animations */
 @keyframes lilac-fade-in {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(8px);
   }
 
   to {
@@ -570,8 +570,121 @@
   }
 }
 
+@keyframes lilac-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes lilac-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes lilac-glow {
+
+  0%,
+  100% {
+    box-shadow: var(--lilac-shadow);
+  }
+
+  50% {
+    box-shadow: var(--lilac-shadow), var(--lilac-shadow-focus);
+  }
+}
+
+@keyframes lilac-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes lilac-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Apply animations */
+.lilac-editor {
+  animation: lilac-scale-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
 .lilac-editor__content {
-  animation: lilac-fade-in 0.2s ease-out;
+  animation: lilac-fade-in 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) 0.1s both;
+}
+
+.lilac-editor__toolbar {
+  animation: lilac-slide-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0.05s both;
+}
+
+.lilac-editor__placeholder {
+  animation: lilac-fade-in 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) 0.2s both;
+  transition: opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.lilac-editor__footer {
+  animation: lilac-slide-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0.15s both;
+}
+
+/* Smooth transitions for interactive elements */
+.lilac-editor__content {
+  transition: padding 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-radius 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.lilac-editor:hover:not(:focus-within) {
+  transform: translateY(-1px);
+  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 12px rgba(139, 124, 216, 0.15), var(--lilac-shadow);
+}
+
+/* Loading state shimmer effect */
+.lilac-editor--loading .lilac-editor__content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+      transparent,
+      var(--lilac-color-primary),
+      transparent);
+  background-size: 200% 100%;
+  animation: lilac-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--lilac-border-radius-small) var(--lilac-border-radius-small) 0 0;
+}
+
+/* Smooth text selection animation */
+.lilac-editor__content::selection,
+.lilac-editor__content *::selection {
+  background: rgba(139, 124, 216, 0.2);
+  animation: lilac-pulse 0.3s ease-out;
 }
 
 /* High contrast mode support */
