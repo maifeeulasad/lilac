@@ -27,7 +27,7 @@ jobs:
     - name: 'Installing deps'    
       run: pnpm i
     - name: 'Build library'
-      run: pnpm build:lib
+      run: pnpm build
     - name: 'Auth for npm'
       run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
     - name: 'Publish'
