@@ -35,3 +35,6 @@ storybook-static/
 # Temporary files
 *.tmp
 *.temp
+
+# Snap generated scripts
+script/snap.js
