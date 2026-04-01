@@ -280,8 +280,22 @@
   </div>
 
   <script type="module">
-    // Import the compiled module
-    import { LilacEditor, injectStyles, pluginManager, wordCountPlugin, emojiPlugin, tablePlugin } from './dist/index.js';
+    const moduleLoader = async () => {
+      try {
+        return await import('./index.js');
+      } catch (err) {
+        return await import('./dist/index.js');
+      }
+    };
+
+    const {
+      LilacEditor,
+      injectStyles,
+      pluginManager,
+      wordCountPlugin,
+      emojiPlugin,
+      tablePlugin,
+    } = await moduleLoader();
 
     // Inject styles
     injectStyles();
