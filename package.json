@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "tsc -w",
+    "dev:server": "npx http-server . -p 3000",
     "build": "rm -rf dist && tsc",
     "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts --fix",
