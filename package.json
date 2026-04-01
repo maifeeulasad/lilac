@@ -21,9 +21,13 @@
     "wysiwyg",
     "editor",
     "text-editor",
-    "react",
     "typescript",
-    "rich-text"
+    "rich-text",
+    "vanilla-js",
+    "framework-agnostic",
+    "rich-text",
+    "contenteditable",
+    "zero-dependencies"
   ],
   "author": "Maifee Ul Asad<maifeeulasad@gmail.com>",
   "license": "MIT",
