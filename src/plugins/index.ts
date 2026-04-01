@@ -1,10 +1,5 @@
-// Plugin Manager
-export { PluginManager, pluginManager } from './PluginManager';
+export { emojiPlugin } from './emojiPicker.js';
+export { PluginManager, pluginManager } from './PluginManager.js';
+export { tablePlugin } from './tableInserter.js';
+export { wordCountPlugin } from './wordCount.js';
 
-// Built-in Plugins
-export { emojiPlugin } from './emojiPicker';
-export { tablePlugin } from './tableInserter';
-export { wordCountPlugin } from './wordCount';
-
-// Plugin Types
-export * from '../types/plugin';
