@@ -26,6 +26,8 @@ jobs:
       run: pnpm i
     - name: 'Build'
       run: pnpm build
+    - name: "Copy demo page"
+      run: cp index.html dist/index.html
     - name: 'Deploy'
       uses: peaceiris/actions-gh-pages@v4
       with:
