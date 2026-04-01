@@ -31,11 +31,6 @@
     "type": "git",
     "url": "https://github.com/maifeeulasad/lilac.git"
   },
-  "dependencies": {
-    "clsx": "^2.0.0",
-    "copy-clipboard-js": "^2.1.1",
-    "lucide-react": "^0.263.1"
-  },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.0",
     "@storybook/addon-interactions": "^7.0.0",
