@@ -32,7 +32,7 @@ jobs:
           npm install -g playwright
           npx playwright install --with-deps chromium
       - name: "Run dev server"
-        run: pnpm dev & sleep 15
+        run: pnpm dev:server & sleep 15
       - name: "Take screenshot"
         run: npx tsc script/snap.ts && node script/snap.js
       - name: "Push to GitHub"
