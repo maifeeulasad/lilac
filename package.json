@@ -9,7 +9,7 @@
     "dev:server": "npx http-server . -p 3000",
     "build": "rm -rf dist && tsc",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "pnpm run build"
   },
   "keywords": [
     "wysiwyg",
