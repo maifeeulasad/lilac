@@ -1,5 +1,5 @@
-import { EditorContext, EditorPlugin, PluginManager as IPluginManager } from '../types/plugin';
-export declare class PluginManager implements IPluginManager {
+import type { ContextMenuItem, EditorContext, EditorPanel, EditorPlugin, KeyboardShortcut } from '../types/index.js';
+export declare class PluginManager {
     plugins: Map<string, EditorPlugin>;
     private context;
     constructor();
@@ -9,11 +9,11 @@ export declare class PluginManager implements IPluginManager {
     getPlugin(pluginId: string): EditorPlugin | undefined;
     getAllPlugins(): EditorPlugin[];
     isInstalled(pluginId: string): boolean;
-    executeHook<T extends keyof EditorPlugin>(hook: T, ...args: any[]): void;
+    executeHook<T extends keyof EditorPlugin>(hook: T, ...args: unknown[]): void;
     getToolbarButtons(): any[];
-    getContextMenuItems(): any[];
-    getKeyboardShortcuts(): any[];
-    getPanels(): any[];
+    getContextMenuItems(): ContextMenuItem[];
+    getKeyboardShortcuts(): KeyboardShortcut[];
+    getPanels(): EditorPanel[];
     transformContent(content: string): string;
     private injectStyles;
     private removeStyles;

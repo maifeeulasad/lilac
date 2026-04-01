@@ -1,0 +1,15 @@
+import type { FormatCommand, ToolbarTool } from '../types';
+export declare const formatCommands: Record<ToolbarTool, FormatCommand | null>;
+export declare function executeFormatCommand(tool: ToolbarTool, value?: string): boolean;
+export declare function isFormatActive(tool: ToolbarTool): boolean;
+export declare function getActiveFormats(tools: ToolbarTool[]): Set<ToolbarTool>;
+export declare function insertLink(url: string, text?: string): boolean;
+export declare function insertImage(src: string, alt?: string): boolean;
+export declare const keyboardShortcuts: Record<string, ToolbarTool>;
+export declare function getShortcutKey(event: KeyboardEvent): string | null;
+export declare function cn(...classes: (string | boolean | undefined | null | Record<string, boolean>)[]): string;
+export declare function debounce<T extends (...args: any[]) => any>(fn: T, delay: number): (...args: Parameters<T>) => void;
+export declare function throttle<T extends (...args: any[]) => any>(fn: T, limit: number): (...args: Parameters<T>) => void;
+export declare function isValidUrl(string: string): boolean;
+export declare function sanitizeHtml(html: string): string;
+export declare function extractTextFromHtml(html: string): string;
