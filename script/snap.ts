@@ -43,12 +43,33 @@ async function waitForEditorReady(page: any): Promise<void> {
 
     try {
         const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+        const browserErrors: string[] = [];
+
+        page.on('pageerror', (error: Error) => {
+            browserErrors.push(`[pageerror] ${error.message}`);
+        });
+
+        page.on('console', (message: any) => {
+            if (message.type() === 'error') {
+                browserErrors.push(`[console.error] ${message.text()}`);
+            }
+        });
+
         await page.goto('http://127.0.0.1:3000/', {
             waitUntil: 'domcontentloaded',
             timeout: 45000,
         });
 
-        await waitForEditorReady(page);
+        try {
+            await waitForEditorReady(page);
+        } catch (error) {
+            if (browserErrors.length > 0) {
+                console.error('Browser errors before snapshot:');
+                browserErrors.forEach((entry) => console.error(entry));
+            }
+            throw error;
+        }
+
         await page.screenshot({ path: OUTPUT_PATH, fullPage: true });
     } finally {
         await browser.close();
