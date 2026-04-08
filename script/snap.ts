@@ -6,6 +6,34 @@ const { chromium } = require('playwright');
 
 const OUTPUT_PATH = path.join('snap', 'screenshot.png');
 
+async function waitForEditorReady(page: any): Promise<void> {
+    await page.waitForSelector('#editor-root .lilac-editor', { state: 'visible', timeout: 60000 });
+
+    await page.waitForFunction(() => {
+        const editor = document.querySelector('#editor-root .lilac-editor');
+        const content = document.querySelector('#editor-root .lilac-editor__content');
+        const toolbarButtons = document.querySelectorAll('#editor-root .lilac-toolbar__button');
+
+        if (!editor || !content || toolbarButtons.length < 8) {
+            return false;
+        }
+
+        const text = (content.textContent || '').trim();
+        return text.length > 80;
+    }, { timeout: 60000 });
+
+    await page.evaluate(async () => {
+        if (document.fonts && document.fonts.ready) {
+            await document.fonts.ready;
+        }
+    });
+
+    // Wait two frames so async mount/layout work settles before capture.
+    await page.evaluate(() => new Promise<void>((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+    }));
+}
+
 (async () => {
     fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
 
@@ -19,10 +47,8 @@ const OUTPUT_PATH = path.join('snap', 'screenshot.png');
             waitUntil: 'domcontentloaded',
             timeout: 45000,
         });
-        // wait for id "editor-root" to be visible
-        await page.waitForSelector('#editor-root', { state: 'visible', timeout: 45000 });
-        // delay 20 seconds for lazy loading for editor
-        await page.waitForTimeout(20000);
+
+        await waitForEditorReady(page);
         await page.screenshot({ path: OUTPUT_PATH, fullPage: true });
     } finally {
         await browser.close();
