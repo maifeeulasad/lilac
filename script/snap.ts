@@ -1,5 +1,4 @@
-declare const require: any;
-declare const process: any;
+/// <reference types="node" />
 
 const fs = require('fs');
 const path = require('path');
