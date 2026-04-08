@@ -22,11 +22,17 @@ async function waitForEditorReady(page: any): Promise<void> {
         return text.length > 80;
     }, { timeout: 60000 });
 
-    await page.evaluate(async () => {
-        if (document.fonts && document.fonts.ready) {
-            await document.fonts.ready;
+    await page.waitForFunction(() => {
+        if (!('fonts' in document)) {
+            return true;
         }
-    });
+
+        const fonts = (document as Document & {
+            fonts?: { status?: string };
+        }).fonts;
+
+        return !fonts || fonts.status === 'loaded';
+    }, { timeout: 20000 });
 
     // Wait two frames so async mount/layout work settles before capture.
     await page.evaluate(() => new Promise<void>((resolve) => {
