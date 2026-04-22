@@ -31,4 +31,4 @@ jobs:
     - name: 'Auth for npm'
       run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ORG }}" > ~/.npmrc
     - name: 'Publish'
-      run: npm publish --provenance
+      run: npm publish
