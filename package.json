@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/core",
-  "version": "0.2.1",
+  "version": "0.0.0",
   "description": "Lilac - a smooth, modern WYSIWYG text editor built with pure TypeScript. Zero dependencies, framework-agnostic, with a clean interface and elegant typography.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
