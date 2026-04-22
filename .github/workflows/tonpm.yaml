@@ -29,6 +29,6 @@ jobs:
     - name: 'Build library'
       run: pnpm build
     - name: 'Auth for npm'
-      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ORG }}" > ~/.npmrc
     - name: 'Publish'
       run: npm publish --provenance
