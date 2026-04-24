@@ -1,10 +1,10 @@
-import type { EditorContext, EditorPlugin } from '../types';
-import { icons } from '../utils/icons.js';
+import type { EditorContext, EditorPlugin } from '../../src/types';
+import { icons } from '../utils/icons';
 
 export const tablePlugin: EditorPlugin = {
   id: 'table-inserter',
   name: 'Table Inserter',
-  version: '1.0.0',
+  version: '0.3.2',
   description: 'Insert and manage HTML tables',
   author: 'Lilac Editor',
 
