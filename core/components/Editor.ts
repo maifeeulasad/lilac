@@ -1,7 +1,7 @@
-import { pluginManager } from '../plugins/PluginManager.js';
-import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, ToolbarTool } from '../types/index.js';
-import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting.js';
-import { Toolbar } from './Toolbar.js';
+import { pluginManager } from '../plugins/PluginManager';
+import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, ToolbarTool } from '../types/index';
+import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting';
+import { Toolbar } from './Toolbar';
 
 export interface EditorRef {
   getContent: () => string;
