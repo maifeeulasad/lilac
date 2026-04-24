@@ -9,7 +9,7 @@
     ],
     "declaration": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./core",
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -21,7 +21,7 @@
     "noImplicitReturns": true
   },
   "include": [
-    "src/**/*"
+    "core/**/*",
   ],
   "exclude": [
     "node_modules",
