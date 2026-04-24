@@ -8,7 +8,7 @@
   "access": "public",
   "scripts": {
     "dev": "tsc -w",
-    "dev:server": "npx http-server . -p 3000",
+    "dev:server": "npx http-server . -p 3000 -c-1",
     "build": "rm -rf dist && tsc",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm run build"
