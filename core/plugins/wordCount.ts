@@ -1,5 +1,5 @@
-import type { EditorContext, EditorPlugin } from '../types';
-import { icons } from '../utils/icons.js';
+import type { EditorContext, EditorPlugin } from '../../src/types';
+import { icons } from '../utils/icons';
 
 interface WordCountState {
   words: number;
@@ -63,7 +63,7 @@ function createWordCountPanel(context: EditorContext): HTMLElement {
 export const wordCountPlugin: EditorPlugin = {
   id: 'word-count',
   name: 'Word Count',
-  version: '1.0.0',
+  version: '0.3.2',
   description: 'Displays word count and document statistics',
   author: 'Lilac Editor',
 
