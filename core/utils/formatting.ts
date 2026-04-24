@@ -1,4 +1,4 @@
-import type { FormatCommand, ToolbarTool } from '../types';
+import type { FormatCommand, ToolbarTool } from '../types/index';
 
 export const formatCommands: Record<ToolbarTool, FormatCommand | null> = {
   bold: { command: 'bold' },
