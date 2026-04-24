@@ -23,7 +23,11 @@
     "framework-agnostic",
     "rich-text",
     "contenteditable",
-    "zero-dependencies"
+    "zero-dependencies",
+    "react",
+    "vue",
+    "svelte",
+    "angular"
   ],
   "author": "Maifee Ul Asad<maifeeulasad@gmail.com>",
   "license": "MIT",
