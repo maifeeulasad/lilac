@@ -1,4 +1,4 @@
-import type { ContextMenuItem, EditorContext, EditorPanel, EditorPlugin, KeyboardShortcut } from '../types/index.js';
+import type { ContextMenuItem, EditorContext, EditorPanel, EditorPlugin, KeyboardShortcut } from '../../src/types/index';
 
 export class PluginManager {
   public plugins: Map<string, EditorPlugin> = new Map();
