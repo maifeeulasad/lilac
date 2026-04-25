@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lilac Editor - Angular Adapter</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+  <style>
+    :root {
+      --color-primary: #8b7cd8;
+      --color-primary-light: #a898e8;
+      --color-background: #ffffff;
+      --color-surface: #f8f9fb;
+      --color-border: #e1e5e9;
+      --color-text: #2c3e50;
+      --color-text-muted: #64748b;
+      --border-radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --code-bg: #1a1b23;
+      --code-text: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--color-background);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #DD0031 0%, #C3002F 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .back-link {
+      color: white;
+      text-decoration: none;
+      opacity: 0.9;
+      font-size: 0.875rem;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .intro {
+      margin-bottom: 2rem;
+    }
+
+    .intro h2 {
+      font-size: 1.5rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .intro p {
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .section h3 {
+      font-size: 1.25rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .code-block {
+      background: var(--code-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      margin: 0;
+      color: var(--code-text);
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .code-block .comment {
+      color: #6a737d;
+    }
+
+    .code-block .keyword {
+      color: #F97583;
+    }
+
+    .code-block .string {
+      color: #9ECBFF;
+    }
+
+    .code-block .function {
+      color: #61DAFB;
+    }
+
+    .code-block .component {
+      color: #7EE787;
+    }
+
+    .code-block .prop {
+      color: #FFAB70;
+    }
+
+    .code-block .decorator {
+      color: #FFAB70;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .feature {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+    }
+
+    .feature h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: #DD0031;
+      color: white;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--color-border);
+      margin-top: 2rem;
+    }
+
+    .footer a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .header {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-content">
+      <h1>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 8l10 6 10-6-10-6z" />
+          <path d="M2 14l10 6 10-6" />
+          <path d="M2 11l10 6 10-6" />
+        </svg>
+        Angular Adapter
+      </h1>
+      <a href="index.html" class="back-link">Back to Home</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h2>Getting Started with Angular</h2>
+      <p>Lilac Editor provides an Angular component and directive with Zone.js integration for seamless integration with
+        Angular applications.</p>
+    </section>
+
+    <section class="section">
+      <h3>Installation</h3>
+      <div class="code-block">
+        <pre><span class="comment"># Using npm</span>
+npm install @lilac-wysiwyg/angular
+
+<span class="comment"># Using pnpm</span>
+pnpm add @lilac-wysiwyg/angular
+
+<span class="comment"># Using yarn</span>
+yarn add @lilac-wysiwyg/angular</pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Module Setup</h3>
+      <div class="code-block">
+        <pre><span class="comment">// app.module.ts</span>
+<span class="keyword">import</span> <span class="brace">&#123;</span> NgModule <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@angular/core'</span><span class="punct">;</span>
+<span class="keyword">import</span> <span class="brace">&#123;</span> LilacEditorModule <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@lilac-wysiwyg/angular'</span><span class="punct">;</span>
+
+<span class="decorator">@NgModule</span><span class="brace">(&#123;</span>
+  <span class="prop">imports</span><span class="punct">:</span> <span class="brace">[</span>LilacEditorModule<span class="brace">]</span>
+<span class="brace">&#125;)</span>
+<span class="keyword">export class</span> <span class="component">AppModule</span> <span class="brace">&#123; &#125;</span></pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Basic Usage</h3>
+      <div class="code-block">
+        <pre><span class="comment">// app.component.ts</span>
+<span class="keyword">import</span> <span class="brace">&#123;</span> Component <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@angular/core'</span><span class="punct">;</span>
+
+<span class="decorator">@Component</span><span class="brace">(&#123;</span>
+  <span class="prop">selector</span><span class="punct">:</span> <span class="string">'app-editor'</span><span class="punct">,</span>
+  <span class="prop">template</span><span class="punct">:</span> <span class="string">`
+    &lt;lilac-editor
+      [(ngModel)]="content"
+      [toolbar]="&#123; show: true &#125;"
+      placeholder="Start writing..."
+      (contentChange)="onContentChange($event)"
+    &gt;&lt;/lilac-editor&gt;
+  `</span>
+<span class="brace">&#125;)</span>
+<span class="keyword">export class</span> <span class="component">EditorComponent</span> <span class="brace">&#123;</span>
+  content <span class="punct">=</span> <span class="string">'&lt;p&gt;Hello Angular!&lt;/p&gt;'</span>
+
+  onContentChange<span class="brace">(</span>newContent<span class="punct">:</span> <span class="keyword">string</span><span class="brace">)</span> <span class="brace">{</span>
+    console.log<span class="brace">(</span><span class="string">'Content updated:'</span><span class="punct">,</span> newContent<span class="brace">)</span>
+  <span class="brace">&#125;</span>
+<span class="brace">&#125;</span></pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Features</h3>
+      <div class="features">
+        <div class="feature">
+          <h4>Zone.js Integration</h4>
+          <p>Automatic change detection with Angular's Zone.js for seamless updates.</p>
+        </div>
+        <div class="feature">
+          <h4>ngModel Support</h4>
+          <p>Two-way data binding with Angular forms and ngModel directive.</p>
+        </div>
+        <div class="feature">
+          <h4>Reactive Forms</h4>
+          <p>Full support for ReactiveFormsModule with FormControl integration.</p>
+        </div>
+        <div class="feature">
+          <h4>ControlValueAccessor</h4>
+          <p>Implements Angular's ControlValueAccessor for custom form controls.</p>
+        </div>
+      </div>
+    </section>
+
+    <span class="badge">Angular Adapter v1.0.0</span>
+  </main>
+
+  <footer class="footer">
+    <p>View on <a href="https://github.com/maifeeulasad/lilac">GitHub</a> - MIT License</p>
+  </footer>
+</body>
+
+</html>
