@@ -5,8 +5,40 @@ on:
     types: [ created ]
 
 jobs:
-  build:
+  publish-core:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Auth for npm
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ORG }}" >
+          ~/.npmrc
+
+      - name: Publish core
+        working-directory: ./core
+        run: npm publish --access=public --provenance
+
+  publish-adapters:
+    needs: publish-core
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -14,22 +46,35 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 24.x ]
+        package:
+          - adapter/angular
+          - adapter/react
+          - adapter/svelte
+          - adapter/vanilla
+          - adapter/vue
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+
+      - name: Use Node.js 24
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: "Installing build deps"
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install pnpm
         run: npm i -g pnpm
-      - name: "Installing deps"
-        run: pnpm i
-      - name: "Build library"
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Build
         run: pnpm build
-      - name: "Auth for npm"
+
+      - name: Auth for npm
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ORG }}" >
           ~/.npmrc
-      - name: "Publish"
-        run: npm publish --access=public --provenance
+
+      - name: Publish ${{ matrix.package }}
+        working-directory: ${{ matrix.package }}
+        run: npm publish
