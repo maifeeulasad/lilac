@@ -53,7 +53,7 @@ function createWordCountPanel(context) {
 export const wordCountPlugin = {
     id: 'word-count',
     name: 'Word Count',
-    version: '0.3.2',
+    version: '0.4.0',
     description: 'Displays word count and document statistics',
     author: 'Lilac Editor',
     panels: [
