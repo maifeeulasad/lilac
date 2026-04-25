@@ -38,7 +38,7 @@ async function waitForEditorReady(page: any): Promise<void> {
     }));
 }
 
-(async () => {
+export async function takeScreenshot(): Promise<void> {
     fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
 
     const browser = await chromium.launch({
@@ -78,7 +78,11 @@ async function waitForEditorReady(page: any): Promise<void> {
     } finally {
         await browser.close();
     }
-})().catch((error: Error) => {
-    console.error(error);
-    process.exit(1);
-});
+}
+
+if (require.main === module) {
+    takeScreenshot().catch((error: Error) => {
+        console.error(error);
+        process.exit(1);
+    });
+}
