@@ -25,4 +25,5 @@ index.html
 
 # Adapters
 adapter/
-adapter/*
+!dist/core/
+dist/adapter/
