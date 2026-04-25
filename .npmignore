@@ -22,3 +22,7 @@ pnpm-lock.yaml
 
 # Demo
 index.html
+
+# Adapters
+adapter/
+adapter/*
