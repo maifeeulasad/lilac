@@ -16,5 +16,7 @@ export function createSvelteAdapter() {
 
 // Svelte component placeholder
 export interface LilacEditorProps extends Partial<EditorProps> {
-  bind: value?: string;
+  bind?: {
+    value: string;
+  };
 }
