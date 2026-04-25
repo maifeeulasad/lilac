@@ -68,6 +68,9 @@ jobs:
       - name: Install deps
         run: pnpm install
 
+      - name: Wait for core to be published
+        run: sleep 30
+
       - name: Build
         run: pnpm build
 
