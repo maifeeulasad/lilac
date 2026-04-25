@@ -6,4 +6,17 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    dependencies:
+      '@lilac-wysiwyg/core':
+        specifier: ^0.3.2
+        version: 0.3.2
+
+packages:
+
+  '@lilac-wysiwyg/core@0.3.2':
+    resolution: {integrity: sha512-p475jQcnAqIF0u1Njc1crPuL7hlLsuOtJd1OUjN6ba5YAEmrVXis6+MNZ+TvPz0enFKgwu1b9BSTgPfSfrkpzQ==}
+
+snapshots:
+
+  '@lilac-wysiwyg/core@0.3.2': {}
