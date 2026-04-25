@@ -34,7 +34,6 @@ jobs:
           ~/.npmrc
 
       - name: Publish core
-        working-directory: ./core
         run: npm publish --access=public --provenance
 
   publish-adapters:
