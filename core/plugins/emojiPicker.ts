@@ -1,4 +1,4 @@
-import type { EditorContext, EditorPlugin } from '../../src/types';
+import type { EditorContext, EditorPlugin } from 'core/types';
 import { icons } from '../utils/icons';
 
 const EMOJI_CATEGORIES = {
