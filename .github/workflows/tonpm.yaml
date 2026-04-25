@@ -29,9 +29,6 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Clean adapters
-        run: rm -rf dist/adapter
-
       - name: Auth for npm
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ORG }}" >
           ~/.npmrc
