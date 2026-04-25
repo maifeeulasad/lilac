@@ -3,11 +3,16 @@
   "version": "0.3.2",
   "description": "",
   "main": "index.js",
+  "access": "public",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "packageManager": "pnpm@10.25.0",
+  "author": "Maifee Ul Asad<maifeeulasad@gmail.com>",
   "license": "MIT",
-  "packageManager": "pnpm@10.25.0"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maifeeulasad/lilac.git"
+  }
 }
