@@ -1,6 +1,6 @@
-import { pluginManager } from '../plugins/PluginManager.js';
-import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting.js';
-import { Toolbar } from './Toolbar.js';
+import { pluginManager } from '../plugins/PluginManager';
+import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting';
+import { Toolbar } from './Toolbar';
 export class LilacEditor {
     constructor(props) {
         this.toolbar = null;

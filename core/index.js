@@ -1,8 +1,10 @@
-// A smooth, modern WYSIWYG text editor
-export * from './components/index.js';
-export * from './plugins/index.js';
-export * from './types/index.js';
-// CSS injection helper
+// Lilac Core - Framework-agnostic WYSIWYG editor core
+// This module exports the core functionality without UI dependencies
+export * from './plugins/index';
+export * from './types/index';
+// Re-export formatting utilities
+export { cn, debounce, executeFormatCommand, extractTextFromHtml, formatCommands, getActiveFormats, getShortcutKey, insertImage, insertLink, isFormatActive, isValidUrl, keyboardShortcuts, sanitizeHtml, throttle } from './utils/formatting';
+// CSS injection helper - UI instructions for consistent styling
 export function injectStyles() {
     if (document.getElementById('lilac-editor-styles'))
         return;
@@ -10,6 +12,7 @@ export function injectStyles() {
     style.id = 'lilac-editor-styles';
     style.textContent = `
 /* Lilac Editor Styles - Clean, Modern, Calming */
+/* UI Instructions - Keep UI consistent across all adapters */
 
 .lilac-editor {
   --lilac-color-primary: #8b7cd8;
@@ -391,3 +394,6 @@ export function injectStyles() {
   `;
     document.head.appendChild(style);
 }
+// Export Editor class for direct usage
+export { LilacEditor } from './components/Editor';
+export { Toolbar } from './components/Toolbar';

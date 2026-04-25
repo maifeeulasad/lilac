@@ -1,5 +1,5 @@
-import { cn } from '../utils/formatting.js';
-import { icons } from '../utils/icons.js';
+import { cn } from '../utils/formatting';
+import { icons } from '../utils/icons';
 const toolIcons = {
     bold: icons.bold,
     italic: icons.italic,

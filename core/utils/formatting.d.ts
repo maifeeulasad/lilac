@@ -1,4 +1,4 @@
-import type { FormatCommand, ToolbarTool } from '../types';
+import type { FormatCommand, ToolbarTool } from '../types/index';
 export declare const formatCommands: Record<ToolbarTool, FormatCommand | null>;
 export declare function executeFormatCommand(tool: ToolbarTool, value?: string): boolean;
 export declare function isFormatActive(tool: ToolbarTool): boolean;

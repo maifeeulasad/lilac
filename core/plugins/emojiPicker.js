@@ -1,4 +1,4 @@
-import { icons } from '../utils/icons.js';
+import { icons } from '../utils/icons';
 const EMOJI_CATEGORIES = {
     smileys: {
         name: 'Smileys & People',
@@ -24,7 +24,7 @@ const EMOJI_CATEGORIES = {
 export const emojiPlugin = {
     id: 'emoji-picker',
     name: 'Emoji Picker',
-    version: '1.0.0',
+    version: '0.3.2',
     description: 'Add emojis to your content with an easy-to-use picker',
     author: 'Lilac Editor',
     toolbarButtons: [

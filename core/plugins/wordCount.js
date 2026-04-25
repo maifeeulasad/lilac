@@ -1,4 +1,4 @@
-import { icons } from '../utils/icons.js';
+import { icons } from '../utils/icons';
 function calculateStats(content) {
     const text = content.replace(/<[^>]*>/g, '');
     return {
@@ -53,7 +53,7 @@ function createWordCountPanel(context) {
 export const wordCountPlugin = {
     id: 'word-count',
     name: 'Word Count',
-    version: '1.0.0',
+    version: '0.3.2',
     description: 'Displays word count and document statistics',
     author: 'Lilac Editor',
     panels: [

@@ -1,2 +1,2 @@
-import type { EditorPlugin } from '../types';
+import type { EditorPlugin } from 'core/types';
 export declare const wordCountPlugin: EditorPlugin;

@@ -1,4 +1,4 @@
-import type { EditorProps } from '../types/index.js';
+import type { EditorProps } from '../types/index';
 export interface EditorRef {
     getContent: () => string;
     setContent: (content: string) => void;
