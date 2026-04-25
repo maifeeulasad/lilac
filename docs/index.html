@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lilac Editor - Framework-Agnostic WYSIWYG Editor</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+  <style>
+    :root {
+      --color-primary: #8b7cd8;
+      --color-primary-light: #a898e8;
+      --color-primary-dark: #6d5ac8;
+      --color-background: #ffffff;
+      --color-surface: #f8f9fb;
+      --color-border: #e1e5e9;
+      --color-text: #2c3e50;
+      --color-text-muted: #64748b;
+      --border-radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--color-background);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+      border-radius: var(--border-radius);
+      margin-bottom: 3rem;
+      color: white;
+    }
+
+    .hero h1 {
+      margin: 0 0 1rem 0;
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 1.25rem;
+      opacity: 0.95;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .frameworks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .framework-card {
+      display: block;
+      padding: 2rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .framework-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: var(--color-primary);
+    }
+
+    .framework-card h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .framework-card p {
+      margin: 0 0 1rem 0;
+      color: var(--color-text-muted);
+    }
+
+    .framework-card .tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--color-primary);
+      color: white;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .framework-card .arrow {
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: all 0.2s ease;
+    }
+
+    .framework-card:hover .arrow {
+      opacity: 1;
+      transform: translateY(-50%) translateX(4px);
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+    }
+
+    .footer a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .container {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <section class="hero">
+      <h1>Lilac Editor</h1>
+      <p>A smooth, modern WYSIWYG text editor built with TypeScript. Framework-agnostic core with adapters for React,
+        Svelte, Angular, Vue, and Vanilla JS.</p>
+    </section>
+
+    <section class="frameworks">
+      <a href="docs/react.html" class="framework-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#61DAFB" stroke-width="2">
+            <circle cx="12" cy="12" r="2.5" />
+            <ellipse cx="12" cy="12" rx="10" ry="4" />
+            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)" />
+            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)" />
+          </svg>
+        </div>
+        <h3>React</h3>
+        <p>React component wrapper with hooks support and TypeScript definitions.</p>
+        <span class="tag">Adapter</span>
+        <span class="arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </span>
+      </a>
+
+      <a href="docs/svelte.html" class="framework-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FF3E00" stroke-width="2">
+            <path d="M12 2L2 19h7L12 2z" />
+            <path d="M12 2l10 17h-7" />
+          </svg>
+        </div>
+        <h3>Svelte</h3>
+        <p>Svelte component with reactive bindings and minimal bundle size.</p>
+        <span class="tag">Adapter</span>
+        <span class="arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </span>
+      </a>
+
+      <a href="docs/angular.html" class="framework-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#DD0031" stroke-width="2">
+            <path d="M12 2L2 8l10 6 10-6-10-6z" />
+            <path d="M2 14l10 6 10-6" />
+            <path d="M2 11l10 6 10-6" />
+          </svg>
+        </div>
+        <h3>Angular</h3>
+        <p>Angular component and directive with Zone.js integration.</p>
+        <span class="tag">Adapter</span>
+        <span class="arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </span>
+      </a>
+
+      <a href="docs/vue.html" class="framework-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="#42B883">
+            <path d="M12 0L0 6.5v11L12 24l12-6.5v-11L12 0z" />
+            <path fill="#35495E" d="M12 0L0 6.5v11L12 24V0z" />
+          </svg>
+        </div>
+        <h3>Vue</h3>
+        <p>Vue 3 component with Composition API and two-way binding.</p>
+        <span class="tag">Adapter</span>
+        <span class="arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </span>
+      </a>
+
+      <a href="docs/vanilla.html" class="framework-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#F7DF1E" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="2" />
+            <path d="M8 16l2-6-2-6" />
+            <path d="M12 16l4-12" />
+          </svg>
+        </div>
+        <h3>Vanilla JS</h3>
+        <p>Pure JavaScript/TypeScript without any framework dependencies.</p>
+        <span class="tag">Core</span>
+        <span class="arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </span>
+      </a>
+    </section>
+
+    <footer class="footer">
+      <p>Lilac Editor is open source and available on <a href="https://github.com/maifeeulasad/lilac">GitHub</a></p>
+      <p>MIT License - Built with TypeScript</p>
+    </footer>
+  </div>
+</body>
+
+</html>
