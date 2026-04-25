@@ -14,5 +14,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/maifeeulasad/lilac.git"
+  },
+  "dependencies": {
+    "@lilac-wysiwyg/core": "^0.3.2"
   }
 }
