@@ -9,7 +9,8 @@
     ],
     "declaration": true,
     "outDir": "./dist",
-    "rootDir": "./core",
+    "rootDir": "./",
+    "baseUrl": "./",
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -18,7 +19,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "paths": {
+      "core/*": [
+        "core/*"
+      ]
+    }
   },
   "include": [
     "core/**/*",
