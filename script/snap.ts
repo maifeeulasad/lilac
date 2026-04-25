@@ -1,8 +1,6 @@
-/// <reference types="node" />
-
-const fs = require('fs');
-const path = require('path');
-const { chromium } = require('playwright');
+import * as fs from 'fs';
+import * as path from 'path';
+import { chromium } from 'playwright';
 
 const OUTPUT_PATH = path.join('snap', 'screenshot.png');
 
