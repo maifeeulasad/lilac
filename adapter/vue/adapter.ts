@@ -262,7 +262,7 @@ export const LilacEditorComponent = {
 export function createVueAdapter() {
   return {
     name: 'vue',
-    version: '0.4.0',
+    version: '0.5.0',
     component: LilacEditorComponent,
   };
 }
