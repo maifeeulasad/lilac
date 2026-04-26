@@ -1,4 +1,5 @@
 // React adapter exports
-export * from 'core';
-export { createReactAdapter, default, LilacEditorComponent as LilacEditor } from './adapter';
-export type { LilacEditorProps, LilacEditorHandle } from './adapter';
+export * from '../../core/index';
+export { createReactAdapter, default, LilacEditor, LilacEditorComponent } from './adapter';
+export type { LilacEditorHandle, LilacEditorProps } from './adapter';
+
