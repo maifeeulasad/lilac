@@ -37,6 +37,7 @@ jobs:
         run: npm publish --access=public --provenance
 
   loitering:
+    # need to accept version from release later on
     needs: publish-core
     runs-on: ubuntu-latest
     permissions:
