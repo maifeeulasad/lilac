@@ -1,14 +1,15 @@
 // Lilac React Adapter
 // Provides React component wrapper for Lilac editor
 
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { LilacEditor, type EditorRef } from '../../core/components/Editor';
-import type { EditorProps, ToolbarConfig } from '../../core/types/index';
+// todo: update w `@lilac-wysiwyg/core`
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { LilacEditor } from '../../core/components/Editor';
+import type { EditorProps, SelectionRange, ToolbarConfig } from '../../core/types/index';
 
 /**
  * Props for the LilacEditor React component
  */
-export interface LilacEditorProps extends Omit<EditorProps, 'container'> {
+export interface LilacEditorProps extends Omit<EditorProps, 'container' | 'toolbar'> {
   /** Initial content for the editor */
   value?: string;
   /** Callback when content changes */
@@ -58,7 +59,7 @@ export interface LilacEditorHandle {
 /**
  * React component wrapper for Lilac WYSIWYG editor
  */
-const LilacEditorComponent = forwardRef<LilacEditorHandle, LilacEditorProps>(
+export const LilacEditorComponent = forwardRef<LilacEditorHandle, LilacEditorProps>(
   (
     {
       value,
@@ -75,14 +76,12 @@ const LilacEditorComponent = forwardRef<LilacEditorHandle, LilacEditorProps>(
       plugins,
       onFocus,
       onBlur,
-      onSelectionChange,
-      ...rest
+      onSelectionChange
     },
     ref
   ) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const editorRef = useRef<EditorRef | null>(null);
-    const [isReady, setIsReady] = useState(false);
+    const editorRef = useRef<LilacEditor | null>(null);
 
     // Merge value and initialContent
     const content = value !== undefined ? value : initialContent;
@@ -134,7 +133,7 @@ const LilacEditorComponent = forwardRef<LilacEditorHandle, LilacEditorProps>(
         className,
         plugins,
         toolbar: toolbarConfig,
-        onChange: (newContent) => {
+        onChange: (newContent: string) => {
           onChange?.(newContent);
         },
         onFocus: () => {
@@ -143,13 +142,12 @@ const LilacEditorComponent = forwardRef<LilacEditorHandle, LilacEditorProps>(
         onBlur: () => {
           onBlur?.();
         },
-        onSelectionChange: (selection) => {
+        onSelectionChange: (selection: SelectionRange | null) => {
           onSelectionChange?.(selection);
         },
       };
 
       editorRef.current = new LilacEditor(editorProps);
-      setIsReady(true);
 
       return () => {
         if (editorRef.current) {
@@ -223,5 +221,4 @@ export function createReactAdapter() {
 }
 
 export { LilacEditorComponent as LilacEditor };
-export type { LilacEditorHandle, LilacEditorProps };
 export default LilacEditorComponent;
