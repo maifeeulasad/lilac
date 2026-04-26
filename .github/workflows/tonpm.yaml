@@ -29,15 +29,15 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Auth for npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ORG }}" >
-          ~/.npmrc
-
       - name: whoami
         run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ORG }}
 
       - name: Publish core
         run: npm publish --access=public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ORG }}
 
   loitering:
     # need to accept version from release later on
@@ -100,13 +100,13 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Auth for npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ORG }}" >
-          ~/.npmrc
-
       - name: whoami
         run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ORG }}
 
       - name: Publish ${{ matrix.package }}
         working-directory: ${{ matrix.package }}
         run: npm publish --access=public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ORG }}
