@@ -12,7 +12,7 @@ import type { EditorProps } from '../../core/types/index';
 export function createVanillaAdapter() {
   return {
     name: 'vanilla',
-    version: '0.4.0',
+    version: '0.5.0',
 
     /**
      * Create a new Lilac editor instance
