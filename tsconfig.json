@@ -27,11 +27,11 @@
     }
   },
   "include": [
-    "core/**/*",
-    "adapter/**/*"
+    "core/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "adapter/**/*"
   ]
 }
