@@ -36,8 +36,34 @@ jobs:
       - name: Publish core
         run: npm publish --access=public --provenance
 
-  publish-adapters:
+  loitering:
     needs: publish-core
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org/
+
+      - name: Wait for core to be available on npm
+        run: |
+          echo "Waiting for core to be available"
+          until npm view @lilac-wysiwyg/core version > /dev/null 2>&1; do
+            echo "Still waiting..."
+            sleep 10
+          done
+          echo "@lilac-wysiwyg/core is now available on npm!"
+
+      - name: Wait 1 minute
+        run: sleep 60
+
+  publish-adapters:
+    needs: loitering
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -66,9 +92,6 @@ jobs:
 
       - name: Install deps
         run: pnpm install
-
-      - name: Wait for core to be published
-        run: sleep 30
 
       - name: Build
         run: pnpm build
