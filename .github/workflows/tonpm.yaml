@@ -33,6 +33,9 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ORG }}" >
           ~/.npmrc
 
+      - name: whoami
+        run: npm whoami
+
       - name: Publish core
         run: npm publish --access=public --provenance
 
@@ -100,6 +103,9 @@ jobs:
       - name: Auth for npm
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ORG }}" >
           ~/.npmrc
+
+      - name: whoami
+        run: npm whoami
 
       - name: Publish ${{ matrix.package }}
         working-directory: ${{ matrix.package }}
