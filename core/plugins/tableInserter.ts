@@ -4,7 +4,7 @@ import { icons } from '../utils/icons';
 export const tablePlugin: EditorPlugin = {
   id: 'table-inserter',
   name: 'Table Inserter',
-  version: '0.4.0',
+  version: '0.5.0',
   description: 'Insert and manage HTML tables',
   author: 'Lilac Editor',
 
