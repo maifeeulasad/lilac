@@ -323,6 +323,10 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 Maifee Ul Asad <maifeeulasad@gmail.com>
 
+## Preview
+
+![preview of lilac](https://raw.githubusercontent.com/maifeeulasad/lilac/refs/heads/main/snap/screenshot.png)
+
 ---
 
 <div align="center">
