@@ -1,6 +1,4 @@
-// Lilac React Adapter
-// Provides React bindings for the Lilac WYSIWYG editor
-
+// React adapter exports
 export * from 'core';
-export { createReactAdapter } from './adapter';
-
+export { createReactAdapter, default, LilacEditorComponent as LilacEditor } from './adapter';
+export type { LilacEditorProps, LilacEditorHandle } from './adapter';
