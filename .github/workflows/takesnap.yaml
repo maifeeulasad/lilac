@@ -47,8 +47,9 @@ jobs:
           done
 
           curl -sf http://127.0.0.1:3000/ > /dev/null
-          npx tsc script/snap.ts
-          node script/snap.js
+          npx tsc -p tsconfig.scripts.json
+          node dist-scripts/script/snap.js
+
       - name: "Debug server logs on failure"
         if: failure()
         run: cat /tmp/http-server.log
