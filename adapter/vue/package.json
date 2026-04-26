@@ -1,13 +1,24 @@
 {
   "name": "@lilac-wysiwyg/vue",
-  "version": "0.3.2",
-  "description": "",
+  "version": "0.4.0",
+  "description": "Vue adapter for Lilac WYSIWYG editor - Vue 3 component with Composition API",
   "main": "index.js",
+  "types": "index.d.ts",
+  "type": "module",
   "access": "public",
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "wysiwyg",
+    "editor",
+    "vue",
+    "vue3",
+    "lilac"
+  ],
   "packageManager": "pnpm@10.25.0",
   "author": "Maifee Ul Asad<maifeeulasad@gmail.com>",
   "license": "MIT",
@@ -15,7 +26,15 @@
     "type": "git",
     "url": "https://github.com/maifeeulasad/lilac.git"
   },
+  "peerDependencies": {
+    "vue": ">=3.0.0"
+  },
   "dependencies": {
-    "@lilac-wysiwyg/core": "^0.3.2"
+    "@lilac-wysiwyg/core": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.2",
+    "vue": "^3.0.0"
   }
 }
