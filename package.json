@@ -11,7 +11,7 @@
     "dev:server": "npx http-server . -p 3000 -c-1",
     "build": "rm -rf dist && tsc",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build && rm -rf dist/adapter"
+    "prepublishOnly": "pnpm run build"
   },
   "keywords": [
     "wysiwyg",
