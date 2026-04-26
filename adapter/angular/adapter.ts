@@ -2,7 +2,7 @@
 // Provides Angular component and directive for Lilac editor
 
 import { LilacEditor, type EditorRef } from '../../core/components/Editor';
-import type { EditorProps, EditorPlugin, ToolbarConfig } from '../../core/types/index';
+import type { EditorPlugin, EditorProps, ToolbarConfig } from '../../core/types/index';
 
 /**
  * Configuration options for the Angular component
@@ -239,5 +239,4 @@ export class LilacEditorService {
   }
 }
 
-export type { LilacEditorConfig };
 export default createAngularAdapter();
