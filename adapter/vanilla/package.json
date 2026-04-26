@@ -1,13 +1,24 @@
 {
   "name": "@lilac-wysiwyg/vanilla",
-  "version": "0.3.2",
-  "description": "",
+  "version": "0.4.0",
+  "description": "Vanilla JS adapter for Lilac WYSIWYG editor - Pure JavaScript/TypeScript without framework dependencies",
   "main": "index.js",
+  "types": "index.d.ts",
+  "type": "module",
   "access": "public",
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "wysiwyg",
+    "editor",
+    "vanilla",
+    "javascript",
+    "lilac"
+  ],
   "packageManager": "pnpm@10.25.0",
   "author": "Maifee Ul Asad<maifeeulasad@gmail.com>",
   "license": "MIT",
@@ -16,6 +27,9 @@
     "url": "https://github.com/maifeeulasad/lilac.git"
   },
   "dependencies": {
-    "@lilac-wysiwyg/core": "^0.3.2"
+    "@lilac-wysiwyg/core": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2"
   }
 }
