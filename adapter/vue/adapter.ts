@@ -1,9 +1,9 @@
 // Lilac Vue Adapter
 // Provides Vue component for Lilac editor
 
-import { ref, onMounted, onBeforeUnmount, watch, type Ref } from 'vue';
-import { LilacEditor, type EditorRef } from '../../core/components/Editor';
-import type { EditorProps, EditorPlugin, ToolbarConfig } from '../../core/types/index';
+import { onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue';
+import { LilacEditor } from '../../core/components/Editor';
+import type { EditorPlugin, EditorProps, ToolbarConfig } from '../../core/types/index';
 
 /**
  * Props for the LilacEditor Vue component
@@ -48,7 +48,7 @@ export interface LilacEditorEmits {
  */
 export interface LilacEditorExposed {
   getContent: () => string;
-  setContent: (content: string): void;
+  setContent: (content: string) => void;
   focus: () => void;
   blur: () => void;
   undo: () => void;
@@ -114,7 +114,7 @@ export const LilacEditorComponent = {
 
   setup(props: LilacEditorProps, { emit, expose }: { emit: any; expose: any }) {
     const containerRef = ref<HTMLDivElement | null>(null);
-    let editorInstance: EditorRef | null = null;
+    let editorInstance: LilacEditor | null = null;
 
     const canUndo = ref(false);
     const canRedo = ref(false);
@@ -213,7 +213,7 @@ export const LilacEditorComponent = {
       () => props.readOnly,
       (newReadOnly) => {
         if (editorInstance) {
-          editorInstance.setReadOnly(newReadOnly);
+          editorInstance.setReadOnly(newReadOnly ?? false);
         }
       }
     );
@@ -268,5 +268,4 @@ export function createVueAdapter() {
 }
 
 export { LilacEditorComponent as LilacEditor };
-export type { LilacEditorProps, LilacEditorEmits, LilacEditorExposed };
 export default LilacEditorComponent;
