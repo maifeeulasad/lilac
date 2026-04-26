@@ -1,9 +1,8 @@
 // Lilac Svelte Adapter
 // Provides Svelte component wrapper for Lilac editor
 
-import { onMount, onDestroy } from 'svelte';
 import { LilacEditor, type EditorRef } from '../../core/components/Editor';
-import type { EditorProps, EditorPlugin, ToolbarConfig } from '../../core/types/index';
+import type { EditorPlugin, EditorProps, ToolbarConfig } from '../../core/types/index';
 
 /**
  * Props for the LilacEditor Svelte component
@@ -44,12 +43,12 @@ export interface LilacEditorProps {
 /**
  * Svelte component wrapper for Lilac WYSIWYG editor
  */
-let LilacEditorComponent: any;
+const LilacEditorComponent: null = null;
 
 /**
  * Create the LilacEditor component
  */
-function createLilacEditorComponent() {
+export function createLilacEditorComponent() {
   return {
     props: {
       value: { type: String, default: '' },
@@ -71,7 +70,7 @@ function createLilacEditorComponent() {
 
     setup(props: LilacEditorProps) {
       let container: HTMLDivElement;
-      let editor: EditorRef | null = null;
+      let editor: LilacEditor | null = null;
 
       const onMount = () => {
         // Determine toolbar config
@@ -141,20 +140,6 @@ function createLilacEditorComponent() {
         }
       };
 
-      // Reactive update for value
-      $effect(() => {
-        if (editor && props.value !== undefined && props.value !== editor.getContent()) {
-          editor.setContent(props.value);
-        }
-      });
-
-      // Reactive update for readOnly
-      $effect(() => {
-        if (editor) {
-          editor.setReadOnly(props.readOnly);
-        }
-      });
-
       return {
         bind: (node: HTMLDivElement) => {
           container = node;
@@ -177,9 +162,9 @@ function createLilacEditorComponent() {
  * Create a Svelte store for the editor
  */
 export function createLilacStore(initialContent = '') {
-  let content = $state(initialContent);
-  let canUndo = $state(false);
-  let canRedo = $state(false);
+  let content = initialContent;
+  let canUndo = false;
+  let canRedo = false;
   let editor: EditorRef | null = null;
 
   return {
@@ -227,5 +212,4 @@ export function createSvelteAdapter() {
   };
 }
 
-export type { LilacEditorProps };
 export default createSvelteAdapter();
