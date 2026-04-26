@@ -1,6 +1,5 @@
-// Lilac Vanilla JS Adapter
-// Provides plain JavaScript bindings for the Lilac WYSIWYG editor
-
+// Vanilla adapter exports
 export * from 'core';
-export { createVanillaAdapter } from './adapter';
-
+export { createVanillaAdapter, default } from './adapter';
+export { LilacEditor } from './adapter';
+export type { EditorRef } from './adapter';
