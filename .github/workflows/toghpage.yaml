@@ -1,4 +1,4 @@
-name: Build and Publish to GH Pages
+name: Publish Docs to GH Pages
 
 on:
   push:
@@ -8,25 +8,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [ 24.x ]
-
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
 
-      - name: "Installing build deps"
-        run: npm i -g pnpm
-      - name: "Installing deps"
-        run: pnpm i
-      - name: "Build"
-        run: pnpm build
-      - name: "Copy demo page"
-        run: cp index.html dist/index.html
+      - name: "Copy documentation files into root"
+        run: cp -r docs/* ./
       - name: "Deploy"
         uses: peaceiris/actions-gh-pages@v4
         with:
