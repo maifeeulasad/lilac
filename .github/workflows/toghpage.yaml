@@ -11,8 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: "Create dist directory"
+        run: mkdir dist
       - name: "Copy documentation files into root"
-        run: cp -r docs/* ./
+        run: cp -r docs/* dist/
       - name: "Deploy"
         uses: peaceiris/actions-gh-pages@v4
         with:
