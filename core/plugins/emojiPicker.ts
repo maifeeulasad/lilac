@@ -27,7 +27,7 @@ const EMOJI_CATEGORIES = {
 export const emojiPlugin: EditorPlugin = {
   id: 'emoji-picker',
   name: 'Emoji Picker',
-  version: '0.4.0',
+  version: '0.5.0',
   description: 'Add emojis to your content with an easy-to-use picker',
   author: 'Lilac Editor',
 
