@@ -1,6 +1,12 @@
-// Lilac Angular Adapter
-// Provides Angular bindings for the Lilac WYSIWYG editor
-
+// Angular adapter exports
 export * from 'core';
-export { createAngularAdapter } from './adapter';
-
+export {
+  createAngularAdapter,
+  default,
+  LilacEditorComponent,
+  LilacEditorDirective,
+  LilacEditorService,
+  createEditorOptions,
+  defaultEditorConfig,
+} from './adapter';
+export type { LilacEditorConfig } from './adapter';
