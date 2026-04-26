@@ -1,13 +1,23 @@
 {
   "name": "@lilac-wysiwyg/react",
-  "version": "0.3.2",
-  "description": "",
+  "version": "0.4.0",
+  "description": "React adapter for Lilac WYSIWYG editor - React component wrapper with hooks support",
   "main": "index.js",
+  "types": "index.d.ts",
+  "type": "module",
   "access": "public",
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "wysiwyg",
+    "editor",
+    "react",
+    "lilac"
+  ],
   "packageManager": "pnpm@10.25.0",
   "author": "Maifee Ul Asad<maifeeulasad@gmail.com>",
   "license": "MIT",
@@ -15,7 +25,16 @@
     "type": "git",
     "url": "https://github.com/maifeeulasad/lilac.git"
   },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
   "dependencies": {
-    "@lilac-wysiwyg/core": "^0.3.2"
+    "@lilac-wysiwyg/core": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "react": "^18.0.0",
+    "typescript": "^5.0.2"
   }
 }
