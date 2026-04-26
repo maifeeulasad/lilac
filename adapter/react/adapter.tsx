@@ -215,7 +215,7 @@ LilacEditorComponent.displayName = 'LilacEditor';
 export function createReactAdapter() {
   return {
     name: 'react',
-    version: '0.4.0',
+    version: '0.5.0',
     component: LilacEditorComponent,
   };
 }
