@@ -1,8 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { chromium } from 'playwright';
+import { fileURLToPath } from 'url';
 
-const OUTPUT_PATH = path.join('snap', 'screenshot.png');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const OUTPUT_PATH = path.join(__dirname, '..', 'snap', 'screenshot.png');
 
 async function waitForEditorReady(page: any): Promise<void> {
     await page.waitForSelector('#editor-root .lilac-editor', { state: 'visible', timeout: 60000 });
@@ -80,9 +84,20 @@ export async function takeScreenshot(): Promise<void> {
     }
 }
 
-if (require.main === module) {
-    takeScreenshot().catch((error: Error) => {
+// Main entry point
+const isMainModule = process.argv[1] === __filename;
+
+async function main(): Promise<void> {
+    try {
+        await takeScreenshot();
+    } catch (error) {
         console.error(error);
         process.exit(1);
-    });
+    }
 }
+
+if (isMainModule) {
+    main();
+}
+
+export { main };
