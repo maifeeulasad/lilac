@@ -304,8 +304,8 @@ Visit our [GitHub Pages](https://maifeeulasad.github.io/lilac/) for complete doc
 - [x] Word count plugin
 - [x] React adapter
 - [x] Svelte adapter
-- [ ] Angular adapter
-- [ ] Vue adapter
+- [x] Angular adapter
+- [x] Vue adapter
 - [ ] Markdown export/import
 - [ ] Image upload and embedding
 - [ ] Find and replace
