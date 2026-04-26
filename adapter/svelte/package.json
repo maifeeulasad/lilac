@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/svelte",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Svelte adapter for Lilac WYSIWYG editor - Svelte component with reactive bindings",
   "main": "index.js",
   "types": "index.d.ts",
