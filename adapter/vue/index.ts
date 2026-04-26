@@ -1,6 +1,4 @@
-// Lilac Vue Adapter
-// Provides Vue bindings for the Lilac WYSIWYG editor
-
+// Vue adapter exports
 export * from 'core';
-export { createVueAdapter } from './adapter';
-
+export { createVueAdapter, default, LilacEditorComponent as LilacEditor } from './adapter';
+export type { LilacEditorProps, LilacEditorEmits, LilacEditorExposed } from './adapter';
