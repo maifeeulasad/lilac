@@ -2,7 +2,7 @@
 // Provides basic wrapper for Lilac editor in plain JavaScript
 
 import { LilacEditor } from '../../core/components/Editor';
-import type { EditorProps } from '../../core/types/index';
+import type { EditorProps, EditorRef } from '../../core/components/Editor';
 
 /**
  * Creates a Vanilla JS adapter for the Lilac editor
@@ -11,12 +11,72 @@ import type { EditorProps } from '../../core/types/index';
 export function createVanillaAdapter() {
   return {
     name: 'vanilla',
-    version: '0.3.2',
-    createEditor: (props: EditorProps) => new LilacEditor(props),
+    version: '0.4.0',
+
+    /**
+     * Create a new Lilac editor instance
+     * @param container - The DOM element to mount the editor in
+     * @param options - Editor configuration options
+     * @returns The editor instance
+     */
+    createEditor: (container: HTMLElement, options?: Partial<EditorProps>): EditorRef => {
+      const props: EditorProps = {
+        container,
+        toolbar: {
+          show: true,
+          tools: ['bold', 'italic', 'underline', 'strikethrough', 'separator', 'heading1', 'heading2', 'paragraph', 'separator', 'bulletList', 'orderedList', 'separator', 'blockquote', 'codeBlock', 'separator', 'link', 'image'],
+        },
+        ...options,
+      };
+      return new LilacEditor(props);
+    },
+
+    /**
+     * Create editor with toolbar configuration
+     */
+    createEditorWithToolbar: (container: HTMLElement, tools: any[], options?: Partial<EditorProps>): EditorRef => {
+      const props: EditorProps = {
+        container,
+        toolbar: {
+          show: true,
+          tools,
+        },
+        ...options,
+      };
+      return new LilacEditor(props);
+    },
+
+    /**
+     * Default tools configuration
+     */
+    defaultTools: [
+      'bold',
+      'italic',
+      'underline',
+      'strikethrough',
+      'separator',
+      'heading1',
+      'heading2',
+      'paragraph',
+      'separator',
+      'bulletList',
+      'orderedList',
+      'separator',
+      'blockquote',
+      'codeBlock',
+      'separator',
+      'link',
+      'image',
+    ] as const,
   };
 }
 
-// Re-export for convenience
+// Export the editor class for direct usage
 export { LilacEditor };
+export type { EditorRef };
 export type { EditorProps };
+export type { EditorPlugin } from '../../core/types/index';
+export type { ToolbarConfig } from '../../core/types/index';
 
+// Default export for convenience
+export default createVanillaAdapter();
