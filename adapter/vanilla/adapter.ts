@@ -1,8 +1,9 @@
 // Lilac Vanilla JS Adapter
 // Provides basic wrapper for Lilac editor in plain JavaScript
 
+import type { EditorRef } from '../../core/components/Editor';
 import { LilacEditor } from '../../core/components/Editor';
-import type { EditorProps, EditorRef } from '../../core/components/Editor';
+import type { EditorProps } from '../../core/types/index';
 
 /**
  * Creates a Vanilla JS adapter for the Lilac editor
@@ -72,11 +73,9 @@ export function createVanillaAdapter() {
 }
 
 // Export the editor class for direct usage
+export type { EditorPlugin, ToolbarConfig } from '../../core/types/index';
 export { LilacEditor };
 export type { EditorRef };
-export type { EditorProps };
-export type { EditorPlugin } from '../../core/types/index';
-export type { ToolbarConfig } from '../../core/types/index';
 
 // Default export for convenience
 export default createVanillaAdapter();
