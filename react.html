@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lilac Editor - React Adapter</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3G1RNC5YLT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-3G1RNC5YLT');
+  </script>
+
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+  <style>
+    :root {
+      --color-primary: #8b7cd8;
+      --color-primary-light: #a898e8;
+      --color-primary-dark: #6d5ac8;
+      --color-background: #ffffff;
+      --color-surface: #f8f9fb;
+      --color-border: #e1e5e9;
+      --color-text: #2c3e50;
+      --color-text-muted: #64748b;
+      --border-radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --code-bg: #1a1b23;
+      --code-text: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--color-background);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #61DAFB 0%, #21A8D9 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .back-link {
+      color: white;
+      text-decoration: none;
+      opacity: 0.9;
+      font-size: 0.875rem;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .intro {
+      margin-bottom: 2rem;
+    }
+
+    .intro h2 {
+      font-size: 1.5rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .intro p {
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .section h3 {
+      font-size: 1.25rem;
+      margin: 0 0 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .code-block {
+      background: var(--code-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block pre {
+      margin: 0;
+      color: var(--code-text);
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .code-block .comment {
+      color: #6a737d;
+    }
+
+    .code-block .keyword {
+      color: #F97583;
+    }
+
+    .code-block .string {
+      color: #9ECBFF;
+    }
+
+    .code-block .function {
+      color: #61DAFB;
+    }
+
+    .code-block .component {
+      color: #7EE787;
+    }
+
+    .code-block .prop {
+      color: #FFAB70;
+    }
+
+    .code-block .tag {
+      color: #7EE787;
+    }
+
+    .code-block .attr {
+      color: #FFAB70;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .feature {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+    }
+
+    .feature h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: #61DAFB;
+      color: white;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--color-border);
+      margin-top: 2rem;
+    }
+
+    .footer a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .header {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-content">
+      <h1>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="2.5" />
+          <ellipse cx="12" cy="12" rx="10" ry="4" />
+          <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)" />
+          <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)" />
+        </svg>
+        React Adapter
+      </h1>
+      <a href="index.html" class="back-link">Back to Home</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h2>Getting Started with React</h2>
+      <p>Lilac Editor provides a React component wrapper that integrates seamlessly with React applications using hooks
+        and TypeScript.</p>
+    </section>
+
+    <section class="section">
+      <h3>Installation</h3>
+      <div class="code-block">
+        <pre><span class="comment"># Using npm</span>
+npm install @lilac-wysiwyg/react
+
+<span class="comment"># Using pnpm</span>
+pnpm add @lilac-wysiwyg/react
+
+<span class="comment"># Using yarn</span>
+yarn add @lilac-wysiwyg/react</pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Basic Usage</h3>
+      <div class="code-block">
+        <pre><span class="keyword">import</span> <span class="brace">&#123;</span> LilacEditor <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@lilac-wysiwyg/react'</span><span class="punct">;</span>
+
+<span class="keyword">function</span> <span class="function">App</span><span class="brace">() {</span>
+  <span class="keyword">const</span> <span class="prop">[content]</span><span class="punct">,</span> <span class="function">setContent</span><span class="brace">()</span> <span class="keyword">=</span> useState<span class="brace">(</span><span class="string">'&lt;p&gt;Hello World!&lt;/p&gt;'</span><span class="brace">)</span><span class="punct">;</span>
+
+  <span class="keyword">return</span> <span class="brace">(&lt;</span><span class="component">LilacEditor</span>
+    <span class="attr">value</span><span class="punct">=</span><span class="brace">&#123;</span>content<span class="brace">&#125;</span>
+    <span class="attr">onChange</span><span class="punct">=</span><span class="brace">&#123;</span><span class="brace">(</span>newContent<span class="brace">)</span> <span class="punct">=&gt;</span> setContent<span class="brace">(</span>newContent<span class="brace">)</span><span class="brace">&#125;</span>
+    <span class="attr">toolbar</span><span class="punct">=</span><span class="brace">&#123;</span><span class="brace">&#123;</span> show<span class="punct">:</span> <span class="boolean">true</span> <span class="brace">&#125;&#125;</span>
+    <span class="attr">placeholder</span><span class="punct">=</span><span class="string">"Start writing..."</span>
+  <span class="brace">/&gt;</span><span class="brace">)</span><span class="punct">;</span>
+<span class="brace">}</span></pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Features</h3>
+      <div class="features">
+        <div class="feature">
+          <h4>Hooks Support</h4>
+          <p>Full access to editor state through React hooks with automatic re-renders.</p>
+        </div>
+        <div class="feature">
+          <h4>TypeScript Ready</h4>
+          <p>Complete TypeScript definitions included for type-safe integration.</p>
+        </div>
+        <div class="feature">
+          <h4>Controlled & Uncontrolled</h4>
+          <p>Supports both controlled (value-based) and uncontrolled modes.</p>
+        </div>
+        <div class="feature">
+          <h4>Custom Toolbar</h4>
+          <p>Configure toolbar buttons with the tools prop array.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>API Reference</h3>
+      <div class="code-block">
+        <pre><span class="keyword">interface</span> <span class="component">LilacEditorProps</span> <span class="punct">{</span>
+  <span class="attr">value?</span><span class="punct">:</span> <span class="keyword">string</span><span class="punct">;</span>
+  <span class="attr">onChange?</span><span class="punct">:</span> <span class="brace">(</span>content<span class="punct">:</span> <span class="keyword">string</span><span class="brace">)</span> <span class="punct">=&gt;</span> <span class="keyword">void</span><span class="punct">;</span>
+  <span class="attr">toolbar?</span><span class="punct">:</span> <span class="brace">&#123;</span> show<span class="punct">:</span> <span class="keyword">boolean</span> <span class="brace">&#125;</span>
+  <span class="attr">placeholder?</span><span class="punct">:</span> <span class="keyword">string</span><span class="punct">;</span>
+  <span class="attr">theme?</span><span class="punct">:</span> <span class="string">'light'</span> <span class="punct">|</span> <span class="string">'dark'</span><span class="punct">;</span>
+  <span class="attr">readOnly?</span><span class="punct">:</span> <span class="keyword">boolean</span><span class="punct">;</span>
+  <span class="attr">plugins?</span><span class="punct">:</span> <span class="component">EditorPlugin</span><span class="punct">[];</span>
+<span class="brace">&#125;</span></pre>
+      </div>
+    </section>
+
+    <span class="badge">React Adapter v0.4.0</span>
+  </main>
+
+  <footer class="footer">
+    <p>View on <a href="https://github.com/maifeeulasad/lilac">GitHub</a> - MIT License</p>
+  </footer>
+</body>
+
+</html>

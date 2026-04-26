@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lilac Editor - Svelte Adapter</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3G1RNC5YLT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-3G1RNC5YLT');
+  </script>
+
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+  <style>
+    :root {
+      --color-primary: #8b7cd8;
+      --color-primary-light: #a898e8;
+      --color-background: #ffffff;
+      --color-surface: #f8f9fb;
+      --color-border: #e1e5e9;
+      --color-text: #2c3e50;
+      --color-text-muted: #64748b;
+      --border-radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --code-bg: #1a1b23;
+      --code-text: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--color-background);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #FF3E00 0%, #FF6536 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .back-link {
+      color: white;
+      text-decoration: none;
+      opacity: 0.9;
+      font-size: 0.875rem;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .intro {
+      margin-bottom: 2rem;
+    }
+
+    .intro h2 {
+      font-size: 1.5rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .intro p {
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .section h3 {
+      font-size: 1.25rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .code-block {
+      background: var(--code-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      margin: 0;
+      color: var(--code-text);
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .code-block .comment {
+      color: #6a737d;
+    }
+
+    .code-block .keyword {
+      color: #F97583;
+    }
+
+    .code-block .string {
+      color: #9ECBFF;
+    }
+
+    .code-block .function {
+      color: #61DAFB;
+    }
+
+    .code-block .component {
+      color: #7EE787;
+    }
+
+    .code-block .prop {
+      color: #FFAB70;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .feature {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+    }
+
+    .feature h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: #FF3E00;
+      color: white;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--color-border);
+      margin-top: 2rem;
+    }
+
+    .footer a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .header {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-content">
+      <h1>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 19h7L12 2z" />
+          <path d="M12 2l10 17h-7" />
+        </svg>
+        Svelte Adapter
+      </h1>
+      <a href="index.html" class="back-link">Back to Home</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h2>Getting Started with Svelte</h2>
+      <p>Lilac Editor provides a Svelte component with reactive bindings and minimal bundle size for modern web
+        applications.</p>
+    </section>
+
+    <section class="section">
+      <h3>Installation</h3>
+      <div class="code-block">
+        <pre><span class="comment"># Using npm</span>
+npm install @lilac-wysiwyg/svelte
+
+<span class="comment"># Using pnpm</span>
+pnpm add @lilac-wysiwyg/svelte
+
+<span class="comment"># Using yarn</span>
+yarn add @lilac-wysiwyg/svelte</pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Basic Usage</h3>
+      <div class="code-block">
+        <pre><span class="keyword">&lt;script&gt;</span>
+  <span class="keyword">import</span> <span class="brace">&#123;</span> LilacEditor <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@lilac-wysiwyg/svelte'</span><span class="punct">;</span>
+  <span class="keyword">import</span> <span class="brace">&#123;</span> <span class="string">'./app.css'</span> <span class="brace">&#125;</span>
+
+  <span class="keyword">let</span> content <span class="punct">=</span> <span class="string">'&lt;p&gt;Hello Svelte!&lt;/p&gt;'</span>
+  <span class="keyword">let</span> theme <span class="punct">=</span> <span class="string">'light'</span>
+
+  <span class="keyword">function</span> <span class="function">handleChange</span><span class="brace">(</span>newContent<span class="brace">)</span> <span class="brace">{</span>
+    content <span class="punct">=</span> newContent
+  <span class="brace">}</span>
+<span class="keyword">&lt;/script&gt;</span>
+
+<span class="punct">&lt;</span><span class="component">LilacEditor</span>
+  <span class="attr">bind:value</span><span class="punct">=</span><span class="brace">&#123;</span>content<span class="brace">&#125;</span>
+  <span class="attr">on:change</span><span class="punct">=</span><span class="brace">&#123;</span><span class="brace">(</span>e<span class="brace">)</span> <span class="punct">=&gt;</span> handleChange<span class="brace">(</span>e.detail<span class="brace">)</span><span class="brace">&#125;</span>
+  <span class="attr">toolbar</span><span class="punct">=</span><span class="brace">&#123;</span><span class="brace">&#123;</span> show<span class="punct">:</span> <span class="boolean">true</span> <span class="brace">&#125;&#125;</span>
+  <span class="attr">placeholder</span><span class="punct">=</span><span class="string">"Start writing..."</span>
+  <span class="attr">theme</span><span class="punct">=</span><span class="brace">&#123;</span>theme<span class="brace">&#125;</span>
+<span class="punct">/&gt;</span></pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Features</h3>
+      <div class="features">
+        <div class="feature">
+          <h4>Reactive Bindings</h4>
+          <p>Automatic two-way binding with Svelte's reactive statements and props.</p>
+        </div>
+        <div class="feature">
+          <h4>Minimal Bundle</h4>
+          <p>Lightweight adapter with no additional runtime dependencies.</p>
+        </div>
+        <div class="feature">
+          <h4>Event Dispatchers</h4>
+          <p>Native Svelte event handling with custom event dispatchers.</p>
+        </div>
+        <div class="feature">
+          <h4>TypeScript Support</h4>
+          <p>Full TypeScript definitions for type-safe component usage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Props</h3>
+      <div class="code-block">
+        <pre><span class="keyword">export let</span> value<span class="punct">:</span> <span class="keyword">string</span> <span class="punct">=</span> <span class="string">''</span>
+<span class="keyword">export let</span> toolbar<span class="punct">:</span> <span class="brace">&#123;</span> show<span class="punct">:</span> <span class="keyword">boolean</span> <span class="brace">&#125;</span> <span class="punct">=</span> <span class="brace">&#123;</span> show<span class="punct">:</span> <span class="boolean">true</span> <span class="brace">&#125;</span>
+<span class="keyword">export let</span> placeholder<span class="punct">:</span> <span class="keyword">string</span> <span class="punct">=</span> <span class="string">'Start writing...'</span>
+<span class="keyword">export let</span> theme<span class="punct">:</span> <span class="string">'light'</span> <span class="punct">|</span> <span class="string">'dark'</span> <span class="punct">=</span> <span class="string">'light'</span>
+<span class="keyword">export let</span> readOnly<span class="punct">:</span> <span class="keyword">boolean</span> <span class="punct">=</span> <span class="boolean">false</span></pre>
+      </div>
+    </section>
+
+    <span class="badge">Svelte Adapter v0.4.0</span>
+  </main>
+
+  <footer class="footer">
+    <p>View on <a href="https://github.com/maifeeulasad/lilac">GitHub</a> - MIT License</p>
+  </footer>
+</body>
+
+</html>
