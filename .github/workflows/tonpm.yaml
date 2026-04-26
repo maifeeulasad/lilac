@@ -103,4 +103,4 @@ jobs:
 
       - name: Publish ${{ matrix.package }}
         working-directory: ${{ matrix.package }}
-        run: npm publish
+        run: npm publish --access=public --no-git-checks
