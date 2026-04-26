@@ -38,3 +38,4 @@ storybook-static/
 
 # Snap generated scripts
 script/snap.js
+dist-scripts/
