@@ -9,14 +9,25 @@ importers:
   .:
     dependencies:
       '@lilac-wysiwyg/core':
-        specifier: ^0.3.2
+        specifier: latest
         version: 0.3.2
+    devDependencies:
+      typescript:
+        specifier: ^5.0.2
+        version: 5.9.3
 
 packages:
 
   '@lilac-wysiwyg/core@0.3.2':
     resolution: {integrity: sha512-p475jQcnAqIF0u1Njc1crPuL7hlLsuOtJd1OUjN6ba5YAEmrVXis6+MNZ+TvPz0enFKgwu1b9BSTgPfSfrkpzQ==}
 
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
 snapshots:
 
   '@lilac-wysiwyg/core@0.3.2': {}
+
+  typescript@5.9.3: {}
