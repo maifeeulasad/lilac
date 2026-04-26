@@ -6,6 +6,8 @@ export interface EditorRef {
     blur: () => void;
     undo: () => void;
     redo: () => void;
+    setReadOnly: (readOnly: boolean) => void;
+    destroy: () => void;
     canUndo: boolean;
     canRedo: boolean;
 }

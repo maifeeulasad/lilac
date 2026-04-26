@@ -1,2 +1,2 @@
-import type { EditorPlugin } from 'core/types';
+import type { EditorPlugin } from '../types/index';
 export declare const emojiPlugin: EditorPlugin;
