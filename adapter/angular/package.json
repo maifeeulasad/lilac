@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/angular",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Angular adapter for Lilac WYSIWYG editor - Angular component and directive with Zone.js integration",
   "main": "index.js",
   "types": "index.d.ts",
