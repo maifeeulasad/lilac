@@ -1,6 +1,4 @@
-// Lilac Svelte Adapter
-// Provides Svelte bindings for the Lilac WYSIWYG editor
-
+// Svelte adapter exports
 export * from 'core';
-export { createSvelteAdapter } from './adapter';
-
+export { createSvelteAdapter, default } from './adapter';
+export type { LilacEditorProps } from './adapter';
