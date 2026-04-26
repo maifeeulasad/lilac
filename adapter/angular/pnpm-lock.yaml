@@ -9,14 +9,58 @@ importers:
   .:
     dependencies:
       '@lilac-wysiwyg/core':
-        specifier: ^0.3.2
+        specifier: latest
         version: 0.3.2
+    devDependencies:
+      '@angular/core':
+        specifier: ^17.0.0
+        version: 17.3.12(rxjs@7.8.2)(zone.js@0.14.10)
+      typescript:
+        specifier: ^5.0.2
+        version: 5.9.3
 
 packages:
+
+  '@angular/core@17.3.12':
+    resolution: {integrity: sha512-MuFt5yKi161JmauUta4Dh0m8ofwoq6Ino+KoOtkYMBGsSx+A7dSm+DUxxNwdj7+DNyg3LjVGCFgBFnq4g8z06A==}
+    engines: {node: ^18.13.0 || >=20.9.0}
+    peerDependencies:
+      rxjs: ^6.5.3 || ^7.4.0
+      zone.js: ~0.14.0
 
   '@lilac-wysiwyg/core@0.3.2':
     resolution: {integrity: sha512-p475jQcnAqIF0u1Njc1crPuL7hlLsuOtJd1OUjN6ba5YAEmrVXis6+MNZ+TvPz0enFKgwu1b9BSTgPfSfrkpzQ==}
 
+  rxjs@7.8.2:
+    resolution: {integrity: sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==}
+
+  tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  zone.js@0.14.10:
+    resolution: {integrity: sha512-YGAhaO7J5ywOXW6InXNlLmfU194F8lVgu7bRntUF3TiG8Y3nBK0x1UJJuHUP/e8IyihkjCYqhCScpSwnlaSRkQ==}
+
 snapshots:
 
+  '@angular/core@17.3.12(rxjs@7.8.2)(zone.js@0.14.10)':
+    dependencies:
+      rxjs: 7.8.2
+      tslib: 2.8.1
+      zone.js: 0.14.10
+
   '@lilac-wysiwyg/core@0.3.2': {}
+
+  rxjs@7.8.2:
+    dependencies:
+      tslib: 2.8.1
+
+  tslib@2.8.1: {}
+
+  typescript@5.9.3: {}
+
+  zone.js@0.14.10: {}
