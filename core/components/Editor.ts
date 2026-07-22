@@ -23,12 +23,12 @@ export class LilacEditor implements EditorRef {
   private toolbar: Toolbar | null = null;
   private state: EditorState;
   private props: EditorProps;
-  private lastContentRef: string = '';
   private isDestroyed = false;
 
   // Kept as instance fields so destroy() can detach them again. The
   // selectionchange listener lives on `document`, so leaving it attached would
   // keep this editor (and its history) alive for the lifetime of the page.
+  private readonly onBeforeInput = (e: Event) => this.handleBeforeInput(e as InputEvent);
   private readonly onInput = (e: Event) => this.handleInput(e);
   private readonly onKeyDown = (e: KeyboardEvent) => this.handleKeyDown(e);
   private readonly onKeyUp = () => this.updateActiveTools();
@@ -130,7 +130,6 @@ export class LilacEditor implements EditorRef {
     } else {
       content.textContent = this.props.initialContent || '';
     }
-    this.lastContentRef = this.props.initialContent || '';
 
     contentWrapper.appendChild(content);
     wrapper.appendChild(contentWrapper);
@@ -213,6 +212,7 @@ export class LilacEditor implements EditorRef {
   }
 
   private setupEventListeners(): void {
+    this.contentElement.addEventListener('beforeinput', this.onBeforeInput);
     this.contentElement.addEventListener('input', this.onInput);
     this.contentElement.addEventListener('keydown', this.onKeyDown);
     this.contentElement.addEventListener('keyup', this.onKeyUp);
@@ -224,6 +224,7 @@ export class LilacEditor implements EditorRef {
   }
 
   private teardownEventListeners(): void {
+    this.contentElement.removeEventListener('beforeinput', this.onBeforeInput);
     this.contentElement.removeEventListener('input', this.onInput);
     this.contentElement.removeEventListener('keydown', this.onKeyDown);
     this.contentElement.removeEventListener('keyup', this.onKeyUp);
@@ -234,18 +235,36 @@ export class LilacEditor implements EditorRef {
     document.removeEventListener('selectionchange', this.onSelectionChange);
   }
 
+  /**
+   * Enforce maxLength before the insertion lands, so an over-limit edit is
+   * simply refused. Reverting afterwards (the previous approach) rewrote the
+   * whole node and dropped the caret to the start of the field.
+   */
+  private handleBeforeInput(event: InputEvent): void {
+    const maxLength = this.props.maxLength;
+    if (!maxLength || !event.inputType?.startsWith('insert')) return;
+
+    let inserted = event.data ?? event.dataTransfer?.getData('text/plain') ?? '';
+    if (!inserted && (event.inputType === 'insertParagraph' || event.inputType === 'insertLineBreak')) {
+      inserted = '\n';
+    }
+    if (!inserted) return;
+
+    // The selection is about to be replaced, so it does not count against us.
+    const replacing = window.getSelection()?.toString().length ?? 0;
+    const current = this.contentElement.textContent?.length ?? 0;
+
+    if (current - replacing + inserted.length > maxLength) {
+      event.preventDefault();
+    }
+  }
+
   private handleInput(event: Event): void {
     const target = event.target as HTMLDivElement;
     const newContent = this.props.toolbar?.show
       ? (target.innerHTML || '')
       : (target.textContent || '');
 
-    if (this.props.maxLength && !this.props.toolbar?.show && newContent.length > this.props.maxLength) {
-      target.textContent = this.lastContentRef;
-      return;
-    }
-
-    this.lastContentRef = newContent;
     this.updateContent(newContent);
     this.updatePlaceholder();
     this.updateActiveTools();
@@ -394,7 +413,6 @@ export class LilacEditor implements EditorRef {
       ? (this.contentElement.innerHTML || '')
       : (this.contentElement.textContent || '');
 
-    this.lastContentRef = newContent;
     this.updateContent(newContent);
   }
 
@@ -446,7 +464,6 @@ export class LilacEditor implements EditorRef {
       } else {
         this.contentElement.textContent = content;
       }
-      this.lastContentRef = content;
     }
     this.updatePlaceholder();
   }
@@ -480,7 +497,6 @@ export class LilacEditor implements EditorRef {
       } else {
         this.contentElement.textContent = previousContent;
       }
-      this.lastContentRef = previousContent;
     }
 
     this.props.onChange?.(previousContent);
@@ -508,7 +524,6 @@ export class LilacEditor implements EditorRef {
       } else {
         this.contentElement.textContent = nextContent;
       }
-      this.lastContentRef = nextContent;
     }
 
     this.props.onChange?.(nextContent);
