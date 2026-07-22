@@ -14,21 +14,21 @@ export interface LilacEditorProps extends Omit<EditorProps, 'container' | 'toolb
   value?: string;
   /** Callback when content changes */
   onChange?: (content: string) => void;
-  /** Placeholder text when editor is empty */
+  /** Placeholder text when editor is empty. Applied on mount only. */
   placeholder?: string;
-  /** Whether the editor is read-only */
+  /** Whether the editor is read-only. Updates after mount. */
   readOnly?: boolean;
-  /** Toolbar configuration */
+  /** Toolbar configuration. Applied on mount only. */
   toolbar?: ToolbarConfig | boolean;
   /** Initial content (alias for value) */
   initialContent?: string;
-  /** CSS class name */
+  /** CSS class name. Applied on mount only. */
   className?: string;
-  /** Minimum height in pixels */
+  /** Minimum height in pixels. Applied on mount only. */
   minHeight?: number;
-  /** Maximum height in pixels */
+  /** Maximum height in pixels. Applied on mount only. */
   maxHeight?: number;
-  /** Theme for the editor */
+  /** Theme for the editor. Applied on mount only. */
   theme?: 'light' | 'dark' | 'auto';
   /** Auto focus on mount */
   autoFocus?: boolean;
@@ -57,7 +57,13 @@ export interface LilacEditorHandle {
 }
 
 /**
- * React component wrapper for Lilac WYSIWYG editor
+ * React component wrapper for Lilac WYSIWYG editor.
+ *
+ * `value`, `readOnly` and the callback props react to changes. The remaining
+ * configuration props are read once at construction — the underlying editor
+ * builds its DOM in the constructor, and rebuilding it on a prop change would
+ * discard the undo history and the caret. Change them by remounting with a
+ * different `key`.
  */
 export const LilacEditorComponent = forwardRef<LilacEditorHandle, LilacEditorProps>(
   (
