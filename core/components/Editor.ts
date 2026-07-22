@@ -1,5 +1,5 @@
 import { pluginManager } from '../plugins/PluginManager';
-import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, ToolbarTool } from '../types/index';
+import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, SelectionRange, ToolbarTool } from '../types/index';
 import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting';
 import { Toolbar } from './Toolbar';
 
@@ -333,22 +333,36 @@ export class LilacEditor implements EditorRef {
 
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
-      this.state.selection = null;
+      this.setSelectionState(null);
       return;
     }
 
     const range = selection.getRangeAt(0);
     if (!this.contentElement.contains(range.commonAncestorContainer)) {
-      this.state.selection = null;
+      this.setSelectionState(null);
       return;
     }
 
-    this.state.selection = {
+    this.setSelectionState({
       start: range.startOffset,
       end: range.endOffset,
-    };
+    });
+  }
 
-    this.props.onSelectionChange?.(this.state.selection);
+  private setSelectionState(selection: SelectionRange | null): void {
+    // `selectionchange` fires on document, so selecting text anywhere else on
+    // the page reaches us as null. Only notify on an actual change, otherwise
+    // subscribers get a stream of redundant nulls.
+    const previous = this.state.selection;
+    const unchanged = previous === selection ||
+      (previous != null && selection != null &&
+        previous.start === selection.start && previous.end === selection.end);
+
+    this.state.selection = selection;
+    if (unchanged) return;
+
+    this.props.onSelectionChange?.(selection);
+    pluginManager.executeHook('onSelectionChange', selection, this.getEditorContext());
   }
 
   private updateContent(newContent: string, addToHistory = true): void {
