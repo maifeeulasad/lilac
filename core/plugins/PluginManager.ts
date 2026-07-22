@@ -8,6 +8,14 @@ type PluginHookName = {
   [K in keyof EditorPlugin]-?: NonNullable<EditorPlugin[K]> extends (...args: never[]) => void ? K : never;
 }[keyof EditorPlugin];
 
+/**
+ * Plugin stylesheets are injected into document.head, which is shared by every
+ * editor on the page, while PluginManager instances are per-editor. Refcount
+ * them here so that tearing down one editor does not strip the styles out from
+ * under another editor still using the same plugin.
+ */
+const styleRefCounts = new Map<string, number>();
+
 export class PluginManager {
   public plugins: Map<string, EditorPlugin> = new Map();
   private context: EditorContext | null = null;
@@ -156,14 +164,17 @@ export class PluginManager {
 
   private injectStyles(pluginId: string, styles: string): void {
     const styleId = `lilac-plugin-${pluginId}`;
+    const refs = styleRefCounts.get(styleId) ?? 0;
+    styleRefCounts.set(styleId, refs + 1);
 
-    // Remove existing styles for this plugin
+    // Already on the page for another editor — leave the existing node alone.
+    if (refs > 0 && document.getElementById(styleId)) return;
+
     const existingStyle = document.getElementById(styleId);
     if (existingStyle) {
       existingStyle.remove();
     }
 
-    // Create and inject new styles
     const styleElement = document.createElement('style');
     styleElement.id = styleId;
     styleElement.textContent = styles;
@@ -172,10 +183,15 @@ export class PluginManager {
 
   private removeStyles(pluginId: string): void {
     const styleId = `lilac-plugin-${pluginId}`;
-    const styleElement = document.getElementById(styleId);
-    if (styleElement) {
-      styleElement.remove();
+    const refs = styleRefCounts.get(styleId) ?? 0;
+
+    if (refs > 1) {
+      styleRefCounts.set(styleId, refs - 1);
+      return;
     }
+
+    styleRefCounts.delete(styleId);
+    document.getElementById(styleId)?.remove();
   }
 }
 
