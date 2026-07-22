@@ -472,14 +472,32 @@ export class LilacEditor implements EditorRef {
   setContent(rawContent: string): void {
     const content = this.prepareContent(rawContent);
     this.updateContent(content);
+
     if (this.contentElement) {
-      if (this.props.toolbar?.show) {
-        this.contentElement.innerHTML = content;
-      } else {
-        this.contentElement.textContent = content;
+      // A controlled wrapper echoes our own onChange back to us. Comparing
+      // against the DOM rather than state.content catches that echo even when
+      // the browser has normalized the markup on the way out, so we skip a
+      // rewrite that would only serve to destroy the selection.
+      if (this.readContentFromDOM() !== content) {
+        this.writeContentToDOM(content);
       }
     }
+
     this.updatePlaceholder();
+  }
+
+  private readContentFromDOM(): string {
+    return this.props.toolbar?.show
+      ? (this.contentElement.innerHTML || '')
+      : (this.contentElement.textContent || '');
+  }
+
+  private writeContentToDOM(content: string): void {
+    if (this.props.toolbar?.show) {
+      this.contentElement.innerHTML = content;
+    } else {
+      this.contentElement.textContent = content;
+    }
   }
 
   focus(): void {
