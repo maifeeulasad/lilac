@@ -1,4 +1,4 @@
 // Svelte adapter exports
-export * from 'core';
+export * from '@lilac-wysiwyg/core';
 export { createSvelteAdapter, default } from './adapter';
 export type { LilacEditorProps } from './adapter';

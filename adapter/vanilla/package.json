@@ -2,15 +2,15 @@
   "name": "@lilac-wysiwyg/vanilla",
   "version": "0.5.0",
   "description": "Vanilla JS adapter for Lilac WYSIWYG editor - Pure JavaScript/TypeScript without framework dependencies",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
   "access": "public",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc -w",
-    "typecheck": "tsc --noEmit",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json -w",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "pnpm run build"
   },
   "keywords": [
     "wysiwyg",
@@ -31,5 +31,17 @@
   },
   "devDependencies": {
     "typescript": "^5.0.2"
-  }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
 }
