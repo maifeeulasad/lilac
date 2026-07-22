@@ -137,6 +137,21 @@ const content = ref('<p>Hello!</p>');
 </script>
 ```
 
+### Svelte
+
+The Svelte adapter ships an **action**, not a component, so it works on both
+Svelte 4 and 5 without a compiler step:
+
+```svelte
+<script>
+  import { lilac } from '@lilac-wysiwyg/svelte';
+
+  let content = '<p>Hello!</p>';
+</script>
+
+<div use:lilac={{ value: content, onChange: (c) => (content = c), toolbar: true }} />
+```
+
 ## Using Built-in Plugins
 
 ```typescript
