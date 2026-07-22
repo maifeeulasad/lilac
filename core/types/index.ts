@@ -32,6 +32,12 @@ export interface EditorConfig {
    * another, which is a stored-XSS path.
    */
   sanitize?: boolean;
+  /**
+   * Inject the Lilac stylesheet into document.head on construction. Defaults
+   * to true, and is idempotent across instances. Set false if you are shipping
+   * your own copy of the CSS and want nothing added to the document.
+   */
+  injectStyles?: boolean;
 }
 
 export interface ToolbarConfig {

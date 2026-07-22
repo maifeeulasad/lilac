@@ -2,6 +2,7 @@ import { PluginManager } from '../plugins/PluginManager';
 import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, SelectionRange, ToolbarTool } from '../types/index';
 import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting';
 import { sanitizeContent } from '../utils/sanitize';
+import { injectStyles } from '../utils/styles';
 import { Toolbar } from './Toolbar';
 
 export interface EditorRef {
@@ -54,6 +55,14 @@ export class LilacEditor implements EditorRef {
       plugins: [],
       ...props,
     };
+
+    // Idempotent, so calling it per instance is free. Without this the
+    // framework adapters render a bare contenteditable with no toolbar chrome,
+    // borders, theme or placeholder positioning — none of them injected the
+    // stylesheet, and none shipped one.
+    if (this.props.injectStyles !== false) {
+      injectStyles();
+    }
 
     this.container = props.container;
     this.state = {
