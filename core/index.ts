@@ -7,8 +7,11 @@ export * from './types/index';
 // Re-export formatting utilities
 export {
   cn,
-  debounce, executeFormatCommand, extractTextFromHtml, formatCommands, getActiveFormats, getShortcutKey, insertImage, insertLink, isFormatActive, isValidUrl, keyboardShortcuts, sanitizeHtml, throttle
+  debounce, escapeHtml, executeFormatCommand, extractTextFromHtml, formatCommands, getActiveFormats, getShortcutKey, insertImage, insertLink, isFormatActive, isValidUrl, keyboardShortcuts, sanitizeHtml, throttle
 } from './utils/formatting';
+
+// HTML sanitization
+export { isSafeUrl, sanitizeContent } from './utils/sanitize';
 
 // CSS injection helper - UI instructions for consistent styling
 export function injectStyles(): void {

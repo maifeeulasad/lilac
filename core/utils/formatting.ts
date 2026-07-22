@@ -231,13 +231,26 @@ export function isValidUrl(string: string): boolean {
   }
 }
 
-// HTML sanitization utility
-export function sanitizeHtml(html: string): string {
-  // Basic HTML sanitization - you might want to use a library like DOMPurify in production
+/**
+ * Escape a string so it renders as literal text rather than markup.
+ *
+ * Note this is NOT a sanitizer — it escapes everything, so passing editor
+ * content through it renders `&lt;p&gt;Hello&lt;/p&gt;` as visible text and
+ * destroys all formatting. To strip dangerous markup while keeping formatting,
+ * use `sanitizeContent` from './sanitize'.
+ */
+export function escapeHtml(html: string): string {
   const div = document.createElement('div');
   div.textContent = html;
   return div.innerHTML;
 }
+
+/**
+ * @deprecated Misleading name — this escapes rather than sanitizes. Use
+ * `escapeHtml` if you want escaping, or `sanitizeContent` if you want to
+ * strip dangerous markup while preserving formatting.
+ */
+export const sanitizeHtml = escapeHtml;
 
 // Extract text from HTML
 export function extractTextFromHtml(html: string): string {
