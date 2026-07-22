@@ -1,4 +1,4 @@
-import { pluginManager } from '../plugins/PluginManager';
+import { PluginManager } from '../plugins/PluginManager';
 import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, SelectionRange, ToolbarTool } from '../types/index';
 import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting';
 import { Toolbar } from './Toolbar';
@@ -36,6 +36,10 @@ export class LilacEditor implements EditorRef {
   private readonly onFocusIn = () => this.handleFocus();
   private readonly onFocusOut = () => this.handleBlur();
   private readonly onSelectionChange = () => this.handleSelectionChange();
+
+  // One manager per editor. A shared instance meant the last editor
+  // constructed owned the context for every plugin on the page.
+  private readonly pluginManager = new PluginManager();
 
   constructor(props: EditorProps) {
     this.props = {
@@ -93,7 +97,7 @@ export class LilacEditor implements EditorRef {
         onToolClick: (tool) => this.handleToolClick(tool),
         activeTools: new Set(),
         disabled: this.state.isReadOnly,
-        pluginButtons: pluginManager.getToolbarButtons(),
+        pluginButtons: this.pluginManager.getToolbarButtons(),
         editorContext: this.getEditorContext(),
       });
       wrapper.appendChild(this.toolbar.getElement());
@@ -179,17 +183,17 @@ export class LilacEditor implements EditorRef {
 
   private initializePlugins(): void {
     const context = this.getEditorContext();
-    pluginManager.setContext(context);
+    this.pluginManager.setContext(context);
 
     this.props.plugins?.forEach((plugin: EditorPlugin) => {
-      if (!pluginManager.isInstalled(plugin.id)) {
-        pluginManager.install(plugin);
+      if (!this.pluginManager.isInstalled(plugin.id)) {
+        this.pluginManager.install(plugin);
       }
     });
 
     // Update toolbar with plugin buttons
     if (this.toolbar) {
-      const pluginButtons = pluginManager.getToolbarButtons();
+      const pluginButtons = this.pluginManager.getToolbarButtons();
       if (pluginButtons.length > 0) {
         // Recreate toolbar with plugin buttons
         const toolbarElement = this.toolbar.getElement();
@@ -206,7 +210,7 @@ export class LilacEditor implements EditorRef {
       }
     }
 
-    pluginManager.executeHook('onEditorMount', context);
+    this.pluginManager.executeHook('onEditorMount', context);
   }
 
   private setupEventListeners(): void {
@@ -250,7 +254,7 @@ export class LilacEditor implements EditorRef {
 
   private handleKeyDown(event: KeyboardEvent): void {
     // Plugin keyboard shortcuts
-    const pluginShortcuts = pluginManager.getKeyboardShortcuts();
+    const pluginShortcuts = this.pluginManager.getKeyboardShortcuts();
     for (const shortcut of pluginShortcuts) {
       const matches =
         event.key.toLowerCase() === shortcut.key.toLowerCase() &&
@@ -362,7 +366,7 @@ export class LilacEditor implements EditorRef {
     if (unchanged) return;
 
     this.props.onSelectionChange?.(selection);
-    pluginManager.executeHook('onSelectionChange', selection, this.getEditorContext());
+    this.pluginManager.executeHook('onSelectionChange', selection, this.getEditorContext());
   }
 
   private updateContent(newContent: string, addToHistory = true): void {
@@ -380,7 +384,7 @@ export class LilacEditor implements EditorRef {
 
     this.state.content = newContent;
     this.props.onChange?.(newContent);
-    pluginManager.executeHook('onContentChange', newContent, this.getEditorContext());
+    this.pluginManager.executeHook('onContentChange', newContent, this.getEditorContext());
     this.updateCharCount();
   }
 
@@ -518,7 +522,14 @@ export class LilacEditor implements EditorRef {
     if (this.isDestroyed) return;
     this.isDestroyed = true;
 
-    pluginManager.executeHook('onEditorUnmount', this.getEditorContext());
+    this.pluginManager.executeHook('onEditorUnmount', this.getEditorContext());
+
+    // Plugins installed by this editor are owned by this editor. Uninstalling
+    // runs their onUninstall hooks and releases their injected stylesheets.
+    for (const plugin of this.pluginManager.getAllPlugins()) {
+      this.pluginManager.uninstall(plugin.id);
+    }
+
     this.teardownEventListeners();
     this.editorWrapper.remove();
   }
