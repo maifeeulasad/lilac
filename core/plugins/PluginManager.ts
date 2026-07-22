@@ -1,5 +1,13 @@
 import type { ContextMenuItem, EditorContext, EditorPanel, EditorPlugin, KeyboardShortcut } from '../types/index';
 
+/**
+ * The subset of EditorPlugin keys that are lifecycle hooks, i.e. the callable
+ * ones. Excludes data members such as `toolbarButtons` and `styles`.
+ */
+type PluginHookName = {
+  [K in keyof EditorPlugin]-?: NonNullable<EditorPlugin[K]> extends (...args: never[]) => void ? K : never;
+}[keyof EditorPlugin];
+
 export class PluginManager {
   public plugins: Map<string, EditorPlugin> = new Map();
   private context: EditorContext | null = null;
@@ -64,14 +72,22 @@ export class PluginManager {
     return this.plugins.has(pluginId);
   }
 
-  executeHook<T extends keyof EditorPlugin>(hook: T, ...args: unknown[]): void {
-    if (!this.context) return;
-
+  /**
+   * Invoke a lifecycle hook on every installed plugin.
+   *
+   * Arguments are forwarded verbatim, in the order the hook declares them. The
+   * context is NOT injected here — call sites pass it in its declared position,
+   * which for most hooks is last.
+   */
+  executeHook<T extends PluginHookName>(
+    hook: T,
+    ...args: Parameters<NonNullable<EditorPlugin[T]>>
+  ): void {
     this.plugins.forEach((plugin) => {
       const hookFn = plugin[hook];
       if (typeof hookFn === 'function') {
         try {
-          (hookFn as (...args: unknown[]) => void).apply(plugin, [this.context, ...args]);
+          (hookFn as (...hookArgs: unknown[]) => void).apply(plugin, args);
         } catch (error) {
           console.error(`Error executing hook ${String(hook)} for plugin ${plugin.id}:`, error);
         }
