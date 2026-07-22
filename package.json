@@ -13,7 +13,9 @@
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm run build",
     "build:adapters": "node script/build-adapters.mjs",
-    "verify:packaging": "node script/verify-packaging.mjs"
+    "verify:packaging": "node script/verify-packaging.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [
     "wysiwyg",
@@ -39,8 +41,10 @@
   },
   "devDependencies": {
     "@types/node": "^24.1.0",
+    "jsdom": "^29.1.1",
     "playwright": "^1.59.0",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.2",
+    "vitest": "^4.1.10"
   },
   "files": [
     "dist",
