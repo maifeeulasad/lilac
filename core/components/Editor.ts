@@ -501,7 +501,11 @@ export class LilacEditor implements EditorRef {
   }
 
   destroy(): void {
+    if (this.isDestroyed) return;
+    this.isDestroyed = true;
+
     pluginManager.executeHook('onEditorUnmount', this.getEditorContext());
+    this.teardownEventListeners();
     this.editorWrapper.remove();
   }
 }
