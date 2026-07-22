@@ -25,6 +25,13 @@ export interface EditorConfig {
   maxHeight?: number;
   theme?: 'light' | 'dark' | 'auto';
   className?: string;
+  /**
+   * Sanitize HTML arriving via `initialContent` / `setContent`. Defaults to
+   * true. Only disable when the content is already sanitized server-side —
+   * editor content is typically authored by one user and rendered for
+   * another, which is a stored-XSS path.
+   */
+  sanitize?: boolean;
 }
 
 export interface ToolbarConfig {
