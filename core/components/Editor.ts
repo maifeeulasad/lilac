@@ -1,6 +1,7 @@
 import { PluginManager } from '../plugins/PluginManager';
 import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, SelectionRange, ToolbarTool } from '../types/index';
 import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting';
+import { sanitizeContent } from '../utils/sanitize';
 import { Toolbar } from './Toolbar';
 
 export interface EditorRef {
@@ -56,7 +57,7 @@ export class LilacEditor implements EditorRef {
 
     this.container = props.container;
     this.state = {
-      content: this.props.initialContent || '',
+      content: this.prepareContent(this.props.initialContent || ''),
       selection: null,
       history: {
         undoStack: [],
@@ -125,10 +126,11 @@ export class LilacEditor implements EditorRef {
     content.setAttribute('aria-label', 'Text editor');
     content.setAttribute('data-testid', 'lilac-editor-content');
 
+    // state.content was sanitized in the constructor.
     if (this.props.toolbar?.show) {
-      content.innerHTML = this.props.initialContent || '';
+      content.innerHTML = this.state.content;
     } else {
-      content.textContent = this.props.initialContent || '';
+      content.textContent = this.state.content;
     }
 
     contentWrapper.appendChild(content);
@@ -146,6 +148,17 @@ export class LilacEditor implements EditorRef {
     }
 
     return wrapper;
+  }
+
+  /**
+   * Content arriving from outside the editor is untrusted. Only rich-text mode
+   * needs this — the plain-text path assigns via textContent, which cannot
+   * execute anything.
+   */
+  private prepareContent(content: string): string {
+    if (!this.props.toolbar?.show) return content;
+    if (this.props.sanitize === false) return content;
+    return sanitizeContent(content);
   }
 
   private getEditorContext(): EditorContext {
@@ -456,7 +469,8 @@ export class LilacEditor implements EditorRef {
     return this.state.content;
   }
 
-  setContent(content: string): void {
+  setContent(rawContent: string): void {
+    const content = this.prepareContent(rawContent);
     this.updateContent(content);
     if (this.contentElement) {
       if (this.props.toolbar?.show) {
