@@ -1,4 +1,5 @@
 import type { FormatCommand, ToolbarTool } from '../types/index';
+import { isSafeUrl } from './sanitize';
 
 export const formatCommands: Record<ToolbarTool, FormatCommand | null> = {
   bold: { command: 'bold' },
@@ -69,6 +70,11 @@ export function getActiveFormats(tools: ToolbarTool[]): Set<ToolbarTool> {
 }
 
 export function insertLink(url: string, text?: string): boolean {
+  if (!isSafeUrl(url)) {
+    console.warn('Refused to insert link with unsafe URL scheme:', url);
+    return false;
+  }
+
   const selection = window.getSelection();
 
   if (!selection || selection.rangeCount === 0) {
@@ -111,6 +117,11 @@ export function insertLink(url: string, text?: string): boolean {
 }
 
 export function insertImage(src: string, alt?: string): boolean {
+  if (!isSafeUrl(src, true)) {
+    console.warn('Refused to insert image with unsafe URL scheme:', src);
+    return false;
+  }
+
   try {
     const img = document.createElement('img');
     img.src = src;
