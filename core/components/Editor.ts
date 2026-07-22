@@ -493,11 +493,69 @@ export class LilacEditor implements EditorRef {
   }
 
   private writeContentToDOM(content: string): void {
+    // Only worth restoring if the caret was actually in here.
+    const offset = this.contentElement.contains(document.activeElement) ||
+      this.contentElement === document.activeElement
+      ? this.getCaretOffset()
+      : null;
+
     if (this.props.toolbar?.show) {
       this.contentElement.innerHTML = content;
     } else {
       this.contentElement.textContent = content;
     }
+
+    if (offset !== null) this.setCaretOffset(offset);
+  }
+
+  /**
+   * Caret position as a character offset into the element's text, which
+   * survives the node identities being replaced.
+   */
+  private getCaretOffset(): number | null {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return null;
+
+    const range = selection.getRangeAt(0);
+    if (!this.contentElement.contains(range.startContainer)) return null;
+
+    const measure = range.cloneRange();
+    measure.selectNodeContents(this.contentElement);
+    measure.setEnd(range.startContainer, range.startOffset);
+    return measure.toString().length;
+  }
+
+  private setCaretOffset(offset: number): void {
+    const walker = document.createTreeWalker(this.contentElement, NodeFilter.SHOW_TEXT);
+    let remaining = offset;
+    let node = walker.nextNode();
+    let target: Text | null = null;
+
+    while (node) {
+      const length = (node as Text).length;
+      if (remaining <= length) {
+        target = node as Text;
+        break;
+      }
+      remaining -= length;
+      node = walker.nextNode();
+    }
+
+    const selection = window.getSelection();
+    if (!selection) return;
+
+    const range = document.createRange();
+    if (target) {
+      range.setStart(target, Math.min(remaining, target.length));
+      range.collapse(true);
+    } else {
+      // Offset ran past the end of the new content — park at the end.
+      range.selectNodeContents(this.contentElement);
+      range.collapse(false);
+    }
+
+    selection.removeAllRanges();
+    selection.addRange(range);
   }
 
   focus(): void {
