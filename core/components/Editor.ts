@@ -139,11 +139,10 @@ export class LilacEditor implements EditorRef {
     if (this.props.maxLength) {
       const footer = document.createElement('div');
       footer.className = 'lilac-editor__footer';
-      footer.innerHTML = `
-        <span class="lilac-editor__char-count">
-          ${this.state.content.length}/${this.props.maxLength}
-        </span>
-      `;
+      const count = document.createElement('span');
+      count.className = 'lilac-editor__char-count';
+      count.textContent = `${this.getTextLength()}/${this.props.maxLength}`;
+      footer.appendChild(count);
       wrapper.appendChild(footer);
     }
 
@@ -414,10 +413,23 @@ export class LilacEditor implements EditorRef {
     }
   }
 
+  /**
+   * Length of the content as the user perceives it: visible text, not markup.
+   *
+   * Parsed via DOMParser rather than a scratch element's innerHTML, because
+   * the latter loads resources — `<img src=x onerror=...>` in stored content
+   * would fire just from measuring it.
+   */
+  private getTextLength(content: string = this.state.content): number {
+    if (!this.props.toolbar?.show) return content.length;
+    const parsed = new DOMParser().parseFromString(content, 'text/html');
+    return (parsed.body.textContent || '').length;
+  }
+
   private updateCharCount(): void {
     const charCount = this.editorWrapper.querySelector('.lilac-editor__char-count');
     if (charCount && this.props.maxLength) {
-      charCount.textContent = `${this.state.content.length}/${this.props.maxLength}`;
+      charCount.textContent = `${this.getTextLength()}/${this.props.maxLength}`;
     }
   }
 
