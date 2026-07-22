@@ -1,20 +1,29 @@
 // Lilac Svelte Adapter
-// Provides Svelte component wrapper for Lilac editor
+//
+// Exposes the editor as a Svelte *action* rather than a component. An action is
+// a plain function, so this package needs no Svelte compiler in its build and
+// works identically in Svelte 4 and 5 (where the component authoring API
+// changed). Use it with `use:lilac`:
+//
+//   <script>
+//     import { lilac } from '@lilac-wysiwyg/svelte';
+//     let content = '<p>Hello!</p>';
+//   </script>
+//
+//   <div use:lilac={{ value: content, onChange: (c) => (content = c) }} />
 
 import { LilacEditor, type EditorRef } from '@lilac-wysiwyg/core';
-import type { EditorPlugin, EditorProps, ToolbarConfig } from '@lilac-wysiwyg/core';
+import type { EditorPlugin, EditorProps, SelectionRange, ToolbarConfig } from '@lilac-wysiwyg/core';
 
-/**
- * Props for the LilacEditor Svelte component
- */
+/** Options accepted by the `lilac` action. */
 export interface LilacEditorProps {
-  /** Initial content for the editor */
+  /** Editor content. Changing it updates the editor. */
   value?: string;
   /** Placeholder text when editor is empty */
   placeholder?: string;
-  /** Whether the editor is read-only */
+  /** Whether the editor is read-only. Changing it updates the editor. */
   readOnly?: boolean;
-  /** Toolbar configuration */
+  /** Toolbar configuration. `true` uses the default tool set. */
   toolbar?: ToolbarConfig | boolean;
   /** Initial content (alias for value) */
   initialContent?: string;
@@ -37,134 +46,85 @@ export interface LilacEditorProps {
   /** Callback when editor loses focus */
   onBlur?: () => void;
   /** Callback when selection changes */
-  onSelectionChange?: (selection: any) => void;
+  onSelectionChange?: (selection: SelectionRange | null) => void;
+}
+
+const DEFAULT_TOOLS: ToolbarConfig = {
+  show: true,
+  tools: [
+    'bold', 'italic', 'underline', 'strikethrough', 'separator',
+    'heading1', 'heading2', 'paragraph', 'separator',
+    'bulletList', 'orderedList', 'separator',
+    'blockquote', 'codeBlock', 'separator',
+    'link', 'image',
+  ],
+};
+
+function resolveToolbar(toolbar: LilacEditorProps['toolbar']): ToolbarConfig | undefined {
+  if (toolbar === true || toolbar === undefined) return DEFAULT_TOOLS;
+  if (toolbar === false) return undefined;
+  return toolbar;
+}
+
+/** What a Svelte action returns. Structural, so no svelte import is needed. */
+export interface ActionReturn<P> {
+  update?: (params: P) => void;
+  destroy?: () => void;
 }
 
 /**
- * Svelte component wrapper for Lilac WYSIWYG editor
+ * Svelte action that mounts a Lilac editor into the node it is applied to.
+ *
+ * Callbacks are read from the latest params on every invocation, so handlers
+ * that close over component state stay current.
  */
-const LilacEditorComponent: null = null;
+export function lilac(node: HTMLElement, params: LilacEditorProps = {}): ActionReturn<LilacEditorProps> {
+  let current = params;
 
-/**
- * Create the LilacEditor component
- */
-export function createLilacEditorComponent() {
+  const editorProps: EditorProps = {
+    container: node,
+    initialContent: current.value !== undefined ? current.value : (current.initialContent || ''),
+    placeholder: current.placeholder,
+    readOnly: current.readOnly,
+    autoFocus: current.autoFocus,
+    minHeight: current.minHeight,
+    maxHeight: current.maxHeight,
+    theme: current.theme,
+    className: current.className,
+    plugins: current.plugins,
+    toolbar: resolveToolbar(current.toolbar),
+    onChange: (content) => current.onChange?.(content),
+    onFocus: () => current.onFocus?.(),
+    onBlur: () => current.onBlur?.(),
+    onSelectionChange: (selection) => current.onSelectionChange?.(selection),
+  };
+
+  const editor = new LilacEditor(editorProps);
+
   return {
-    props: {
-      value: { type: String, default: '' },
-      placeholder: { type: String, default: 'Start writing...' },
-      readOnly: { type: Boolean, default: false },
-      toolbar: { type: [Object, Boolean], default: true },
-      initialContent: { type: String, default: '' },
-      className: { type: String, default: '' },
-      minHeight: { type: Number, default: 200 },
-      maxHeight: { type: Number, default: 600 },
-      theme: { type: String, default: 'light' },
-      autoFocus: { type: Boolean, default: false },
-      plugins: { type: Array, default: () => [] },
-      onChange: { type: Function, default: undefined },
-      onFocus: { type: Function, default: undefined },
-      onBlur: { type: Function, default: undefined },
-      onSelectionChange: { type: Function, default: undefined },
+    update(next: LilacEditorProps) {
+      const previous = current;
+      current = next;
+
+      if (next.value !== undefined && next.value !== editor.getContent()) {
+        editor.setContent(next.value);
+      }
+      if (next.readOnly !== previous.readOnly) {
+        editor.setReadOnly(!!next.readOnly);
+      }
     },
-
-    setup(props: LilacEditorProps) {
-      let container: HTMLDivElement;
-      let editor: LilacEditor | null = null;
-
-      const onMount = () => {
-        // Determine toolbar config
-        let toolbarConfig: ToolbarConfig | undefined;
-        if (props.toolbar === true) {
-          toolbarConfig = {
-            show: true,
-            tools: [
-              'bold',
-              'italic',
-              'underline',
-              'strikethrough',
-              'separator',
-              'heading1',
-              'heading2',
-              'paragraph',
-              'separator',
-              'bulletList',
-              'orderedList',
-              'separator',
-              'blockquote',
-              'codeBlock',
-              'separator',
-              'link',
-              'image',
-            ],
-          };
-        } else if (typeof props.toolbar === 'object') {
-          toolbarConfig = props.toolbar;
-        }
-
-        const content = props.value !== undefined ? props.value : (props.initialContent || '');
-
-        const editorProps: EditorProps = {
-          container,
-          initialContent: content,
-          placeholder: props.placeholder,
-          readOnly: props.readOnly,
-          autoFocus: props.autoFocus,
-          minHeight: props.minHeight,
-          maxHeight: props.maxHeight,
-          theme: props.theme as 'light' | 'dark' | 'auto',
-          className: props.className,
-          plugins: props.plugins,
-          toolbar: toolbarConfig,
-          onChange: (newContent) => {
-            props.onChange?.(newContent);
-          },
-          onFocus: () => {
-            props.onFocus?.();
-          },
-          onBlur: () => {
-            props.onBlur?.();
-          },
-          onSelectionChange: (selection) => {
-            props.onSelectionChange?.(selection);
-          },
-        };
-
-        editor = new LilacEditor(editorProps);
-      };
-
-      const onDestroy = () => {
-        if (editor) {
-          editor.destroy();
-          editor = null;
-        }
-      };
-
-      return {
-        bind: (node: HTMLDivElement) => {
-          container = node;
-          onMount();
-        },
-        onDestroy,
-      };
+    destroy() {
+      editor.destroy();
     },
-
-    template: `
-      <div
-        use:bind
-        class="lilac-svelte-editor {className}"
-      />
-    `,
   };
 }
 
 /**
- * Create a Svelte store for the editor
+ * Small store around an editor instance, for callers who prefer a store to the
+ * action's callbacks. Bind it with `store.bindEditor(...)`.
  */
 export function createLilacStore(initialContent = '') {
   let content = initialContent;
-  let canUndo = false;
-  let canRedo = false;
   let editor: EditorRef | null = null;
 
   return {
@@ -173,43 +133,45 @@ export function createLilacStore(initialContent = '') {
     },
     set content(value: string) {
       content = value;
-      if (editor) {
-        editor.setContent(value);
-      }
+      editor?.setContent(value);
     },
 
     get canUndo() {
-      return canUndo;
+      return editor?.canUndo ?? false;
     },
     get canRedo() {
-      return canRedo;
+      return editor?.canRedo ?? false;
     },
 
     bindEditor(editorRef: EditorRef) {
       editor = editorRef;
-      canUndo = editor.canUndo;
-      canRedo = editor.canRedo;
     },
 
-    updateState() {
-      if (editor) {
-        canUndo = editor.canUndo;
-        canRedo = editor.canRedo;
-      }
+    undo() {
+      editor?.undo();
+      if (editor) content = editor.getContent();
+    },
+
+    redo() {
+      editor?.redo();
+      if (editor) content = editor.getContent();
     },
   };
 }
 
 /**
- * Create a Svelte adapter for the Lilac editor
+ * Create a Svelte adapter for the Lilac editor.
  */
 export function createSvelteAdapter() {
   return {
     name: 'svelte',
     version: '0.5.0',
-    component: LilacEditorComponent,
+    action: lilac,
     createStore: createLilacStore,
   };
 }
+
+export { LilacEditor };
+export type { EditorRef };
 
 export default createSvelteAdapter();
