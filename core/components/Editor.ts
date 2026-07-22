@@ -24,6 +24,18 @@ export class LilacEditor implements EditorRef {
   private state: EditorState;
   private props: EditorProps;
   private lastContentRef: string = '';
+  private isDestroyed = false;
+
+  // Kept as instance fields so destroy() can detach them again. The
+  // selectionchange listener lives on `document`, so leaving it attached would
+  // keep this editor (and its history) alive for the lifetime of the page.
+  private readonly onInput = (e: Event) => this.handleInput(e);
+  private readonly onKeyDown = (e: KeyboardEvent) => this.handleKeyDown(e);
+  private readonly onKeyUp = () => this.updateActiveTools();
+  private readonly onMouseUp = () => this.updateActiveTools();
+  private readonly onFocusIn = () => this.handleFocus();
+  private readonly onFocusOut = () => this.handleBlur();
+  private readonly onSelectionChange = () => this.handleSelectionChange();
 
   constructor(props: EditorProps) {
     this.props = {
@@ -198,14 +210,25 @@ export class LilacEditor implements EditorRef {
   }
 
   private setupEventListeners(): void {
-    this.contentElement.addEventListener('input', (e) => this.handleInput(e));
-    this.contentElement.addEventListener('keydown', (e) => this.handleKeyDown(e));
-    this.contentElement.addEventListener('keyup', () => this.updateActiveTools());
-    this.contentElement.addEventListener('mouseup', () => this.updateActiveTools());
-    this.contentElement.addEventListener('focus', () => this.handleFocus());
-    this.contentElement.addEventListener('blur', () => this.handleBlur());
+    this.contentElement.addEventListener('input', this.onInput);
+    this.contentElement.addEventListener('keydown', this.onKeyDown);
+    this.contentElement.addEventListener('keyup', this.onKeyUp);
+    this.contentElement.addEventListener('mouseup', this.onMouseUp);
+    this.contentElement.addEventListener('focus', this.onFocusIn);
+    this.contentElement.addEventListener('blur', this.onFocusOut);
 
-    document.addEventListener('selectionchange', () => this.handleSelectionChange());
+    document.addEventListener('selectionchange', this.onSelectionChange);
+  }
+
+  private teardownEventListeners(): void {
+    this.contentElement.removeEventListener('input', this.onInput);
+    this.contentElement.removeEventListener('keydown', this.onKeyDown);
+    this.contentElement.removeEventListener('keyup', this.onKeyUp);
+    this.contentElement.removeEventListener('mouseup', this.onMouseUp);
+    this.contentElement.removeEventListener('focus', this.onFocusIn);
+    this.contentElement.removeEventListener('blur', this.onFocusOut);
+
+    document.removeEventListener('selectionchange', this.onSelectionChange);
   }
 
   private handleInput(event: Event): void {
