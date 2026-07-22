@@ -83,6 +83,12 @@ export const LilacEditorComponent = forwardRef<LilacEditorHandle, LilacEditorPro
     const containerRef = useRef<HTMLDivElement>(null);
     const editorRef = useRef<LilacEditor | null>(null);
 
+    // The editor is constructed once, so anything it closes over would be
+    // frozen at first render. Callbacks go through this ref instead, which is
+    // refreshed every render, so the editor always invokes the current one.
+    const handlersRef = useRef({ onChange, onFocus, onBlur, onSelectionChange });
+    handlersRef.current = { onChange, onFocus, onBlur, onSelectionChange };
+
     // Merge value and initialContent
     const content = value !== undefined ? value : initialContent;
 
@@ -134,16 +140,16 @@ export const LilacEditorComponent = forwardRef<LilacEditorHandle, LilacEditorPro
         plugins,
         toolbar: toolbarConfig,
         onChange: (newContent: string) => {
-          onChange?.(newContent);
+          handlersRef.current.onChange?.(newContent);
         },
         onFocus: () => {
-          onFocus?.();
+          handlersRef.current.onFocus?.();
         },
         onBlur: () => {
-          onBlur?.();
+          handlersRef.current.onBlur?.();
         },
         onSelectionChange: (selection: SelectionRange | null) => {
-          onSelectionChange?.(selection);
+          handlersRef.current.onSelectionChange?.(selection);
         },
       };
 
