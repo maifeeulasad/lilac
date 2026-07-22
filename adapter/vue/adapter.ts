@@ -2,8 +2,8 @@
 // Provides Vue component for Lilac editor
 
 import { onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue';
-import { LilacEditor } from '../../core/components/Editor';
-import type { EditorPlugin, EditorProps, ToolbarConfig } from '../../core/types/index';
+import { LilacEditor } from '@lilac-wysiwyg/core';
+import type { EditorPlugin, EditorProps, ToolbarConfig } from '@lilac-wysiwyg/core';
 
 /**
  * Props for the LilacEditor Vue component

@@ -21,12 +21,11 @@
       "@lilac-wysiwyg/core": [
         "../../dist/index.d.ts"
       ]
-    },
-    "jsx": "react-jsx"
+    }
   },
   "include": [
     "index.ts",
-    "adapter.tsx"
+    "adapter.ts"
   ],
   "exclude": [
     "dist",

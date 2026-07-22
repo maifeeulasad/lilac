@@ -1,9 +1,9 @@
 // Lilac Vanilla JS Adapter
 // Provides basic wrapper for Lilac editor in plain JavaScript
 
-import type { EditorRef } from '../../core/components/Editor';
-import { LilacEditor } from '../../core/components/Editor';
-import type { EditorProps } from '../../core/types/index';
+import type { EditorRef } from '@lilac-wysiwyg/core';
+import { LilacEditor } from '@lilac-wysiwyg/core';
+import type { EditorProps } from '@lilac-wysiwyg/core';
 
 /**
  * Creates a Vanilla JS adapter for the Lilac editor
@@ -73,7 +73,7 @@ export function createVanillaAdapter() {
 }
 
 // Export the editor class for direct usage
-export type { EditorPlugin, ToolbarConfig } from '../../core/types/index';
+export type { EditorPlugin, ToolbarConfig } from '@lilac-wysiwyg/core';
 export { LilacEditor };
 export type { EditorRef };
 

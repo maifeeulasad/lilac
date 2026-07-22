@@ -3,8 +3,8 @@
 
 // todo: update w `@lilac-wysiwyg/core`
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { LilacEditor } from '../../core/components/Editor';
-import type { EditorProps, SelectionRange, ToolbarConfig } from '../../core/types/index';
+import { LilacEditor } from '@lilac-wysiwyg/core';
+import type { EditorProps, SelectionRange, ToolbarConfig } from '@lilac-wysiwyg/core';
 
 /**
  * Props for the LilacEditor React component

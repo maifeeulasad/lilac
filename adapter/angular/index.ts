@@ -1,5 +1,5 @@
 // Angular adapter exports
-export * from 'core';
+export * from '@lilac-wysiwyg/core';
 export {
   createAngularAdapter,
   default,

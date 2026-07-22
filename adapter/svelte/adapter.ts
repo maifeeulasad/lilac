@@ -1,8 +1,8 @@
 // Lilac Svelte Adapter
 // Provides Svelte component wrapper for Lilac editor
 
-import { LilacEditor, type EditorRef } from '../../core/components/Editor';
-import type { EditorPlugin, EditorProps, ToolbarConfig } from '../../core/types/index';
+import { LilacEditor, type EditorRef } from '@lilac-wysiwyg/core';
+import type { EditorPlugin, EditorProps, ToolbarConfig } from '@lilac-wysiwyg/core';
 
 /**
  * Props for the LilacEditor Svelte component
