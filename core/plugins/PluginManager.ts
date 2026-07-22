@@ -195,5 +195,13 @@ export class PluginManager {
   }
 }
 
-// Singleton instance
+/**
+ * Shared manager instance.
+ *
+ * @deprecated LilacEditor now owns a PluginManager per instance. This shared
+ * one is no longer wired to any editor — plugins installed here will not
+ * receive an editor context and their toolbar buttons will not render. Pass
+ * plugins via the `plugins` editor option instead. Kept only so existing
+ * imports keep resolving; it will be removed in a future major.
+ */
 export const pluginManager = new PluginManager();
