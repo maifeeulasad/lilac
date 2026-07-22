@@ -27,3 +27,21 @@ jobs:
         run: pnpm typecheck
       - name: "Build"
         run: pnpm build
+
+      # Adapter deps live in each adapter's own lockfile; the root install does
+      # not reach them.
+      - name: "Install adapter deps"
+        run: |
+          for dir in adapter/*/; do
+            if [ -f "$dir/package.json" ]; then
+              (cd "$dir" && pnpm install --ignore-scripts)
+            fi
+          done
+
+      - name: "Build adapters"
+        run: pnpm build:adapters
+
+      # Guards the failure that shipped raw .ts to npm for several releases:
+      # typecheck and build both passed while the tarballs held no JavaScript.
+      - name: "Verify packaging"
+        run: pnpm verify:packaging

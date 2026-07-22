@@ -11,7 +11,9 @@
     "dev:server": "npx http-server . -p 3000 -c-1",
     "build": "rm -rf dist && tsc",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm run build",
+    "build:adapters": "node script/build-adapters.mjs",
+    "verify:packaging": "node script/verify-packaging.mjs"
   },
   "keywords": [
     "wysiwyg",
