@@ -1,9 +1,9 @@
-// Regression tests for the bugs filed as issues.
+// Regression tests for the bugs fixed in #12-#21.
 //
-// These target behavior fixed in separate branches. Each is marked `.fails`
-// where the bug is still present on main, so the suite stays green *and* the
-// assertion is real: when the corresponding PR lands, vitest reports the test
-// as unexpectedly passing and it should be flipped to a plain `it`.
+// These were written while the bugs were still present, marked `it.fails` so
+// the assertions were live rather than aspirational. Each duly reported as
+// unexpectedly passing the moment its fix merged, and was then flipped to a
+// plain `it`. They now guard against reintroduction.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LilacEditor } from '../core/components/Editor';
@@ -33,7 +33,7 @@ afterEach(() => {
 });
 
 describe('#2 destroy() must not leak a document listener', () => {
-  it.fails('detaches its selectionchange listener', () => {
+  it('detaches its selectionchange listener', () => {
     const add = vi.spyOn(document, 'addEventListener');
     const remove = vi.spyOn(document, 'removeEventListener');
 
@@ -51,7 +51,7 @@ describe('#2 destroy() must not leak a document listener', () => {
 });
 
 describe('#3 plugins must not bleed between editor instances', () => {
-  it.fails('does not give a second editor the first editor\'s plugin buttons', () => {
+  it('does not give a second editor the first editor\'s plugin buttons', () => {
     const plugin = {
       id: 'bleed-check',
       name: 'Bleed Check',
@@ -74,7 +74,7 @@ describe('#3 plugins must not bleed between editor instances', () => {
 });
 
 describe('#11 maxLength must apply in rich-text mode', () => {
-  it.fails('counts visible text rather than markup', () => {
+  it('counts visible text rather than markup', () => {
     const editor = mount({ toolbar: { show: true }, maxLength: 500 });
     editor.setContent('<b>a</b>');
 
@@ -85,7 +85,7 @@ describe('#11 maxLength must apply in rich-text mode', () => {
 });
 
 describe('#9 content from outside must be sanitized', () => {
-  it.fails('strips event handler attributes passed to setContent', () => {
+  it('strips event handler attributes passed to setContent', () => {
     const editor = mount({ toolbar: { show: true } });
     editor.setContent('<img src=x onerror="alert(1)">');
 
