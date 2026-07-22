@@ -77,10 +77,10 @@ npm install @lilac-wysiwyg/vue
 ### Vanilla JS / TypeScript (Core)
 
 ```typescript
-import { LilacEditor, injectStyles } from '@lilac-wysiwyg/core';
+import { LilacEditor } from '@lilac-wysiwyg/core';
 
-// Inject required styles (only needed once per page)
-injectStyles();
+// Styles are injected automatically on construction. To supply your own
+// stylesheet instead, pass `injectStyles: false` below.
 
 // Create editor instance
 const editor = new LilacEditor({
@@ -103,7 +103,6 @@ editor.setContent('<p>Hello World!</p>');
 
 ```tsx
 import { LilacEditor } from '@lilac-wysiwyg/react';
-import '@lilac-wysiwyg/react/styles';
 
 function App() {
   const [content, setContent] = useState('<p>Hello!</p>');
