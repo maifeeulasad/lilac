@@ -92,9 +92,33 @@ jobs:
       - name: Install deps
         run: pnpm install
 
+      # Adapters resolve @lilac-wysiwyg/core's types from the root build, so it
+      # has to happen before theirs.
+      - name: Build core
+        run: pnpm build
+
+      - name: Install adapter deps
+        working-directory: ${{ matrix.package }}
+        run: pnpm install --ignore-scripts
+
       - name: Build
         working-directory: ${{ matrix.package }}
         run: pnpm build
+
+      - name: Verify entry point exists before publishing
+        working-directory: ${{ matrix.package }}
+        run: |
+          node -e "
+            const pkg = require('./package.json');
+            const fs = require('fs');
+            for (const entry of [pkg.main, pkg.types]) {
+              if (!fs.existsSync(entry)) {
+                console.error('refusing to publish ' + pkg.name + ': ' + entry + ' does not exist');
+                process.exit(1);
+              }
+            }
+            console.log('entry points present for ' + pkg.name);
+          "
 
       - name: Publish ${{ matrix.package }}
         working-directory: ${{ matrix.package }}
