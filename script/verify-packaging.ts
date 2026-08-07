@@ -4,11 +4,24 @@
 // JavaScript at all: `tsc` picked up the root tsconfig, emitted nothing for the
 // adapter, exited 0, and CI shipped it. Typecheck and build both passed the
 // whole time. This asserts the thing that actually matters — that every package
-// declares an entry point which exists in what `npm pack` would publish.
+// declares an entry point which exists in what `npm pack` would publish, and
+// that the entry actually imports under plain Node.
 
 import { execSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
+interface PackageJson {
+  name: string;
+  main?: string;
+  types?: string;
+  dependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+}
+
+interface NpmPackResult {
+  files: { path: string }[];
+}
 
 const PACKAGES = [
   '.',
@@ -21,17 +34,17 @@ const PACKAGES = [
 
 let failures = 0;
 
-function fail(pkg, message) {
+function fail(pkg: string, message: string): void {
   failures++;
   console.error(`FAIL  ${pkg}: ${message}`);
 }
 
 for (const dir of PACKAGES) {
   const pkgPath = resolve(dir, 'package.json');
-  const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
+  const pkg = JSON.parse(readFileSync(pkgPath, 'utf8')) as PackageJson;
 
   // 1. The declared entry points must exist on disk after a build.
-  const entries = [pkg.main, pkg.types].filter(Boolean);
+  const entries = [pkg.main, pkg.types].filter((e): e is string => Boolean(e));
   for (const entry of entries) {
     if (!existsSync(resolve(dir, entry))) {
       fail(pkg.name, `declares "${entry}" but it does not exist (did the build emit nothing?)`);
@@ -39,16 +52,16 @@ for (const dir of PACKAGES) {
   }
 
   // 2. They must also survive into the tarball, which `files` can silently omit.
-  let packed;
+  let packed: string[];
   try {
     const raw = execSync('npm pack --dry-run --json', {
       cwd: resolve(dir),
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'ignore'],
     });
-    packed = JSON.parse(raw)[0].files.map((f) => f.path.replace(/\\/g, '/'));
+    packed = (JSON.parse(raw) as NpmPackResult[])[0].files.map((f) => f.path.replace(/\\/g, '/'));
   } catch (error) {
-    fail(pkg.name, `npm pack failed: ${error.message}`);
+    fail(pkg.name, `npm pack failed: ${(error as Error).message}`);
     continue;
   }
 
@@ -73,15 +86,18 @@ for (const dir of PACKAGES) {
   // import. Only run it where every dependency resolves without an install; the
   // adapters import @lilac-wysiwyg/core, which is not linked in this layout.
   if (pkg.main && existsSync(resolve(dir, pkg.main)) && !pkg.dependencies && !pkg.peerDependencies) {
+    const entry = pkg.main.replace(/^\.\//, '');
     try {
-      execSync(`node -e "import('./${pkg.main.replace(/^\.\//, '')}')"`, {
+      execSync(`node -e "import('./${entry}')"`, {
         cwd: resolve(dir),
         stdio: ['ignore', 'ignore', 'pipe'],
         encoding: 'utf8',
       });
       console.log(`PASS  ${pkg.name} imports under Node`);
     } catch (error) {
-      fail(pkg.name, `entry does not import under Node: ${String(error.stderr || error.message).trim().split('\n').pop()}`);
+      const { stderr, message } = error as { stderr?: string; message: string };
+      const detail = String(stderr || message).trim().split('\n').pop();
+      fail(pkg.name, `entry does not import under Node: ${detail}`);
     }
   }
 }
