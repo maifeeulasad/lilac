@@ -2,8 +2,14 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "outDir": "./dist-scripts",
+        // The base config roots at ./core; the scripts live in ./script, so
+        // override rootDir to the repo root. Output lands at dist-scripts/script/*.js.
+        "rootDir": ".",
         "module": "NodeNext",
-        "moduleResolution": "NodeNext"
+        "moduleResolution": "NodeNext",
+        "types": [
+            "node"
+        ]
     },
     "include": [
         "script/**/*"
