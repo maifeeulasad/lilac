@@ -319,26 +319,19 @@
 
     const {
       LilacEditor,
-      injectStyles,
-      pluginManager,
       wordCountPlugin,
       emojiPlugin,
       tablePlugin,
     } = await moduleLoader();
 
-    // Inject styles
-    injectStyles();
-
-    // Install plugins
-    pluginManager.install(wordCountPlugin);
-    pluginManager.install(emojiPlugin);
-    pluginManager.install(tablePlugin);
-
-    // Initialize editor
+    // Styles inject automatically on construction. Plugins are passed through
+    // the `plugins` option below — installing them into the exported
+    // `pluginManager` singleton would not reach this editor instance.
     const editorContainer = document.getElementById('editor-root');
     const editor = new LilacEditor({
       container: editorContainer,
       toolbar: { show: true },
+      plugins: [wordCountPlugin, emojiPlugin, tablePlugin],
       initialContent: `<h1>Welcome to Lilac Editor!</h1>
 <p>This is a <strong>modern WYSIWYG text editor</strong> built with <em>pure TypeScript</em> - <strong>framework-agnostic</strong>!</p>
 <h2>Features</h2>
