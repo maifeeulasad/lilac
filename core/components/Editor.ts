@@ -1,4 +1,5 @@
 import { PluginManager } from '../plugins/PluginManager.js';
+import { fromMarkdown, toMarkdown } from '../utils/markdown.js';
 import { FindReplace } from './FindReplace.js';
 import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, SelectionRange, ToolbarTool } from '../types/index.js';
 import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting.js';
@@ -664,6 +665,16 @@ export class LilacEditor implements EditorRef {
     this.contentElement.contentEditable = (!readOnly).toString();
     this.editorWrapper.classList.toggle('lilac-editor--readonly', readOnly);
     this.toolbar?.setDisabled(readOnly);
+  }
+
+  /** Current content serialized to Markdown (headings, emphasis, lists, code, links, images, quotes). */
+  getMarkdown(): string {
+    return toMarkdown(this.getContent());
+  }
+
+  /** Replace the content from a Markdown string. */
+  setMarkdown(markdown: string): void {
+    this.setContent(fromMarkdown(markdown));
   }
 
   /** Open the find & replace panel (also bound to Ctrl/Cmd+F). */
