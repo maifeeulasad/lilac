@@ -32,6 +32,21 @@
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-background: #14151b;
+        --color-surface: #1d1f27;
+        --color-border: #2c2f3a;
+        --color-text: #e7e9ee;
+        --color-text-muted: #9aa4b2;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+      }
+
+      .icon {
+        background: #0f1015;
+      }
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -204,7 +219,7 @@
           </svg>
         </div>
         <h3>React</h3>
-        <p>React component wrapper with hooks support and TypeScript definitions.</p>
+        <p>React component wrapper with a controlled value, an imperative ref handle, and TypeScript definitions.</p>
         <span class="tag">Adapter</span>
         <span class="arrow">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -239,7 +254,7 @@
           </svg>
         </div>
         <h3>Angular</h3>
-        <p>Angular component and directive with Zone.js integration.</p>
+        <p>Angular component and directive wrapping the framework-agnostic core.</p>
         <span class="tag">Adapter</span>
         <span class="arrow">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
