@@ -7,7 +7,7 @@
 import { execSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 
-const ADAPTERS = ['angular', 'react', 'svelte', 'vanilla', 'vue'];
+const ADAPTERS = ['angular', 'react', 'svelte', 'vanilla', 'vue'] as const;
 
 if (!existsSync('dist/index.d.ts')) {
   console.error('core is not built — run `pnpm build` first (adapters resolve its types from dist/)');
@@ -24,7 +24,9 @@ for (const name of ADAPTERS) {
   } catch (error) {
     failed++;
     console.log('FAILED');
-    console.error(error.stdout || error.message);
+    // execSync throws an Error augmented with the child's captured stdout.
+    const { stdout, message } = error as { stdout?: string; message: string };
+    console.error(stdout || message);
   }
 }
 

@@ -12,8 +12,9 @@
     "build": "rm -rf dist && tsc",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm run build",
-    "build:adapters": "node script/build-adapters.mjs",
-    "verify:packaging": "node script/verify-packaging.mjs",
+    "build:scripts": "tsc -p tsconfig.scripts.json",
+    "build:adapters": "pnpm run build:scripts && node dist-scripts/script/build-adapters.js",
+    "verify:packaging": "pnpm run build:scripts && node dist-scripts/script/verify-packaging.js",
     "test": "vitest run",
     "test:watch": "vitest"
   },
