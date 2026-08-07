@@ -280,6 +280,36 @@ export const myCustomPlugin: EditorPlugin = {
 };
 ```
 
+## Images
+
+Drop an image file onto the editor, or paste one from the clipboard, and it is
+embedded at the caret. By default the image is inlined as a base64 `data:` URL —
+fully client-side, no server required:
+
+```typescript
+const editor = new LilacEditor({
+  container,
+  toolbar: { show: true },
+  maxImageSize: 5 * 1024 * 1024, // optional: reject images over 5 MB
+});
+```
+
+To upload to your own storage instead of inlining, provide `onImageUpload` and
+return the URL to embed:
+
+```typescript
+const editor = new LilacEditor({
+  container,
+  toolbar: { show: true },
+  onImageUpload: async (file) => {
+    const url = await myUploader(file); // your storage
+    return url;
+  },
+});
+```
+
+Non-image drops and pastes fall through to the editor's normal handling.
+
 ## Markdown Export / Import
 
 Round-trip editor content to and from Markdown. The conversion is hand-written
@@ -372,7 +402,7 @@ Visit our [GitHub Pages](https://maifeeulasad.github.io/lilac/) for complete doc
 - [x] Angular adapter
 - [x] Vue adapter
 - [x] Markdown export/import
-- [ ] Image upload and embedding
+- [x] Image upload and embedding
 - [x] Find and replace
 - [ ] Mobile optimizations
 
