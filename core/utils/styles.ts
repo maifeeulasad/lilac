@@ -391,6 +391,13 @@ export function injectStyles(): void {
   }
 }
 
+/* Embedded images stay within the editor width */
+.lilac-editor__image {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--lilac-border-radius-small);
+}
+
 /* Find & replace panel */
 .lilac-editor {
   position: relative;

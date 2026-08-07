@@ -1,4 +1,5 @@
 import { PluginManager } from '../plugins/PluginManager.js';
+import { imageFilesFrom, isEmbeddableImage, resolveImageSource } from '../utils/imageEmbed.js';
 import { fromMarkdown, toMarkdown } from '../utils/markdown.js';
 import { FindReplace } from './FindReplace.js';
 import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, SelectionRange, ToolbarTool } from '../types/index.js';
@@ -40,6 +41,9 @@ export class LilacEditor implements EditorRef {
   private readonly onFocusIn = () => this.handleFocus();
   private readonly onFocusOut = () => this.handleBlur();
   private readonly onSelectionChange = () => this.handleSelectionChange();
+  private readonly onDragOver = (e: DragEvent) => this.handleDragOver(e);
+  private readonly onDrop = (e: DragEvent) => this.handleDrop(e);
+  private readonly onPaste = (e: ClipboardEvent) => this.handlePaste(e);
 
   // One manager per editor. A shared instance meant the last editor
   // constructed owned the context for every plugin on the page.
@@ -246,6 +250,9 @@ export class LilacEditor implements EditorRef {
     this.contentElement.addEventListener('mouseup', this.onMouseUp);
     this.contentElement.addEventListener('focus', this.onFocusIn);
     this.contentElement.addEventListener('blur', this.onFocusOut);
+    this.contentElement.addEventListener('dragover', this.onDragOver);
+    this.contentElement.addEventListener('drop', this.onDrop);
+    this.contentElement.addEventListener('paste', this.onPaste);
 
     document.addEventListener('selectionchange', this.onSelectionChange);
   }
@@ -258,6 +265,9 @@ export class LilacEditor implements EditorRef {
     this.contentElement.removeEventListener('mouseup', this.onMouseUp);
     this.contentElement.removeEventListener('focus', this.onFocusIn);
     this.contentElement.removeEventListener('blur', this.onFocusOut);
+    this.contentElement.removeEventListener('dragover', this.onDragOver);
+    this.contentElement.removeEventListener('drop', this.onDrop);
+    this.contentElement.removeEventListener('paste', this.onPaste);
 
     document.removeEventListener('selectionchange', this.onSelectionChange);
   }
@@ -348,6 +358,71 @@ export class LilacEditor implements EditorRef {
         this.redo();
       }
     }
+  }
+
+  private handleDragOver(event: DragEvent): void {
+    // Only claim the drop when image files are being dragged; leave text and
+    // everything else to the browser's default handling.
+    const items = event.dataTransfer?.items;
+    if (items && Array.from(items).some((item) => item.kind === 'file' && item.type.startsWith('image/'))) {
+      event.preventDefault();
+    }
+  }
+
+  private handleDrop(event: DragEvent): void {
+    const files = imageFilesFrom(event.dataTransfer?.files);
+    if (files.length === 0) return;
+    event.preventDefault();
+    void this.embedImages(files);
+  }
+
+  private handlePaste(event: ClipboardEvent): void {
+    const files = imageFilesFrom(event.clipboardData?.files);
+    if (files.length === 0) return; // let normal text/html paste through
+    event.preventDefault();
+    void this.embedImages(files);
+  }
+
+  private async embedImages(files: File[]): Promise<void> {
+    for (const file of files) {
+      const check = isEmbeddableImage(file, this.props.maxImageSize);
+      if (!check.ok) {
+        console.warn(`Lilac: skipped image — ${check.reason}`);
+        continue;
+      }
+      try {
+        const src = await resolveImageSource(file, {
+          onImageUpload: this.props.onImageUpload,
+          maxImageSize: this.props.maxImageSize,
+        });
+        this.insertImageElement(src, file.name);
+      } catch (error) {
+        console.warn('Lilac: failed to embed image', error);
+      }
+    }
+  }
+
+  private insertImageElement(src: string, alt = ''): void {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = alt;
+    img.className = 'lilac-editor__image';
+
+    this.contentElement.focus();
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0 && this.contentElement.contains(selection.anchorNode)) {
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(img);
+      range.setStartAfter(img);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    } else {
+      this.contentElement.appendChild(img);
+    }
+
+    this.updateContentFromDOM();
   }
 
   private ensureFindReplace(): FindReplace {
