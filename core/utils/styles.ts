@@ -373,6 +373,39 @@ export function injectStyles(): void {
   }
 }
 
+/* Touch devices: bigger hit targets and no zoom-on-focus. Ordered after the
+   width query so it wins where both match (a phone is narrow AND coarse). */
+@media (pointer: coarse) {
+  .lilac-toolbar {
+    gap: 4px;
+    padding: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .lilac-toolbar__button {
+    width: 44px;
+    height: 44px;
+  }
+  .lilac-find__btn {
+    min-width: 2.5rem;
+    height: 2.5rem;
+  }
+  /* >= 16px keeps iOS Safari from zooming the page when a field is focused. */
+  .lilac-find__input {
+    font-size: 16px;
+  }
+}
+
+/* Very narrow screens: let the find panel span the editor and wrap its row. */
+@media (max-width: 480px) {
+  .lilac-find {
+    left: 0.5rem;
+    right: 0.5rem;
+  }
+  .lilac-find__row {
+    flex-wrap: wrap;
+  }
+}
+
 /* Animations */
 @keyframes lilac-scale-in {
   from { opacity: 0; transform: scale(0.95); }
