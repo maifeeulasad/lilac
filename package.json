@@ -39,6 +39,9 @@
     "type": "git",
     "url": "https://github.com/maifeeulasad/lilac.git"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
     "@types/node": "^24.1.0",
     "jsdom": "^29.1.1",
