@@ -280,6 +280,30 @@ export const myCustomPlugin: EditorPlugin = {
 };
 ```
 
+## Markdown Export / Import
+
+Round-trip editor content to and from Markdown. The conversion is hand-written
+and zero-dependency, covering the subset the editor produces (headings,
+bold/italic/strikethrough, inline code and code blocks, links, images,
+blockquotes, lists, rules, paragraphs):
+
+```typescript
+const md = editor.getMarkdown();      // serialize current content to Markdown
+editor.setMarkdown('# Hello\n\nWorld'); // replace content from Markdown
+```
+
+The converters are also exported directly:
+
+```typescript
+import { toMarkdown, fromMarkdown } from '@lilac-wysiwyg/core';
+
+toMarkdown('<h1>Hi</h1><p>a <strong>b</strong></p>'); // "# Hi\n\na **b**"
+fromMarkdown('- one\n- two');                          // "<ul><li>one</li><li>two</li></ul>"
+```
+
+Constructs outside that subset (tables, nested lists, HTML passthrough,
+underline — which has no Markdown equivalent) are not converted.
+
 ## Find & Replace
 
 Press **Ctrl/Cmd + F** inside the editor to open the find bar — match count,
@@ -347,7 +371,7 @@ Visit our [GitHub Pages](https://maifeeulasad.github.io/lilac/) for complete doc
 - [x] Svelte adapter
 - [x] Angular adapter
 - [x] Vue adapter
-- [ ] Markdown export/import
+- [x] Markdown export/import
 - [ ] Image upload and embedding
 - [x] Find and replace
 - [ ] Mobile optimizations

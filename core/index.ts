@@ -17,6 +17,9 @@ export { isSafeUrl, sanitizeContent } from './utils/sanitize.js';
 export { buildPattern, countMatches, findMatches, replaceAll } from './utils/findReplace.js';
 export type { FindMatch, FindOptions } from './utils/findReplace.js';
 
+// Markdown <-> HTML conversion for the editor's content subset
+export { fromMarkdown, toMarkdown } from './utils/markdown.js';
+
 // CSS injection helper - UI instructions for consistent styling
 export { injectStyles } from './utils/styles.js';
 
