@@ -44,6 +44,7 @@ lilac/
 - **Undo/Redo**: Full history support with 50-step undo stack
 - **Theme Support**: Light and dark themes with CSS custom properties
 - **Accessibility**: ARIA labels on the toolbar buttons and editable region, plus full keyboard navigation
+- **Mobile-friendly**: 44px touch targets on coarse pointers, a scrollable toolbar, and a 16px editable font so iOS doesn't zoom on focus
 - **Plugin API**: Create custom plugins with toolbar buttons, keyboard shortcuts, and lifecycle hooks
 
 ## Installation
@@ -404,7 +405,7 @@ Visit our [GitHub Pages](https://maifeeulasad.github.io/lilac/) for complete doc
 - [x] Markdown export/import
 - [x] Image upload and embedding
 - [x] Find and replace
-- [ ] Mobile optimizations
+- [x] Mobile optimizations
 
 ## Contributing
 
