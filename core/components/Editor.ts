@@ -1,4 +1,5 @@
 import { PluginManager } from '../plugins/PluginManager.js';
+import { FindReplace } from './FindReplace.js';
 import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, SelectionRange, ToolbarTool } from '../types/index.js';
 import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting.js';
 import { sanitizeContent } from '../utils/sanitize.js';
@@ -42,6 +43,9 @@ export class LilacEditor implements EditorRef {
   // One manager per editor. A shared instance meant the last editor
   // constructed owned the context for every plugin on the page.
   private readonly pluginManager = new PluginManager();
+
+  // Built on first use (Ctrl/Cmd+F) so editors that never search pay nothing.
+  private findReplace: FindReplace | null = null;
 
   constructor(props: EditorProps) {
     this.props = {
@@ -293,6 +297,13 @@ export class LilacEditor implements EditorRef {
   }
 
   private handleKeyDown(event: KeyboardEvent): void {
+    // Find & replace — override the browser's native find inside the editor.
+    if ((event.metaKey || event.ctrlKey) && !event.shiftKey && !event.altKey && event.key.toLowerCase() === 'f') {
+      event.preventDefault();
+      this.ensureFindReplace().toggle();
+      return;
+    }
+
     // Plugin keyboard shortcuts
     const pluginShortcuts = this.pluginManager.getKeyboardShortcuts();
     for (const shortcut of pluginShortcuts) {
@@ -336,6 +347,17 @@ export class LilacEditor implements EditorRef {
         this.redo();
       }
     }
+  }
+
+  private ensureFindReplace(): FindReplace {
+    if (!this.findReplace) {
+      this.findReplace = new FindReplace({
+        editor: this.editorWrapper,
+        content: this.contentElement,
+        onMutate: () => this.updateContentFromDOM(),
+      });
+    }
+    return this.findReplace;
   }
 
   private handleToolClick(tool: ToolbarTool): void {
@@ -644,6 +666,16 @@ export class LilacEditor implements EditorRef {
     this.toolbar?.setDisabled(readOnly);
   }
 
+  /** Open the find & replace panel (also bound to Ctrl/Cmd+F). */
+  openFind(): void {
+    this.ensureFindReplace().show();
+  }
+
+  /** Close the find & replace panel if it is open. */
+  closeFind(): void {
+    if (this.findReplace?.isOpen()) this.findReplace.hide();
+  }
+
   destroy(): void {
     if (this.isDestroyed) return;
     this.isDestroyed = true;
@@ -656,6 +688,7 @@ export class LilacEditor implements EditorRef {
       this.pluginManager.uninstall(plugin.id);
     }
 
+    this.findReplace?.destroy();
     this.teardownEventListeners();
     this.editorWrapper.remove();
   }

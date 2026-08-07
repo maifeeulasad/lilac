@@ -280,6 +280,28 @@ export const myCustomPlugin: EditorPlugin = {
 };
 ```
 
+## Find & Replace
+
+Press **Ctrl/Cmd + F** inside the editor to open the find bar — match count,
+next/previous, replace, replace-all, and case-sensitive / whole-word toggles.
+`Esc` closes it, and because the shortcut is bound to the editable region, the
+browser's own find still works when the editor isn't focused.
+
+```typescript
+editor.openFind();  // open the panel programmatically
+editor.closeFind(); // close it
+```
+
+The matching engine is also exported for non-DOM use (e.g. searching content
+before it is mounted):
+
+```typescript
+import { findMatches, replaceAll } from '@lilac-wysiwyg/core';
+
+findMatches('the cat sat', 'at');                 // [{ start: 5, end: 7 }, { start: 9, end: 11 }]
+replaceAll('cat cat', 'cat', 'dog', { wholeWord: true }); // { text: 'dog dog', count: 2 }
+```
+
 ## Customization
 
 ### Themes
@@ -327,7 +349,7 @@ Visit our [GitHub Pages](https://maifeeulasad.github.io/lilac/) for complete doc
 - [x] Vue adapter
 - [ ] Markdown export/import
 - [ ] Image upload and embedding
-- [ ] Find and replace
+- [x] Find and replace
 - [ ] Mobile optimizations
 
 ## Contributing

@@ -390,6 +390,97 @@ export function injectStyles(): void {
     transition: none;
   }
 }
+
+/* Find & replace panel */
+.lilac-editor {
+  position: relative;
+}
+
+.lilac-find {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 0.5rem;
+  background: var(--lilac-color-background);
+  border: 1px solid var(--lilac-color-border);
+  border-radius: var(--lilac-border-radius-small);
+  box-shadow: var(--lilac-shadow);
+}
+
+.lilac-find[hidden] {
+  display: none;
+}
+
+.lilac-find__row {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.lilac-find__input {
+  flex: 1;
+  min-width: 8rem;
+  padding: 0.25rem 0.5rem;
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--lilac-color-text);
+  background: var(--lilac-color-surface);
+  border: 1px solid var(--lilac-color-border);
+  border-radius: var(--lilac-border-radius-small);
+}
+
+.lilac-find__input:focus {
+  outline: none;
+  border-color: var(--lilac-color-border-focus);
+  box-shadow: var(--lilac-shadow-focus);
+}
+
+.lilac-find__count {
+  min-width: 2.75rem;
+  font-size: 0.75rem;
+  color: var(--lilac-color-text-muted);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.lilac-find__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  padding: 0 0.4rem;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--lilac-color-text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--lilac-border-radius-small);
+  cursor: pointer;
+  transition: var(--lilac-transition);
+}
+
+.lilac-find__btn:hover {
+  background: var(--lilac-color-hover);
+}
+
+.lilac-find__btn--active {
+  color: var(--lilac-color-primary);
+  border-color: var(--lilac-color-primary);
+  background: var(--lilac-shadow-focus);
+}
+
+.lilac-find__text-btn {
+  padding: 0 0.6rem;
+}
+
+.lilac-find__close {
+  margin-left: auto;
+}
   `;
   document.head.appendChild(style);
 }
