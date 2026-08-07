@@ -1,6 +1,6 @@
-import type { EditorContext, ToolbarButton, ToolbarTool } from '../types';
-import { cn } from '../utils/formatting';
-import { icons } from '../utils/icons';
+import type { EditorContext, ToolbarButton, ToolbarTool } from '../types/index.js';
+import { cn } from '../utils/formatting.js';
+import { icons } from '../utils/icons.js';
 
 const toolIcons: Record<ToolbarTool, string> = {
   bold: icons.bold,

@@ -1,5 +1,5 @@
-import type { EditorContext, EditorPlugin } from '../types/index';
-import { icons } from '../utils/icons';
+import type { EditorContext, EditorPlugin } from '../types/index.js';
+import { icons } from '../utils/icons.js';
 
 const EMOJI_CATEGORIES = {
   smileys: {
