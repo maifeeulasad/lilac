@@ -43,7 +43,7 @@ lilac/
 - **Keyboard Shortcuts**: Ctrl/Cmd + B for bold, Ctrl/Cmd + I for italic, etc.
 - **Undo/Redo**: Full history support with 50-step undo stack
 - **Theme Support**: Light and dark themes with CSS custom properties
-- **Accessibility**: WCAG compliant with ARIA labels and keyboard navigation
+- **Accessibility**: ARIA labels on the toolbar buttons and editable region, plus full keyboard navigation
 - **Plugin API**: Create custom plugins with toolbar buttons, keyboard shortcuts, and lifecycle hooks
 
 ## Installation
@@ -154,29 +154,27 @@ Svelte 4 and 5 without a compiler step:
 
 ## Using Built-in Plugins
 
+Pass plugins through the `plugins` option — the editor installs them into its
+own manager on construction:
+
 ```typescript
-import { 
-  LilacEditor, 
-  injectStyles,
-  pluginManager,
+import {
+  LilacEditor,
   wordCountPlugin,
   emojiPlugin,
   tablePlugin
 } from '@lilac-wysiwyg/core';
 
-injectStyles();
-
-// Install plugins
-pluginManager.install(wordCountPlugin);
-pluginManager.install(emojiPlugin);
-pluginManager.install(tablePlugin);
-
 const editor = new LilacEditor({
   container: document.getElementById('editor')!,
   toolbar: { show: true },
+  plugins: [wordCountPlugin, emojiPlugin, tablePlugin],
   onChange: (content) => console.log('Content:', content)
 });
 ```
+
+> The exported `pluginManager` singleton is a standalone registry; installing
+> into it does **not** affect an editor instance. Use the `plugins` option above.
 
 ## API Reference
 
@@ -189,8 +187,15 @@ const editor = new LilacEditor({
 | `placeholder` | `string` | `'Start writing...'` | Placeholder text when editor is empty |
 | `readOnly` | `boolean` | `false` | Whether the editor is read-only |
 | `autoFocus` | `boolean` | `false` | Auto-focus editor on mount |
-| `theme` | `'light' \| 'dark'` | `'light'` | Editor theme |
+| `theme` | `'light' \| 'dark' \| 'auto'` | `'light'` | Editor theme (`'auto'` follows the OS preference) |
+| `sanitize` | `boolean` | `true` | Sanitize HTML from `initialContent`/`setContent` (stored-XSS guard) |
+| `injectStyles` | `boolean` | `true` | Inject Lilac's stylesheet into `document.head` on construction |
+| `minHeight` | `number` | `undefined` | Minimum editor height in pixels |
+| `maxHeight` | `number` | `undefined` | Maximum editor height in pixels |
+| `maxLength` | `number` | `undefined` | Maximum content length |
+| `className` | `string` | `undefined` | Extra class name on the editor root |
 | `onChange` | `(content: string) => void` | `undefined` | Content change callback |
+| `onSelectionChange` | `(selection: SelectionRange \| null) => void` | `undefined` | Selection change callback |
 | `onFocus` | `() => void` | `undefined` | Focus event callback |
 | `onBlur` | `() => void` | `undefined` | Blur event callback |
 | `toolbar` | `ToolbarConfig` | `undefined` | Toolbar configuration |
@@ -232,7 +237,7 @@ Lilac features a powerful plugin system that allows extending the editor with cu
 
 ### Built-in Plugins
 
-- **Word Count Plugin**: Displays real-time document statistics (Ctrl+Shift+W)
+- **Word Count Plugin**: Real-time document statistics in a side panel, toggled from a toolbar button
 - **Emoji Picker Plugin**: Insert emojis with an easy-to-use picker (Ctrl+Shift+E)
 - **Table Inserter Plugin**: Insert and manage HTML tables (Ctrl+Shift+T)
 
