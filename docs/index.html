@@ -32,6 +32,21 @@
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-background: #14151b;
+        --color-surface: #1d1f27;
+        --color-border: #2c2f3a;
+        --color-text: #e7e9ee;
+        --color-text-muted: #9aa4b2;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+      }
+
+      .icon {
+        background: #0f1015;
+      }
+    }
+
     * {
       box-sizing: border-box;
     }
