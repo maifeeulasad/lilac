@@ -8,5 +8,5 @@ export {
   LilacEditorService,
   createEditorOptions,
   defaultEditorConfig,
-} from './adapter';
-export type { LilacEditorConfig } from './adapter';
+} from './adapter.js';
+export type { LilacEditorConfig } from './adapter.js';
