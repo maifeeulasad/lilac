@@ -1,4 +1,4 @@
-import type { ContextMenuItem, EditorContext, EditorPanel, EditorPlugin, KeyboardShortcut } from '../types/index';
+import type { ContextMenuItem, EditorContext, EditorPanel, EditorPlugin, KeyboardShortcut } from '../types/index.js';
 
 /**
  * The subset of EditorPlugin keys that are lifecycle hooks, i.e. the callable

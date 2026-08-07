@@ -1,5 +1,5 @@
-import type { FormatCommand, ToolbarTool } from '../types/index';
-import { isSafeUrl } from './sanitize';
+import type { FormatCommand, ToolbarTool } from '../types/index.js';
+import { isSafeUrl } from './sanitize.js';
 
 export const formatCommands: Record<ToolbarTool, FormatCommand | null> = {
   bold: { command: 'bold' },
@@ -237,7 +237,7 @@ export function isValidUrl(string: string): boolean {
  * Note this is NOT a sanitizer — it escapes everything, so passing editor
  * content through it renders `&lt;p&gt;Hello&lt;/p&gt;` as visible text and
  * destroys all formatting. To strip dangerous markup while keeping formatting,
- * use `sanitizeContent` from './sanitize'.
+ * use `sanitizeContent` from './sanitize.js'.
  */
 export function escapeHtml(html: string): string {
   const div = document.createElement('div');

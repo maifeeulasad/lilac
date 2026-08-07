@@ -1,4 +1,4 @@
-export { LilacEditor } from './Editor';
-export type { EditorRef } from './Editor';
-export { Toolbar } from './Toolbar';
+export { LilacEditor } from './Editor.js';
+export type { EditorRef } from './Editor.js';
+export { Toolbar } from './Toolbar.js';
 

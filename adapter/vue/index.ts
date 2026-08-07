@@ -1,4 +1,4 @@
 // Vue adapter exports
 export * from '@lilac-wysiwyg/core';
-export { createVueAdapter, default, LilacEditorComponent as LilacEditor } from './adapter';
-export type { LilacEditorProps, LilacEditorEmits, LilacEditorExposed } from './adapter';
+export { createVueAdapter, default, LilacEditorComponent as LilacEditor } from './adapter.js';
+export type { LilacEditorProps, LilacEditorEmits, LilacEditorExposed } from './adapter.js';

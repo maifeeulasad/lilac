@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ESNext",
+    "module": "NodeNext",
     "lib": [
       "ES2020",
       "DOM",
@@ -20,11 +20,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "paths": {
-      "core/*": [
-        "core/*"
-      ]
-    }
+    // NodeNext makes the compiler require explicit file extensions on relative
+    // specifiers, so a missing ".js" fails the build instead of shipping a
+    // package that cannot be imported under Node (see #23).
+    "moduleResolution": "NodeNext"
   },
   "include": [
     "core/**/*"

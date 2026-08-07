@@ -66,6 +66,24 @@ for (const dir of PACKAGES) {
   if (failures === 0 || !entries.some((e) => !existsSync(resolve(dir, e)))) {
     console.log(`PASS  ${pkg.name} -> ${entries.join(', ')} (${packed.length} files)`);
   }
+
+  // 3. The entry must actually import under plain Node — not just exist. This is
+  // what catches extensionless ESM specifiers (#23): the file is present and
+  // ships, but Node's resolver throws ERR_MODULE_NOT_FOUND on the first relative
+  // import. Only run it where every dependency resolves without an install; the
+  // adapters import @lilac-wysiwyg/core, which is not linked in this layout.
+  if (pkg.main && existsSync(resolve(dir, pkg.main)) && !pkg.dependencies && !pkg.peerDependencies) {
+    try {
+      execSync(`node -e "import('./${pkg.main.replace(/^\.\//, '')}')"`, {
+        cwd: resolve(dir),
+        stdio: ['ignore', 'ignore', 'pipe'],
+        encoding: 'utf8',
+      });
+      console.log(`PASS  ${pkg.name} imports under Node`);
+    } catch (error) {
+      fail(pkg.name, `entry does not import under Node: ${String(error.stderr || error.message).trim().split('\n').pop()}`);
+    }
+  }
 }
 
 if (failures > 0) {

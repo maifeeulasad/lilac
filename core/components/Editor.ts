@@ -1,9 +1,9 @@
-import { PluginManager } from '../plugins/PluginManager';
-import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, SelectionRange, ToolbarTool } from '../types/index';
-import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting';
-import { sanitizeContent } from '../utils/sanitize';
-import { injectStyles } from '../utils/styles';
-import { Toolbar } from './Toolbar';
+import { PluginManager } from '../plugins/PluginManager.js';
+import type { EditorContext, EditorPlugin, EditorProps, EditorState, HistoryState, SelectionRange, ToolbarTool } from '../types/index.js';
+import { cn, executeFormatCommand, getActiveFormats, getShortcutKey, insertImage, insertLink, keyboardShortcuts } from '../utils/formatting.js';
+import { sanitizeContent } from '../utils/sanitize.js';
+import { injectStyles } from '../utils/styles.js';
+import { Toolbar } from './Toolbar.js';
 
 export interface EditorRef {
   getContent: () => string;
