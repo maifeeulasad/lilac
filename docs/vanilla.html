@@ -310,10 +310,13 @@
 
   <script type="module">
     const moduleLoader = async () => {
+      // On GitHub Pages the compiled library is deployed alongside these pages,
+      // so ./index.js resolves. When serving the repo root locally, fall back to
+      // the build output one directory up (../dist/index.js).
       try {
-        return await import('./core/index.js');
+        return await import('./index.js');
       } catch (err) {
-        return await import('./dist/index.js');
+        return await import('../dist/index.js');
       }
     };
 
