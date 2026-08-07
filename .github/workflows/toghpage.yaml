@@ -11,9 +11,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: "Create dist directory"
-        run: mkdir dist
-      - name: "Copy documentation files into root"
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+      - name: "Install pnpm"
+        run: npm i -g pnpm
+      - name: "Install deps"
+        run: pnpm install
+      # The demo pages import the built ESM (./index.js) relative to themselves,
+      # so the compiled library has to ship with them. `pnpm build` produces the
+      # library in dist/; the docs pages are then copied in alongside it.
+      - name: "Build the library"
+        run: pnpm build
+      - name: "Copy documentation pages alongside the build"
         run: cp -r docs/* dist/
       - name: "Deploy"
         uses: peaceiris/actions-gh-pages@v4
