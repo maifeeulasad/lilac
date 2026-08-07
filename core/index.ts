@@ -13,6 +13,10 @@ export {
 // HTML sanitization
 export { isSafeUrl, sanitizeContent } from './utils/sanitize.js';
 
+// Find & replace matching engine
+export { buildPattern, countMatches, findMatches, replaceAll } from './utils/findReplace.js';
+export type { FindMatch, FindOptions } from './utils/findReplace.js';
+
 // CSS injection helper - UI instructions for consistent styling
 export { injectStyles } from './utils/styles.js';
 
