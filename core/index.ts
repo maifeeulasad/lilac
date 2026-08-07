@@ -20,6 +20,10 @@ export type { FindMatch, FindOptions } from './utils/findReplace.js';
 // Markdown <-> HTML conversion for the editor's content subset
 export { fromMarkdown, toMarkdown } from './utils/markdown.js';
 
+// Image embedding helpers (drag/drop + paste)
+export { imageFilesFrom, isEmbeddableImage, readAsDataUrl, resolveImageSource } from './utils/imageEmbed.js';
+export type { ImageCheck, ImageEmbedOptions } from './utils/imageEmbed.js';
+
 // CSS injection helper - UI instructions for consistent styling
 export { injectStyles } from './utils/styles.js';
 

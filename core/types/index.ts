@@ -72,6 +72,14 @@ export interface EditorProps extends EditorConfig {
   onBlur?: () => void;
   toolbar?: ToolbarConfig;
   plugins?: EditorPlugin[];
+  /**
+   * Called with an image dropped or pasted into the editor; return the URL to
+   * embed. When omitted, the image is inlined as a base64 `data:` URL — fully
+   * client-side, no server required.
+   */
+  onImageUpload?: (file: File) => Promise<string>;
+  /** Reject dropped/pasted images larger than this many bytes. */
+  maxImageSize?: number;
 }
 
 // Plugin types
