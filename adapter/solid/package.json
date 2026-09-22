@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/solid",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "SolidJS adapter for Lilac WYSIWYG editor - reactive Solid component and use:lilac directive",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

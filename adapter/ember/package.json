@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/ember",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Ember adapter for Lilac WYSIWYG editor - a {{lilac}} element modifier",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

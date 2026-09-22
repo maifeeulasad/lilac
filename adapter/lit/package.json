@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/lit",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Lit adapter for Lilac WYSIWYG editor - a <lilac-editor> Web Component",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

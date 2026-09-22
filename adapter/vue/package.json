@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/vue",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Vue adapter for Lilac WYSIWYG editor - Vue 3 component with Composition API",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
