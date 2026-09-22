@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="lilac-version" content="0.7.0">
-  <title>Lilac Editor - Qwik Adapter</title>
+  <title>Lilac Editor - PHP &amp; Laravel</title>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3G1RNC5YLT"></script>
@@ -19,7 +19,7 @@
 
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
-  <style>:root { --accent: #18B6F6; --accent-2: #AC7EF4; }</style>
+  <style>:root { --accent: #777BB4; --accent-2: #8892BF; }</style>
   <style>
     :root {
       --color-primary: #8b7cd8;
@@ -171,8 +171,11 @@
   <header class="header">
     <div class="header-content">
       <h1>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="2"><path d="M4 4h16v12H4z" stroke="#18B6F6"/><path d="M13 8l-4 8 6-6h-4l4-6z" fill="#AC7EF4" stroke="none"/></svg>
-        Qwik Adapter
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <ellipse cx="12" cy="12" rx="10" ry="6" />
+          <path d="M7 10.5h2l-.6 3M14 10.5h2l-.6 3M10 10.5h1.6c.8 0 1.1.6.9 1.4-.2.8-.7 1.1-1.5 1.1H10z" />
+        </svg>
+        PHP &amp; Laravel
       </h1>
       <a href="index.html" class="back-link">Back to Home</a>
     </div>
@@ -180,41 +183,55 @@
 
   <main class="container">
     <section class="intro">
-      <h2>Getting Started with Qwik</h2>
-      <p>A Qwik component that mounts the editor client-side in a visible task. Event handlers use the QRL convention (onChange$).</p>
+      <h2>Using Lilac from PHP</h2>
+      <p>Lilac's core runs in the browser, so the PHP package renders the markup that mounts it: a container plus a
+        script that loads the published UMD build from a CDN. Works in plain PHP, or as a Laravel Blade component.</p>
     </section>
 
     <section class="section">
       <h3>Installation</h3>
       <div class="code-block">
-        <pre><span class="comment"># Using npm</span>
-npm install @lilac-wysiwyg/qwik
-
-<span class="comment"># Using pnpm</span>
-pnpm add @lilac-wysiwyg/qwik
-
-<span class="comment"># Using yarn</span>
-yarn add @lilac-wysiwyg/qwik</pre>
+        <pre><span class="comment"># Composer (Packagist)</span>
+composer require lilac-wysiwyg/lilac</pre>
       </div>
     </section>
 
     <section class="section">
-      <h3>Basic Usage</h3>
+      <h3>Plain PHP</h3>
       <div class="code-block">
-        <pre><span class="keyword">import</span> &#123; component$, useSignal &#125; <span class="keyword">from</span> <span class="string">'@builder.io/qwik'</span>;
-<span class="keyword">import</span> &#123; LilacEditor &#125; <span class="keyword">from</span> <span class="string">'@lilac-wysiwyg/qwik'</span>;
+        <pre><span class="keyword">use</span> <span class="component">Lilac\Editor</span><span class="attr">;</span>
 
-<span class="keyword">export const</span> <span class="component">App</span> <span class="keyword">=</span> <span class="function">component$</span>(() <span class="keyword">=&gt;</span> {
-  <span class="keyword">const</span> content <span class="keyword">=</span> <span class="function">useSignal</span>(<span class="string">'&lt;p&gt;Hello Qwik!&lt;/p&gt;'</span>);
+<span class="keyword">echo</span> <span class="component">Editor</span>::<span class="function">render</span>([
+  <span class="string">'toolbar'</span> =&gt; [<span class="string">'show'</span> =&gt; <span class="keyword">true</span>],
+  <span class="string">'placeholder'</span> =&gt; <span class="string">'Start writing…'</span>,
+  <span class="string">'theme'</span> =&gt; <span class="string">'auto'</span>,
+  <span class="string">'initialContent'</span> =&gt; <span class="string">'&lt;p&gt;Hello from PHP!&lt;/p&gt;'</span>,
+]);</pre>
+      </div>
+    </section>
 
-  <span class="keyword">return</span> (
-    &lt;<span class="component">LilacEditor</span>
-      <span class="attr">value</span>=&#123;content.value&#125;
-      <span class="attr">onChange$</span>=&#123;(c) <span class="keyword">=&gt;</span> (content.value <span class="keyword">=</span> c)&#125;
-      <span class="attr">toolbar</span>
-    /&gt;
-  );
-});</pre>
+    <section class="section">
+      <h3>Laravel</h3>
+      <div class="code-block">
+        <pre><span class="comment">{{-- The service provider is auto-discovered; just use the component --}}</span>
+<span class="punct">&lt;</span><span class="component">x-lilac</span>
+  <span class="attr">:value</span>=<span class="string">"old('body', $post->body)"</span>
+  <span class="attr">placeholder</span>=<span class="string">"Write your post…"</span>
+  <span class="attr">theme</span>=<span class="string">"auto"</span>
+<span class="punct">/&gt;</span></pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Just a script tag</h3>
+      <div class="code-block">
+        <pre><span class="comment">&lt;!-- Load the UMD build once, then construct editors yourself --&gt;</span>
+<span class="keyword">echo</span> <span class="component">Lilac\Editor</span>::<span class="function">scriptTag</span>(); <span class="comment">// or a pinned version: scriptTag('0.7.0')</span>
+
+<span class="punct">&lt;</span><span class="component">div</span> <span class="attr">id</span>=<span class="string">"editor"</span><span class="punct">&gt;&lt;/</span><span class="component">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;</span><span class="component">script</span><span class="punct">&gt;</span>
+  <span class="keyword">new</span> window.<span class="component">Lilac</span>.<span class="function">LilacEditor</span>({ container: <span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">'editor'</span>), toolbar: { show: <span class="keyword">true</span> } });
+<span class="punct">&lt;/</span><span class="component">script</span><span class="punct">&gt;</span></pre>
       </div>
     </section>
 
@@ -222,45 +239,31 @@ yarn add @lilac-wysiwyg/qwik</pre>
       <h3>Features</h3>
       <div class="features">
         <div class="feature">
-          <h4>Resumable</h4>
-          <p>A real <code>component$</code>; the editor mounts in a client-only <code>useVisibleTask$</code>.</p>
+          <h4>Framework-free</h4>
+          <p><code>Lilac\Editor::render()</code> returns an HTML string — drop it into any PHP template.</p>
         </div>
         <div class="feature">
-          <h4>QRL Handlers</h4>
-          <p>Events follow the Qwik convention: <code>onChange$</code>, <code>onFocus$</code>, <code>onBlur$</code>.</p>
+          <h4>Laravel Blade</h4>
+          <p>An auto-discovered <code>&lt;x-lilac /&gt;</code> component, no manual provider registration.</p>
         </div>
         <div class="feature">
-          <h4>Reactive Signals</h4>
-          <p>Bind <code>value</code> and <code>readOnly</code> to signals; changes update the editor.</p>
+          <h4>CDN-loaded core</h4>
+          <p>Pulls the published <code>window.Lilac</code> UMD build; pin a version or track the latest.</p>
         </div>
         <div class="feature">
-          <h4>TypeScript Ready</h4>
-          <p>Typed component props.</p>
+          <h4>One shared loader</h4>
+          <p>Multiple editors on a page reuse a single script include.</p>
         </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <h3>API Reference</h3>
-      <div class="code-block">
-        <pre><span class="keyword">interface</span> <span class="component">LilacEditorProps</span> {
-  <span class="attr">value</span>?: <span class="keyword">string</span>;
-  <span class="attr">toolbar</span>?: <span class="component">ToolbarConfig</span> | <span class="keyword">boolean</span>;
-  <span class="attr">readOnly</span>?: <span class="keyword">boolean</span>;
-  <span class="attr">onChange$</span>?: <span class="component">QRL</span>&lt;(content: <span class="keyword">string</span>) <span class="keyword">=&gt;</span> <span class="keyword">void</span>&gt;;
-}
-
-<span class="comment">// Note: build the consuming app with the Qwik optimizer.</span></pre>
       </div>
     </section>
 
     <section class="section">
       <h3>Live Playground</h3>
-      <p style="color:var(--color-text-muted);margin:0 0 1rem 0">A real editor running the published Qwik adapter, built with the Qwik optimizer (v<span data-lilac-version>0.6.0</span>). Type in it — it's a full Qwik app embedded below.</p>
-      <iframe src="playground/qwik/" title="Qwik playground" loading="lazy" style="width:100%;height:340px;border:1px solid var(--color-border);border-radius:var(--border-radius);background:var(--color-background)"></iframe>
+      <p style="color:var(--color-text-muted);margin:0 0 1rem 0">This page is static, so the PHP is shown rather than executed (v<span data-lilac-version>0.6.0</span>). The rendered output is a plain editor identical to every other integration.</p>
+      <div class="lilac-playground" data-framework="php"></div>
     </section>
 
-    <span class="badge">Qwik Adapter v<span data-lilac-version>0.6.0</span></span>
+    <span class="badge">PHP &amp; Laravel v<span data-lilac-version>0.6.0</span></span>
   </main>
 
   <footer class="footer">

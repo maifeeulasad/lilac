@@ -141,12 +141,13 @@ const MOUNTERS = {
 // / the Glimmer compiler and a booted app + resolver.)
 const BUILD_ONLY = {
   ember: 'Ember',
+  php: 'PHP',
 };
 
 function note(el, framework) {
   el.innerHTML = `<div style="padding:1.25rem;border:1px dashed var(--color-border);border-radius:var(--border-radius);color:var(--color-text-muted)">
-    A live in-browser demo isn't practical for ${framework}, which needs its own build step to run.
-    The editor is identical across every adapter — see the usage above, or try the
+    A live in-browser demo isn't available for ${framework} on this static site (it renders server-side or needs its own build).
+    The editor is identical across every integration — see the usage above, or try the
     <a href="vanilla.html" style="color:var(--color-primary)">Vanilla JS demo</a> for a running editor.
   </div>`;
 }
