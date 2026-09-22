@@ -1,0 +1,475 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`content markup > renders a link with new-tab hardening > link 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <p><a href="https://ex.com" rel="noopener noreferrer" target="_blank">link</a></p>
+</div>"
+`;
+
+exports[`content markup > renders a simple paragraph > paragraph 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <p>Hello world</p>
+</div>"
+`;
+
+exports[`content markup > renders a table > table 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <table>
+    <thead>
+      <tr>
+        <th>h</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>c</td>
+      </tr>
+    </tbody>
+  </table>
+</div>"
+`;
+
+exports[`content markup > renders an embedded image > image 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <p><img alt="a cat" src="cat.png"></p>
+</div>"
+`;
+
+exports[`content markup > renders blockquote and code block > quote and code 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <blockquote>
+    <p>quoted</p>
+  </blockquote>
+  <pre>const x = 1;</pre>
+</div>"
+`;
+
+exports[`content markup > renders bullet and ordered lists > lists 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <ul>
+    <li>a</li>
+    <li>b</li>
+  </ul>
+  <ol start="3">
+    <li>x</li>
+  </ol>
+</div>"
+`;
+
+exports[`content markup > renders headings > headings 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <h1>One</h1>
+  <h2>Two</h2>
+  <h3>Three</h3>
+</div>"
+`;
+
+exports[`content markup > renders inline typography > inline typography 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <p>normal <strong>bold</strong> <em>italic</em> <u>underline</u> <s>strike</s> <code>code</code></p>
+</div>"
+`;
+
+exports[`content markup > strips scripts and event handlers from untrusted content > sanitized 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <p>ok</p>
+  <img src="x">
+</div>"
+`;
+
+exports[`content markup after user interactions > keeps the markup stable after typing into an empty editor > after typing 1`] = `"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">typed</div>"`;
+
+exports[`content markup after user interactions > shows the selection-driven state intact after a link is inserted over text > with selection 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <p>lilac is nice</p>
+</div>"
+`;
+
+exports[`editor shell > renders a toolbar with the default tool set > toolbar shell 1`] = `
+"<div class="lilac-editor lilac-editor--light lilac-editor--empty">
+  <div class="lilac-toolbar">
+    <button aria-label="Bold (Ctrl+B)" aria-pressed="false" class="lilac-toolbar__button" data-tool="bold" title="Bold (Ctrl+B)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Italic (Ctrl+I)" aria-pressed="false" class="lilac-toolbar__button" data-tool="italic" title="Italic (Ctrl+I)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Underline (Ctrl+U)" aria-pressed="false" class="lilac-toolbar__button" data-tool="underline" title="Underline (Ctrl+U)" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Heading 1" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading1" title="Heading 1" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 2" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading2" title="Heading 2" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 3" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading3" title="Heading 3" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Paragraph" aria-pressed="false" class="lilac-toolbar__button" data-tool="paragraph" title="Paragraph" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Bullet List" aria-pressed="false" class="lilac-toolbar__button" data-tool="bulletList" title="Bullet List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Numbered List" aria-pressed="false" class="lilac-toolbar__button" data-tool="orderedList" title="Numbered List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Quote" aria-pressed="false" class="lilac-toolbar__button" data-tool="blockquote" title="Quote" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Link (Ctrl+K)" aria-pressed="false" class="lilac-toolbar__button" data-tool="link" title="Link (Ctrl+K)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Code Block" aria-pressed="false" class="lilac-toolbar__button" data-tool="codeBlock" title="Code Block" type="button">
+      <svg></svg>
+    </button>
+  </div>
+  <div class="lilac-editor__content-wrapper" style="min-height: 200px; max-height: 600px;">
+    <div class="lilac-editor__placeholder" style="display: block;">Start writing...</div>
+    <div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox"></div>
+  </div>
+</div>"
+`;
+
+exports[`editor shell > renders an empty editor with its placeholder > empty editor 1`] = `
+"<div class="lilac-editor lilac-editor--light lilac-editor--empty">
+  <div class="lilac-toolbar">
+    <button aria-label="Bold (Ctrl+B)" aria-pressed="false" class="lilac-toolbar__button" data-tool="bold" title="Bold (Ctrl+B)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Italic (Ctrl+I)" aria-pressed="false" class="lilac-toolbar__button" data-tool="italic" title="Italic (Ctrl+I)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Underline (Ctrl+U)" aria-pressed="false" class="lilac-toolbar__button" data-tool="underline" title="Underline (Ctrl+U)" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Heading 1" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading1" title="Heading 1" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 2" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading2" title="Heading 2" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 3" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading3" title="Heading 3" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Paragraph" aria-pressed="false" class="lilac-toolbar__button" data-tool="paragraph" title="Paragraph" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Bullet List" aria-pressed="false" class="lilac-toolbar__button" data-tool="bulletList" title="Bullet List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Numbered List" aria-pressed="false" class="lilac-toolbar__button" data-tool="orderedList" title="Numbered List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Quote" aria-pressed="false" class="lilac-toolbar__button" data-tool="blockquote" title="Quote" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Link (Ctrl+K)" aria-pressed="false" class="lilac-toolbar__button" data-tool="link" title="Link (Ctrl+K)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Code Block" aria-pressed="false" class="lilac-toolbar__button" data-tool="codeBlock" title="Code Block" type="button">
+      <svg></svg>
+    </button>
+  </div>
+  <div class="lilac-editor__content-wrapper" style="min-height: 200px; max-height: 600px;">
+    <div class="lilac-editor__placeholder" style="display: block;">Start writing...</div>
+    <div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox"></div>
+  </div>
+</div>"
+`;
+
+exports[`editor shell > renders plain-text mode without toolbar chrome > plain mode 1`] = `
+"<div class="lilac-editor lilac-editor--light">
+  <div class="lilac-editor__content-wrapper" style="min-height: 200px; max-height: 600px;">
+    <div class="lilac-editor__placeholder" style="display: none;">Start writing...</div>
+    <div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">plain text</div>
+  </div>
+</div>"
+`;
+
+exports[`editor shell > renders plugin toolbar buttons > plugin buttons 1`] = `
+"<div class="lilac-editor lilac-editor--light lilac-editor--empty">
+  <div class="lilac-toolbar">
+    <button aria-label="Bold (Ctrl+B)" aria-pressed="false" class="lilac-toolbar__button" data-tool="bold" title="Bold (Ctrl+B)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Italic (Ctrl+I)" aria-pressed="false" class="lilac-toolbar__button" data-tool="italic" title="Italic (Ctrl+I)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Underline (Ctrl+U)" aria-pressed="false" class="lilac-toolbar__button" data-tool="underline" title="Underline (Ctrl+U)" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Heading 1" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading1" title="Heading 1" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 2" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading2" title="Heading 2" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 3" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading3" title="Heading 3" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Paragraph" aria-pressed="false" class="lilac-toolbar__button" data-tool="paragraph" title="Paragraph" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Bullet List" aria-pressed="false" class="lilac-toolbar__button" data-tool="bulletList" title="Bullet List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Numbered List" aria-pressed="false" class="lilac-toolbar__button" data-tool="orderedList" title="Numbered List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Quote" aria-pressed="false" class="lilac-toolbar__button" data-tool="blockquote" title="Quote" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Link (Ctrl+K)" aria-pressed="false" class="lilac-toolbar__button" data-tool="link" title="Link (Ctrl+K)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Code Block" aria-pressed="false" class="lilac-toolbar__button" data-tool="codeBlock" title="Code Block" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Word Count" class="lilac-toolbar__button lilac-toolbar__button--plugin" data-tooltip="Show word count" title="Show word count" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Insert Emoji" class="lilac-toolbar__button lilac-toolbar__button--plugin" data-tooltip="Insert emoji (Ctrl+Shift+E)" title="Insert emoji (Ctrl+Shift+E)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Insert Table" class="lilac-toolbar__button lilac-toolbar__button--plugin" data-tooltip="Insert table (Ctrl+Shift+T)" title="Insert table (Ctrl+Shift+T)" type="button">
+      <svg></svg>
+    </button>
+  </div>
+  <div class="lilac-editor__content-wrapper" style="min-height: 200px; max-height: 600px;">
+    <div class="lilac-editor__placeholder" style="display: block;">Start writing...</div>
+    <div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox"></div>
+  </div>
+</div>"
+`;
+
+exports[`editor shell > renders the character counter footer > char counter 1`] = `
+"<div class="lilac-editor lilac-editor--light">
+  <div class="lilac-toolbar">
+    <button aria-label="Bold (Ctrl+B)" aria-pressed="false" class="lilac-toolbar__button" data-tool="bold" title="Bold (Ctrl+B)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Italic (Ctrl+I)" aria-pressed="false" class="lilac-toolbar__button" data-tool="italic" title="Italic (Ctrl+I)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Underline (Ctrl+U)" aria-pressed="false" class="lilac-toolbar__button" data-tool="underline" title="Underline (Ctrl+U)" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Heading 1" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading1" title="Heading 1" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 2" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading2" title="Heading 2" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 3" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading3" title="Heading 3" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Paragraph" aria-pressed="false" class="lilac-toolbar__button" data-tool="paragraph" title="Paragraph" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Bullet List" aria-pressed="false" class="lilac-toolbar__button" data-tool="bulletList" title="Bullet List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Numbered List" aria-pressed="false" class="lilac-toolbar__button" data-tool="orderedList" title="Numbered List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Quote" aria-pressed="false" class="lilac-toolbar__button" data-tool="blockquote" title="Quote" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Link (Ctrl+K)" aria-pressed="false" class="lilac-toolbar__button" data-tool="link" title="Link (Ctrl+K)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Code Block" aria-pressed="false" class="lilac-toolbar__button" data-tool="codeBlock" title="Code Block" type="button">
+      <svg></svg>
+    </button>
+  </div>
+  <div class="lilac-editor__content-wrapper" style="min-height: 200px; max-height: 600px;">
+    <div class="lilac-editor__placeholder" style="display: none;">Start writing...</div>
+    <div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox"><b>hi</b></div>
+  </div>
+  <div class="lilac-editor__footer"><span class="lilac-editor__char-count">2/120</span></div>
+</div>"
+`;
+
+exports[`editor shell > renders the dark theme > dark theme 1`] = `
+"<div class="lilac-editor lilac-editor--dark">
+  <div class="lilac-toolbar">
+    <button aria-label="Bold (Ctrl+B)" aria-pressed="false" class="lilac-toolbar__button" data-tool="bold" title="Bold (Ctrl+B)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Italic (Ctrl+I)" aria-pressed="false" class="lilac-toolbar__button" data-tool="italic" title="Italic (Ctrl+I)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Underline (Ctrl+U)" aria-pressed="false" class="lilac-toolbar__button" data-tool="underline" title="Underline (Ctrl+U)" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Heading 1" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading1" title="Heading 1" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 2" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading2" title="Heading 2" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 3" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading3" title="Heading 3" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Paragraph" aria-pressed="false" class="lilac-toolbar__button" data-tool="paragraph" title="Paragraph" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Bullet List" aria-pressed="false" class="lilac-toolbar__button" data-tool="bulletList" title="Bullet List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Numbered List" aria-pressed="false" class="lilac-toolbar__button" data-tool="orderedList" title="Numbered List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Quote" aria-pressed="false" class="lilac-toolbar__button" data-tool="blockquote" title="Quote" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Link (Ctrl+K)" aria-pressed="false" class="lilac-toolbar__button" data-tool="link" title="Link (Ctrl+K)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Code Block" aria-pressed="false" class="lilac-toolbar__button" data-tool="codeBlock" title="Code Block" type="button">
+      <svg></svg>
+    </button>
+  </div>
+  <div class="lilac-editor__content-wrapper" style="min-height: 200px; max-height: 600px;">
+    <div class="lilac-editor__placeholder" style="display: none;">Start writing...</div>
+    <div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+      <p>night</p>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`editor shell > renders the find & replace panel once opened > find panel 1`] = `
+"<div class="lilac-editor lilac-editor--light">
+  <div class="lilac-toolbar">
+    <button aria-label="Bold (Ctrl+B)" aria-pressed="false" class="lilac-toolbar__button" data-tool="bold" title="Bold (Ctrl+B)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Italic (Ctrl+I)" aria-pressed="false" class="lilac-toolbar__button" data-tool="italic" title="Italic (Ctrl+I)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Underline (Ctrl+U)" aria-pressed="false" class="lilac-toolbar__button" data-tool="underline" title="Underline (Ctrl+U)" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Heading 1" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading1" title="Heading 1" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 2" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading2" title="Heading 2" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 3" aria-pressed="false" class="lilac-toolbar__button" data-tool="heading3" title="Heading 3" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Paragraph" aria-pressed="false" class="lilac-toolbar__button" data-tool="paragraph" title="Paragraph" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Bullet List" aria-pressed="false" class="lilac-toolbar__button" data-tool="bulletList" title="Bullet List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Numbered List" aria-pressed="false" class="lilac-toolbar__button" data-tool="orderedList" title="Numbered List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Quote" aria-pressed="false" class="lilac-toolbar__button" data-tool="blockquote" title="Quote" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Link (Ctrl+K)" aria-pressed="false" class="lilac-toolbar__button" data-tool="link" title="Link (Ctrl+K)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Code Block" aria-pressed="false" class="lilac-toolbar__button" data-tool="codeBlock" title="Code Block" type="button">
+      <svg></svg>
+    </button>
+  </div>
+  <div class="lilac-editor__content-wrapper" style="min-height: 200px; max-height: 600px;">
+    <div class="lilac-editor__placeholder" style="display: none;">Start writing...</div>
+    <div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+      <p>find me</p>
+    </div>
+  </div>
+  <div class="lilac-find" role="search">
+    <div class="lilac-find__row"><input aria-label="Find" class="lilac-find__input" placeholder="Find" type="text"><span class="lilac-find__count">0/0</span><button aria-label="Previous match" class="lilac-find__btn" title="Previous match" type="button">↑</button><button aria-label="Next match" class="lilac-find__btn" title="Next match" type="button">↓</button><button aria-label="Match case" aria-pressed="false" class="lilac-find__btn lilac-find__toggle" title="Match case" type="button">Aa</button><button aria-label="Whole word" aria-pressed="false" class="lilac-find__btn lilac-find__toggle" title="Whole word" type="button">“W”</button><button aria-label="Close" class="lilac-find__btn lilac-find__close" title="Close" type="button">✕</button></div>
+    <div class="lilac-find__row"><input aria-label="Replace" class="lilac-find__input" placeholder="Replace" type="text"><button aria-label="Replace current match" class="lilac-find__btn lilac-find__text-btn" title="Replace current match" type="button">Replace</button><button aria-label="Replace all matches" class="lilac-find__btn lilac-find__text-btn" title="Replace all matches" type="button">All</button></div>
+  </div>
+</div>"
+`;
+
+exports[`editor shell > renders the read-only state > read only 1`] = `
+"<div class="lilac-editor lilac-editor--light lilac-editor--readonly">
+  <div class="lilac-toolbar lilac-toolbar--disabled">
+    <button aria-label="Bold (Ctrl+B)" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="bold" disabled title="Bold (Ctrl+B)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Italic (Ctrl+I)" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="italic" disabled title="Italic (Ctrl+I)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Underline (Ctrl+U)" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="underline" disabled title="Underline (Ctrl+U)" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Heading 1" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="heading1" disabled title="Heading 1" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 2" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="heading2" disabled title="Heading 2" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Heading 3" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="heading3" disabled title="Heading 3" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Paragraph" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="paragraph" disabled title="Paragraph" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Bullet List" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="bulletList" disabled title="Bullet List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Numbered List" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="orderedList" disabled title="Numbered List" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Quote" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="blockquote" disabled title="Quote" type="button">
+      <svg></svg>
+    </button>
+    <div aria-hidden="true" class="lilac-toolbar__separator"></div>
+    <button aria-label="Link (Ctrl+K)" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="link" disabled title="Link (Ctrl+K)" type="button">
+      <svg></svg>
+    </button>
+    <button aria-label="Code Block" aria-pressed="false" class="lilac-toolbar__button lilac-toolbar__button--disabled" data-tool="codeBlock" disabled title="Code Block" type="button">
+      <svg></svg>
+    </button>
+  </div>
+  <div class="lilac-editor__content-wrapper" style="min-height: 200px; max-height: 600px;">
+    <div class="lilac-editor__placeholder" style="display: none;">Start writing...</div>
+    <div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+      <p>locked</p>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`editor shell > renders without a toolbar when asked > no toolbar 1`] = `
+"<div class="lilac-editor lilac-editor--light lilac-editor--empty">
+  <div class="lilac-editor__content-wrapper" style="min-height: 200px; max-height: 600px;">
+    <div class="lilac-editor__placeholder" style="display: block;">Start writing...</div>
+    <div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox"></div>
+  </div>
+</div>"
+`;

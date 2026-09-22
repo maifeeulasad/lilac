@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`accessibility tree > disables the editable region and toolbar when read-only > read only 1`] = `
+"- div
+  - div
+    - button [aria-label="Bold (Ctrl+B)"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Italic (Ctrl+I)"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Underline (Ctrl+U)"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Heading 1"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Heading 2"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Heading 3"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Paragraph"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Bullet List"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Numbered List"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Quote"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Link (Ctrl+K)"] [aria-pressed="false"] [disabled]
+    - button [aria-label="Code Block"] [aria-pressed="false"] [disabled]
+  - div
+    - div
+      - text: "Start writing..."
+    - textbox [aria-multiline="true"] [aria-label="Text editor"]"
+`;
+
+exports[`accessibility tree > exposes the editable region as a multiline textbox > textbox 1`] = `
+"- div
+  - div
+    - button [aria-label="Bold (Ctrl+B)"] [aria-pressed="false"]
+    - button [aria-label="Italic (Ctrl+I)"] [aria-pressed="false"]
+    - button [aria-label="Underline (Ctrl+U)"] [aria-pressed="false"]
+    - button [aria-label="Heading 1"] [aria-pressed="false"]
+    - button [aria-label="Heading 2"] [aria-pressed="false"]
+    - button [aria-label="Heading 3"] [aria-pressed="false"]
+    - button [aria-label="Paragraph"] [aria-pressed="false"]
+    - button [aria-label="Bullet List"] [aria-pressed="false"]
+    - button [aria-label="Numbered List"] [aria-pressed="false"]
+    - button [aria-label="Quote"] [aria-pressed="false"]
+    - button [aria-label="Link (Ctrl+K)"] [aria-pressed="false"]
+    - button [aria-label="Code Block"] [aria-pressed="false"]
+  - div
+    - div
+      - text: "Start writing..."
+    - textbox [aria-multiline="true"] [aria-label="Text editor"]"
+`;
