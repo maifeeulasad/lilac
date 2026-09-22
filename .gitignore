@@ -41,3 +41,6 @@ script/snap.js
 dist-scripts/
 # Vitest
 .vitest/
+# Playwright
+test-results/
+playwright-report/

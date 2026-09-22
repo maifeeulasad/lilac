@@ -16,7 +16,9 @@
     "build:adapters": "pnpm run build:scripts && node dist-scripts/script/build-adapters.js",
     "verify:packaging": "pnpm run build:scripts && node dist-scripts/script/verify-packaging.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:all": "pnpm run test && pnpm run typecheck && pnpm run test:e2e"
   },
   "keywords": [
     "wysiwyg",
@@ -44,6 +46,7 @@
     "node": ">=20"
   },
   "devDependencies": {
+    "@playwright/test": "1.59.0",
     "@types/node": "^24.1.0",
     "jsdom": "^29.1.1",
     "playwright": "^1.59.0",
