@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lilac Editor - Lit Adapter</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3G1RNC5YLT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-3G1RNC5YLT');
+  </script>
+
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+  <style>:root { --accent: #324FFF; --accent-2: #6A7BFF; }</style>
+  <style>
+    :root {
+      --color-primary: #8b7cd8;
+      --color-primary-light: #a898e8;
+      --color-primary-dark: #6d5ac8;
+      --color-background: #ffffff;
+      --color-surface: #f8f9fb;
+      --color-border: #e1e5e9;
+      --color-text: #2c3e50;
+      --color-text-muted: #64748b;
+      --border-radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --code-bg: #1a1b23;
+      --code-text: #e2e8f0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-background: #14151b;
+        --color-surface: #1d1f27;
+        --color-border: #2c2f3a;
+        --color-text: #e7e9ee;
+        --color-text-muted: #9aa4b2;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--color-background);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .back-link { color: white; text-decoration: none; opacity: 0.9; font-size: 0.875rem; }
+    .back-link:hover { opacity: 1; text-decoration: underline; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+    .intro { margin-bottom: 2rem; }
+    .intro h2 { font-size: 1.5rem; margin: 0 0 1rem 0; }
+    .intro p { color: var(--color-text-muted); margin: 0; }
+
+    .section { margin-bottom: 2rem; }
+    .section h3 { font-size: 1.25rem; margin: 0 0 1rem 0; display: flex; align-items: center; gap: 0.5rem; }
+
+    .code-block {
+      background: var(--code-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block pre {
+      margin: 0;
+      color: var(--code-text);
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .code-block .comment { color: #6a737d; }
+    .code-block .keyword { color: #F97583; }
+    .code-block .string { color: #9ECBFF; }
+    .code-block .function { color: #B392F0; }
+    .code-block .component { color: #7EE787; }
+    .code-block .attr { color: #FFAB70; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .feature {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+    }
+
+    .feature h4 { margin: 0 0 0.5rem 0; font-size: 1rem; }
+    .feature p { margin: 0; color: var(--color-text-muted); font-size: 0.875rem; }
+    .feature code {
+      background: var(--color-background);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      font-size: 0.8125rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--color-border);
+      margin-top: 2rem;
+    }
+
+    .footer a { color: var(--color-primary); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      .header { padding: 1rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-content">
+      <h1>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#324FFF" stroke-width="2"><path d="M12 2L5 9v7l7 6 7-6V9l-7-7z"/><path d="M12 2v20"/></svg>
+        Lit Adapter
+      </h1>
+      <a href="index.html" class="back-link">Back to Home</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h2>Getting Started with Lit</h2>
+      <p>A native Web Component, &lt;lilac-editor&gt;, built on LitElement. Drop it into any HTML page or any framework that renders custom elements.</p>
+    </section>
+
+    <section class="section">
+      <h3>Installation</h3>
+      <div class="code-block">
+        <pre><span class="comment"># Using npm</span>
+npm install @lilac-wysiwyg/lit
+
+<span class="comment"># Using pnpm</span>
+pnpm add @lilac-wysiwyg/lit
+
+<span class="comment"># Using yarn</span>
+yarn add @lilac-wysiwyg/lit</pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Basic Usage</h3>
+      <div class="code-block">
+        <pre><span class="comment">&lt;!-- Registers &lt;lilac-editor&gt; on import --&gt;</span>
+&lt;<span class="component">script</span> <span class="attr">type</span>=<span class="string">"module"</span>&gt;
+  <span class="keyword">import</span> <span class="string">'@lilac-wysiwyg/lit'</span>;
+&lt;/<span class="component">script</span>&gt;
+
+&lt;<span class="component">lilac-editor</span> <span class="attr">value</span>=<span class="string">"&lt;p&gt;Hello Lit!&lt;/p&gt;"</span> <span class="attr">toolbar</span>&gt;&lt;/<span class="component">lilac-editor</span>&gt;
+
+&lt;<span class="component">script</span>&gt;
+  <span class="keyword">const</span> el <span class="keyword">=</span> document.<span class="function">querySelector</span>(<span class="string">'lilac-editor'</span>);
+  el.<span class="function">addEventListener</span>(<span class="string">'change'</span>, (e) <span class="keyword">=&gt;</span> console.<span class="function">log</span>(e.detail));
+&lt;/<span class="component">script</span>&gt;</pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Features</h3>
+      <div class="features">
+        <div class="feature">
+          <h4>Standards-Based</h4>
+          <p>A real custom element — works in plain HTML and in every framework that supports Web Components.</p>
+        </div>
+        <div class="feature">
+          <h4>Light DOM Rendering</h4>
+          <p>Renders into the light DOM so Lilac's global styles reach the editable region.</p>
+        </div>
+        <div class="feature">
+          <h4>Reactive Attributes</h4>
+          <p><code>value</code> and <code>read-only</code> react to attribute and property changes.</p>
+        </div>
+        <div class="feature">
+          <h4>No Decorators</h4>
+          <p>Uses the static <code>properties</code> getter, so it builds with plain tsc.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Attributes & Events</h3>
+      <div class="code-block">
+        <pre><span class="comment">// Attributes / properties</span>
+value            <span class="comment">// string</span>
+read-only        <span class="comment">// boolean</span>
+placeholder      <span class="comment">// string</span>
+theme            <span class="comment">// 'light' | 'dark' | 'auto'</span>
+min-height / max-height  <span class="comment">// number</span>
+
+<span class="comment">// Events</span>
+change                   <span class="comment">// detail: string (content)</span>
+lilac-focus / lilac-blur
+lilac-selection-change</pre>
+      </div>
+    </section>
+
+    <span class="badge">Lit Adapter v0.5.0</span>
+  </main>
+
+  <footer class="footer">
+    <p>View on <a href="https://github.com/maifeeulasad/lilac">GitHub</a> - MIT License</p>
+  </footer>
+</body>
+
+</html>
