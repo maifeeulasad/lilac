@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="lilac-version" content="__LILAC_VERSION__">
   <title>Lilac Editor - Vue Adapter</title>
 
   <!-- Google tag (gtag.js) -->
@@ -306,12 +307,19 @@ app<span class="punct">.</span><span class="function">mount</span><span class="b
       </div>
     </section>
 
+    <section class="section">
+      <h3>Live Playground</h3>
+      <p style="color:var(--color-text-muted);margin:0 0 1rem 0">A real editor running this adapter, loaded straight from npm (v<span data-lilac-version>0.6.0</span>). Type in it — formatting, lists, undo/redo all work.</p>
+      <div class="lilac-playground" data-framework="vue"></div>
+    </section>
+
     <span class="badge">Vue Adapter v0.5.0</span>
   </main>
 
   <footer class="footer">
     <p>View on <a href="https://github.com/maifeeulasad/lilac">GitHub</a> - MIT License</p>
   </footer>
+  <script type="module" src="playground.js"></script>
 </body>
 
 </html>

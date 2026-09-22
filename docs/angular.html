@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="lilac-version" content="__LILAC_VERSION__">
   <title>Lilac Editor - Angular Adapter</title>
 
   <!-- Google tag (gtag.js) -->
@@ -313,12 +314,19 @@ yarn add @lilac-wysiwyg/angular</pre>
       </div>
     </section>
 
+    <section class="section">
+      <h3>Live Playground</h3>
+      <p style="color:var(--color-text-muted);margin:0 0 1rem 0">The editor is identical across every adapter. This one needs its own build step, so it can’t be demoed purely in the browser — the usage above shows how it wires up.</p>
+      <div class="lilac-playground" data-framework="angular"></div>
+    </section>
+
     <span class="badge">Angular Adapter v0.5.0</span>
   </main>
 
   <footer class="footer">
     <p>View on <a href="https://github.com/maifeeulasad/lilac">GitHub</a> - MIT License</p>
   </footer>
+  <script type="module" src="playground.js"></script>
 </body>
 
 </html>
