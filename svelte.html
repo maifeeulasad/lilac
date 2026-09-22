@@ -249,24 +249,21 @@ yarn add @lilac-wysiwyg/svelte</pre>
       <h3>Basic Usage</h3>
       <div class="code-block">
         <pre><span class="keyword">&lt;script&gt;</span>
-  <span class="keyword">import</span> <span class="brace">&#123;</span> LilacEditor <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@lilac-wysiwyg/svelte'</span><span class="punct">;</span>
-  <span class="keyword">import</span> <span class="brace">&#123;</span> <span class="string">'./app.css'</span> <span class="brace">&#125;</span>
+  <span class="comment">// The Svelte adapter ships an action, not a component, so it works</span>
+  <span class="comment">// identically in Svelte 4 and 5 and needs no compiler.</span>
+  <span class="keyword">import</span> <span class="brace">&#123;</span> lilac <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@lilac-wysiwyg/svelte'</span><span class="punct">;</span>
 
   <span class="keyword">let</span> content <span class="punct">=</span> <span class="string">'&lt;p&gt;Hello Svelte!&lt;/p&gt;'</span>
-  <span class="keyword">let</span> theme <span class="punct">=</span> <span class="string">'light'</span>
-
-  <span class="keyword">function</span> <span class="function">handleChange</span><span class="brace">(</span>newContent<span class="brace">)</span> <span class="brace">{</span>
-    content <span class="punct">=</span> newContent
-  <span class="brace">}</span>
 <span class="keyword">&lt;/script&gt;</span>
 
-<span class="punct">&lt;</span><span class="component">LilacEditor</span>
-  <span class="attr">bind:value</span><span class="punct">=</span><span class="brace">&#123;</span>content<span class="brace">&#125;</span>
-  <span class="attr">on:change</span><span class="punct">=</span><span class="brace">&#123;</span><span class="brace">(</span>e<span class="brace">)</span> <span class="punct">=&gt;</span> handleChange<span class="brace">(</span>e.detail<span class="brace">)</span><span class="brace">&#125;</span>
-  <span class="attr">toolbar</span><span class="punct">=</span><span class="brace">&#123;</span><span class="brace">&#123;</span> show<span class="punct">:</span> <span class="boolean">true</span> <span class="brace">&#125;&#125;</span>
-  <span class="attr">placeholder</span><span class="punct">=</span><span class="string">"Start writing..."</span>
-  <span class="attr">theme</span><span class="punct">=</span><span class="brace">&#123;</span>theme<span class="brace">&#125;</span>
-<span class="punct">/&gt;</span></pre>
+<span class="punct">&lt;</span><span class="component">div</span>
+  <span class="attr">use:lilac</span><span class="punct">=</span><span class="brace">&#123;</span><span class="brace">&#123;</span>
+    value<span class="punct">:</span> content<span class="punct">,</span>
+    toolbar<span class="punct">:</span> <span class="boolean">true</span><span class="punct">,</span>
+    placeholder<span class="punct">:</span> <span class="string">'Start writing...'</span><span class="punct">,</span>
+    onChange<span class="punct">:</span> <span class="brace">(</span>c<span class="brace">)</span> <span class="punct">=&gt;</span> <span class="brace">(</span>content <span class="punct">=</span> c<span class="brace">)</span><span class="punct">,</span>
+  <span class="brace">&#125;&#125;</span>
+<span class="punct">&gt;&lt;/</span><span class="component">div</span><span class="punct">&gt;</span></pre>
       </div>
     </section>
 
@@ -274,32 +271,35 @@ yarn add @lilac-wysiwyg/svelte</pre>
       <h3>Features</h3>
       <div class="features">
         <div class="feature">
-          <h4>Reactive Bindings</h4>
-          <p>Automatic two-way binding with Svelte's reactive statements and props.</p>
+          <h4>Action, Not a Component</h4>
+          <p>A <code>use:lilac</code> action — a plain function that works the same in Svelte 4 and 5.</p>
         </div>
         <div class="feature">
-          <h4>Minimal Bundle</h4>
-          <p>Lightweight adapter with no additional runtime dependencies.</p>
+          <h4>No Compiler Needed</h4>
+          <p>Ships as TypeScript; no Svelte compiler step, no extra runtime dependencies.</p>
         </div>
         <div class="feature">
-          <h4>Event Dispatchers</h4>
-          <p>Native Svelte event handling with custom event dispatchers.</p>
+          <h4>Reactive Options</h4>
+          <p>Changing <code>value</code> or <code>readOnly</code> in the action params updates the editor.</p>
         </div>
         <div class="feature">
           <h4>TypeScript Support</h4>
-          <p>Full TypeScript definitions for type-safe component usage.</p>
+          <p>Full TypeScript definitions for type-safe action parameters.</p>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <h3>Props</h3>
+      <h3>Action Params</h3>
       <div class="code-block">
-        <pre><span class="keyword">export let</span> value<span class="punct">:</span> <span class="keyword">string</span> <span class="punct">=</span> <span class="string">''</span>
-<span class="keyword">export let</span> toolbar<span class="punct">:</span> <span class="brace">&#123;</span> show<span class="punct">:</span> <span class="keyword">boolean</span> <span class="brace">&#125;</span> <span class="punct">=</span> <span class="brace">&#123;</span> show<span class="punct">:</span> <span class="boolean">true</span> <span class="brace">&#125;</span>
-<span class="keyword">export let</span> placeholder<span class="punct">:</span> <span class="keyword">string</span> <span class="punct">=</span> <span class="string">'Start writing...'</span>
-<span class="keyword">export let</span> theme<span class="punct">:</span> <span class="string">'light'</span> <span class="punct">|</span> <span class="string">'dark'</span> <span class="punct">=</span> <span class="string">'light'</span>
-<span class="keyword">export let</span> readOnly<span class="punct">:</span> <span class="keyword">boolean</span> <span class="punct">=</span> <span class="boolean">false</span></pre>
+        <pre><span class="keyword">interface</span> <span class="component">LilacEditorProps</span> <span class="brace">{</span>
+  value<span class="punct">?:</span> <span class="keyword">string</span><span class="punct">;</span>
+  toolbar<span class="punct">?:</span> <span class="component">ToolbarConfig</span> <span class="punct">|</span> <span class="keyword">boolean</span><span class="punct">;</span>
+  placeholder<span class="punct">?:</span> <span class="keyword">string</span><span class="punct">;</span>
+  theme<span class="punct">?:</span> <span class="string">'light'</span> <span class="punct">|</span> <span class="string">'dark'</span> <span class="punct">|</span> <span class="string">'auto'</span><span class="punct">;</span>
+  readOnly<span class="punct">?:</span> <span class="keyword">boolean</span><span class="punct">;</span>
+  onChange<span class="punct">?:</span> <span class="brace">(</span>content<span class="punct">:</span> <span class="keyword">string</span><span class="brace">)</span> <span class="punct">=&gt;</span> <span class="keyword">void</span><span class="punct">;</span>
+<span class="brace">}</span></pre>
       </div>
     </section>
 

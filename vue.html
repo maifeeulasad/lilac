@@ -244,15 +244,16 @@ yarn add @lilac-wysiwyg/vue</pre>
     </section>
 
     <section class="section">
-      <h3>Plugin Setup</h3>
+      <h3>Component Registration</h3>
       <div class="code-block">
-        <pre><span class="comment">// main.ts</span>
+        <pre><span class="comment">// The adapter exports a component — import it where you use it.</span>
+<span class="comment">// Register it globally only if you prefer:</span>
 <span class="keyword">import</span> <span class="brace">&#123;</span> createApp <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'vue'</span><span class="punct">;</span>
-<span class="keyword">import</span> <span class="brace">&#123;</span> LilacEditorPlugin <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@lilac-wysiwyg/vue'</span><span class="punct">;</span>
+<span class="keyword">import</span> <span class="brace">&#123;</span> LilacEditor <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@lilac-wysiwyg/vue'</span><span class="punct">;</span>
 <span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span><span class="punct">;</span>
 
 <span class="keyword">const</span> app <span class="punct">=</span> createApp<span class="brace">(</span>App<span class="brace">)</span><span class="punct">;</span>
-app<span class="punct">.</span><span class="function">use</span><span class="brace">(</span>LilacEditorPlugin<span class="brace">)</span><span class="punct">;</span>
+app<span class="punct">.</span><span class="function">component</span><span class="brace">(</span><span class="string">'LilacEditor'</span><span class="punct">,</span> LilacEditor<span class="brace">)</span><span class="punct">;</span>
 app<span class="punct">.</span><span class="function">mount</span><span class="brace">(</span><span class="string">'#app'</span><span class="brace">)</span><span class="punct">;</span></pre>
       </div>
     </section>
@@ -299,8 +300,8 @@ app<span class="punct">.</span><span class="function">mount</span><span class="b
           <p>Full TypeScript definitions included with proper typing.</p>
         </div>
         <div class="feature">
-          <h4>Plugin System</h4>
-          <p>Easy installation via Vue plugin system with global registration.</p>
+          <h4>Local or Global</h4>
+          <p>Import the component per-file, or register it globally with <code>app.component()</code>.</p>
         </div>
       </div>
     </section>

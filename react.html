@@ -263,10 +263,11 @@ yarn add @lilac-wysiwyg/react</pre>
     <section class="section">
       <h3>Basic Usage</h3>
       <div class="code-block">
-        <pre><span class="keyword">import</span> <span class="brace">&#123;</span> LilacEditor <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@lilac-wysiwyg/react'</span><span class="punct">;</span>
+        <pre><span class="keyword">import</span> <span class="brace">&#123;</span> useState <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'react'</span><span class="punct">;</span>
+<span class="keyword">import</span> <span class="brace">&#123;</span> LilacEditor <span class="brace">&#125;</span> <span class="keyword">from</span> <span class="string">'@lilac-wysiwyg/react'</span><span class="punct">;</span>
 
 <span class="keyword">function</span> <span class="function">App</span><span class="brace">() {</span>
-  <span class="keyword">const</span> <span class="prop">[content]</span><span class="punct">,</span> <span class="function">setContent</span><span class="brace">()</span> <span class="keyword">=</span> useState<span class="brace">(</span><span class="string">'&lt;p&gt;Hello World!&lt;/p&gt;'</span><span class="brace">)</span><span class="punct">;</span>
+  <span class="keyword">const</span> [content, setContent] <span class="keyword">=</span> <span class="function">useState</span><span class="brace">(</span><span class="string">'&lt;p&gt;Hello World!&lt;/p&gt;'</span><span class="brace">)</span><span class="punct">;</span>
 
   <span class="keyword">return</span> <span class="brace">(&lt;</span><span class="component">LilacEditor</span>
     <span class="attr">value</span><span class="punct">=</span><span class="brace">&#123;</span>content<span class="brace">&#125;</span>
