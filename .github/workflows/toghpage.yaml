@@ -30,13 +30,15 @@ jobs:
       # toolchain) can't run from a CDN, so each has a tiny Vite app under
       # playground/. Build them here and drop the static output under
       # dist/playground/<name>/, which the docs pages embed via an iframe.
+      # Built with npm (not pnpm): these apps need esbuild's install script to
+      # run, which newer pnpm blocks by default. npm runs it normally.
       - name: "Build playground micro-bundles"
         run: |
           for dir in playground/*/; do
             [ -f "${dir}package.json" ] || continue
             name="$(basename "$dir")"
             echo "== building $name playground =="
-            (cd "$dir" && pnpm install --no-frozen-lockfile && pnpm build)
+            (cd "$dir" && npm install --no-audit --no-fund && npm run build)
             mkdir -p "dist/playground/$name"
             cp -r "${dir}dist/." "dist/playground/$name/"
           done

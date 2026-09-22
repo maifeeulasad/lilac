@@ -51,3 +51,5 @@ adapter/*/LICENSE
 playground/*/dist/
 playground/*/node_modules/
 playground/*/pnpm-lock.yaml
+playground/*/pnpm-workspace.yaml
+playground/*/package-lock.json
