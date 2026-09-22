@@ -1,0 +1,20 @@
+{
+  "name": "lilac-qwik-playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@builder.io/qwik": "^1.9.0",
+    "@lilac-wysiwyg/core": "^0.6.0",
+    "@lilac-wysiwyg/qwik": "^0.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2",
+    "vite": "^5.4.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}

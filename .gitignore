@@ -47,3 +47,8 @@ playwright-report/
 # Per-package README/LICENSE are generated at publish time (script/prepare-package.ts)
 adapter/*/README.md
 adapter/*/LICENSE
+# Playground micro-bundles are built in CI, not tracked
+playground/*/dist/
+playground/*/node_modules/
+playground/*/pnpm-lock.yaml
+playground/*/pnpm-workspace.yaml

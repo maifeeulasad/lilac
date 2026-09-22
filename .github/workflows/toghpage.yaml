@@ -26,6 +26,20 @@ jobs:
         run: pnpm build
       - name: "Copy documentation pages alongside the build"
         run: cp -r docs/* dist/
+      # Frameworks that need their own build (Qwik's optimizer, Ember's
+      # toolchain) can't run from a CDN, so each has a tiny Vite app under
+      # playground/. Build them here and drop the static output under
+      # dist/playground/<name>/, which the docs pages embed via an iframe.
+      - name: "Build playground micro-bundles"
+        run: |
+          for dir in playground/*/; do
+            [ -f "${dir}package.json" ] || continue
+            name="$(basename "$dir")"
+            echo "== building $name playground =="
+            (cd "$dir" && pnpm install --no-frozen-lockfile && pnpm build)
+            mkdir -p "dist/playground/$name"
+            cp -r "${dir}dist/." "dist/playground/$name/"
+          done
       # The live playgrounds load the published adapters from a CDN at the
       # version stamped here, so they always match the current package version.
       - name: "Stamp docs with the package version"
