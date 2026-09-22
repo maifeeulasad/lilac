@@ -1,0 +1,3 @@
+<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" contenteditable="true" data-testid="lilac-editor-content" role="textbox">
+  <h1>Big title</h1>
+</div>

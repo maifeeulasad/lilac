@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lilac — E2E fixture</title>
+  <style>
+    /* Screenshot stability: the editor ships a scale-in animation; kill it
+       so visual baselines are pixel-stable. */
+    .lilac-editor,
+    .lilac-toolbar__button {
+      animation: none !important;
+      transition: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="lilac-root"></div>
+
+  <script type="module">
+    const { LilacEditor } = await import('/dist/index.js');
+
+    const editor = new LilacEditor({
+      container: document.getElementById('lilac-root'),
+      toolbar: { show: true },
+      placeholder: 'Start writing...',
+      minHeight: 300,
+      maxHeight: 500,
+    });
+
+    // Exposed so specs can drive the editor from the page context.
+    window.lilac = {
+      editor,
+      root: document.querySelector('.lilac-editor'),
+      content: document.querySelector('.lilac-editor__content'),
+      setContent: (html) => editor.setContent(html),
+      getContent: () => editor.getContent(),
+      selectText: (needle) => {
+        const walker = document.createTreeWalker(window.lilac.content, NodeFilter.SHOW_TEXT);
+        let node = walker.nextNode();
+        while (node) {
+          const index = node.data.indexOf(needle);
+          if (index !== -1) {
+            const range = document.createRange();
+            range.setStart(node, index);
+            range.setEnd(node, index + needle.length);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            return true;
+          }
+          node = walker.nextNode();
+        }
+        return false;
+      },
+    };
+    window.lilac.editor.focus();
+  </script>
+</body>
+
+</html>
