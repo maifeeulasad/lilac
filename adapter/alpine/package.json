@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/alpine",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Alpine.js adapter for Lilac WYSIWYG editor - an x-lilac directive for progressively enhanced pages",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
