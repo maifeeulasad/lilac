@@ -44,3 +44,6 @@ dist-scripts/
 # Playwright
 test-results/
 playwright-report/
+# Per-package README/LICENSE are generated at publish time (script/prepare-package.ts)
+adapter/*/README.md
+adapter/*/LICENSE
