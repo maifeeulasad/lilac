@@ -1,0 +1,76 @@
+{
+	"version": "1",
+	"manifestHash": "kahf7a",
+	"options": {
+		"target": "client",
+		"buildMode": "production",
+		"entryStrategy": {
+			"type": "smart"
+		}
+	},
+	"core": "../assets/index-Dk2lvlCx.js",
+	"preloader": "../assets/preloader-C-Y9QxqI.js",
+	"bundleGraphAsset": "assets/bundle-graph-BqrDAOEV.json",
+	"injections": [],
+	"mapping": {},
+	"bundles": {
+		"../assets/index-Dk2lvlCx.js": {
+			"size": 114500,
+			"total": 114500,
+			"origins": [
+				"@builder.io/qwik/build",
+				"index.html",
+				"index.html?html-proxy&inline-css&index=0.css",
+				"node_modules/@builder.io/qwik/dist/core.prod.mjs",
+				"node_modules/@lilac-wysiwyg/core/dist/components/Editor.js",
+				"node_modules/@lilac-wysiwyg/core/dist/components/FindReplace.js",
+				"node_modules/@lilac-wysiwyg/core/dist/components/Toolbar.js",
+				"node_modules/@lilac-wysiwyg/core/dist/plugins/PluginManager.js",
+				"node_modules/@lilac-wysiwyg/core/dist/utils/findReplace.js",
+				"node_modules/@lilac-wysiwyg/core/dist/utils/formatting.js",
+				"node_modules/@lilac-wysiwyg/core/dist/utils/icons.js",
+				"node_modules/@lilac-wysiwyg/core/dist/utils/imageEmbed.js",
+				"node_modules/@lilac-wysiwyg/core/dist/utils/markdown.js",
+				"node_modules/@lilac-wysiwyg/core/dist/utils/sanitize.js",
+				"node_modules/@lilac-wysiwyg/core/dist/utils/styles.js",
+				"node_modules/@lilac-wysiwyg/qwik/dist/adapter.js",
+				"src/main.tsx"
+			],
+			"interactivity": 0
+		},
+		"../assets/preloader-C-Y9QxqI.js": {
+			"size": 2511,
+			"total": 2511,
+			"origins": [
+				"node_modules/@builder.io/qwik/dist/preloader.mjs"
+			],
+			"interactivity": 0
+		},
+		"../assets/qwikloader-naDMFAHy.js": {
+			"size": 3100,
+			"total": 3100,
+			"origins": [
+				"node_modules/@builder.io/qwik/dist/qwikloader.js"
+			],
+			"interactivity": 0
+		}
+	},
+	"assets": {
+		"index.html": {
+			"size": 423
+		},
+		"assets/bundle-graph-BqrDAOEV.json": {
+			"name": "bundle-graph.json",
+			"size": 0
+		}
+	},
+	"symbols": {},
+	"qwikLoader": "../assets/qwikloader-naDMFAHy.js",
+	"platform": {
+		"vite": "",
+		"rollup": "4.63.4",
+		"env": "node",
+		"os": "linux",
+		"node": "24.20.0"
+	}
+}

@@ -140,7 +140,6 @@ const MOUNTERS = {
 // in-browser demo. (Qwik needs its resumability optimizer; Ember needs ember-cli
 // / the Glimmer compiler and a booted app + resolver.)
 const BUILD_ONLY = {
-  qwik: 'Qwik',
   ember: 'Ember',
 };
 
