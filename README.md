@@ -85,6 +85,38 @@ Every adapter is a thin wrapper over the same core, published under the `@lilac-
 
 > All version ranges are declared as peer dependencies, so the adapter uses the copy of the framework already in your app. React also peers on `react-dom` (&ge; 16.8).
 
+### Script tag (UMD / CDN)
+
+For no-bundler pages, load the UMD build and use the `Lilac` global:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@lilac-wysiwyg/core/dist/lilac.umd.js"></script>
+<div id="editor"></div>
+<script>
+  new Lilac.LilacEditor({ container: document.getElementById('editor'), toolbar: { show: true } });
+</script>
+```
+
+### PHP &amp; Laravel
+
+A Composer package renders the editor server-side (it emits the container + the UMD loader script). See the [PHP docs](https://maifeeulasad.github.io/lilac/php.html).
+
+```bash
+composer require lilac-wysiwyg/lilac
+```
+
+```php
+use Lilac\Editor;
+
+echo Editor::render(['toolbar' => ['show' => true], 'placeholder' => 'Write…']);
+```
+
+In Laravel the service provider is auto-discovered, so a Blade view can use the component directly:
+
+```blade
+<x-lilac :value="old('body', $post->body)" placeholder="Write…" />
+```
+
 ## Quick Start
 
 ### Vanilla JS / TypeScript (Core)
@@ -455,6 +487,8 @@ Visit our [GitHub Pages](https://maifeeulasad.github.io/lilac/) for per-framewor
 - [x] Ember adapter
 - [x] Astro adapter
 - [x] Vanilla JS adapter
+- [x] UMD / CDN (script-tag) build
+- [x] PHP & Laravel integration
 - [x] Markdown export/import
 - [x] Image upload and embedding
 - [x] Find and replace

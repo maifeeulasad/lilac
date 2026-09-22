@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="lilac-version" content="__LILAC_VERSION__">
+  <title>Lilac Editor - PHP &amp; Laravel</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3G1RNC5YLT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-3G1RNC5YLT');
+  </script>
+
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+  <style>:root { --accent: #777BB4; --accent-2: #8892BF; }</style>
+  <style>
+    :root {
+      --color-primary: #8b7cd8;
+      --color-primary-light: #a898e8;
+      --color-primary-dark: #6d5ac8;
+      --color-background: #ffffff;
+      --color-surface: #f8f9fb;
+      --color-border: #e1e5e9;
+      --color-text: #2c3e50;
+      --color-text-muted: #64748b;
+      --border-radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --code-bg: #1a1b23;
+      --code-text: #e2e8f0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-background: #14151b;
+        --color-surface: #1d1f27;
+        --color-border: #2c2f3a;
+        --color-text: #e7e9ee;
+        --color-text-muted: #9aa4b2;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--color-background);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .back-link { color: white; text-decoration: none; opacity: 0.9; font-size: 0.875rem; }
+    .back-link:hover { opacity: 1; text-decoration: underline; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+    .intro { margin-bottom: 2rem; }
+    .intro h2 { font-size: 1.5rem; margin: 0 0 1rem 0; }
+    .intro p { color: var(--color-text-muted); margin: 0; }
+
+    .section { margin-bottom: 2rem; }
+    .section h3 { font-size: 1.25rem; margin: 0 0 1rem 0; display: flex; align-items: center; gap: 0.5rem; }
+
+    .code-block {
+      background: var(--code-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block pre {
+      margin: 0;
+      color: var(--code-text);
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .code-block .comment { color: #6a737d; }
+    .code-block .keyword { color: #F97583; }
+    .code-block .string { color: #9ECBFF; }
+    .code-block .function { color: #B392F0; }
+    .code-block .component { color: #7EE787; }
+    .code-block .attr { color: #FFAB70; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .feature {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+    }
+
+    .feature h4 { margin: 0 0 0.5rem 0; font-size: 1rem; }
+    .feature p { margin: 0; color: var(--color-text-muted); font-size: 0.875rem; }
+    .feature code {
+      background: var(--color-background);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      font-size: 0.8125rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--color-border);
+      margin-top: 2rem;
+    }
+
+    .footer a { color: var(--color-primary); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      .header { padding: 1rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-content">
+      <h1>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <ellipse cx="12" cy="12" rx="10" ry="6" />
+          <path d="M7 10.5h2l-.6 3M14 10.5h2l-.6 3M10 10.5h1.6c.8 0 1.1.6.9 1.4-.2.8-.7 1.1-1.5 1.1H10z" />
+        </svg>
+        PHP &amp; Laravel
+      </h1>
+      <a href="index.html" class="back-link">Back to Home</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h2>Using Lilac from PHP</h2>
+      <p>Lilac's core runs in the browser, so the PHP package renders the markup that mounts it: a container plus a
+        script that loads the published UMD build from a CDN. Works in plain PHP, or as a Laravel Blade component.</p>
+    </section>
+
+    <section class="section">
+      <h3>Installation</h3>
+      <div class="code-block">
+        <pre><span class="comment"># Composer (Packagist)</span>
+composer require lilac-wysiwyg/lilac</pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Plain PHP</h3>
+      <div class="code-block">
+        <pre><span class="keyword">use</span> <span class="component">Lilac\Editor</span><span class="attr">;</span>
+
+<span class="keyword">echo</span> <span class="component">Editor</span>::<span class="function">render</span>([
+  <span class="string">'toolbar'</span> =&gt; [<span class="string">'show'</span> =&gt; <span class="keyword">true</span>],
+  <span class="string">'placeholder'</span> =&gt; <span class="string">'Start writing…'</span>,
+  <span class="string">'theme'</span> =&gt; <span class="string">'auto'</span>,
+  <span class="string">'initialContent'</span> =&gt; <span class="string">'&lt;p&gt;Hello from PHP!&lt;/p&gt;'</span>,
+]);</pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Laravel</h3>
+      <div class="code-block">
+        <pre><span class="comment">{{-- The service provider is auto-discovered; just use the component --}}</span>
+<span class="punct">&lt;</span><span class="component">x-lilac</span>
+  <span class="attr">:value</span>=<span class="string">"old('body', $post->body)"</span>
+  <span class="attr">placeholder</span>=<span class="string">"Write your post…"</span>
+  <span class="attr">theme</span>=<span class="string">"auto"</span>
+<span class="punct">/&gt;</span></pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Just a script tag</h3>
+      <div class="code-block">
+        <pre><span class="comment">&lt;!-- Load the UMD build once, then construct editors yourself --&gt;</span>
+<span class="keyword">echo</span> <span class="component">Lilac\Editor</span>::<span class="function">scriptTag</span>(); <span class="comment">// or a pinned version: scriptTag('__LILAC_VERSION__')</span>
+
+<span class="punct">&lt;</span><span class="component">div</span> <span class="attr">id</span>=<span class="string">"editor"</span><span class="punct">&gt;&lt;/</span><span class="component">div</span><span class="punct">&gt;</span>
+<span class="punct">&lt;</span><span class="component">script</span><span class="punct">&gt;</span>
+  <span class="keyword">new</span> window.<span class="component">Lilac</span>.<span class="function">LilacEditor</span>({ container: <span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">'editor'</span>), toolbar: { show: <span class="keyword">true</span> } });
+<span class="punct">&lt;/</span><span class="component">script</span><span class="punct">&gt;</span></pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Features</h3>
+      <div class="features">
+        <div class="feature">
+          <h4>Framework-free</h4>
+          <p><code>Lilac\Editor::render()</code> returns an HTML string — drop it into any PHP template.</p>
+        </div>
+        <div class="feature">
+          <h4>Laravel Blade</h4>
+          <p>An auto-discovered <code>&lt;x-lilac /&gt;</code> component, no manual provider registration.</p>
+        </div>
+        <div class="feature">
+          <h4>CDN-loaded core</h4>
+          <p>Pulls the published <code>window.Lilac</code> UMD build; pin a version or track the latest.</p>
+        </div>
+        <div class="feature">
+          <h4>One shared loader</h4>
+          <p>Multiple editors on a page reuse a single script include.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Live Playground</h3>
+      <p style="color:var(--color-text-muted);margin:0 0 1rem 0">This page is static, so the PHP is shown rather than executed (v<span data-lilac-version>0.6.0</span>). The rendered output is a plain editor identical to every other integration.</p>
+      <div class="lilac-playground" data-framework="php"></div>
+    </section>
+
+    <span class="badge">PHP &amp; Laravel v<span data-lilac-version>0.6.0</span></span>
+  </main>
+
+  <footer class="footer">
+    <p>View on <a href="https://github.com/maifeeulasad/lilac">GitHub</a> - MIT License</p>
+  </footer>
+  <script type="module" src="playground.js"></script>
+</body>
+
+</html>
