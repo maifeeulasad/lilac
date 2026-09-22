@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/preact",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Preact adapter for Lilac WYSIWYG editor - lightweight React-compatible component wrapper",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

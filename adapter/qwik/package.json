@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/qwik",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Qwik adapter for Lilac WYSIWYG editor - a resumable Qwik component wrapper",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

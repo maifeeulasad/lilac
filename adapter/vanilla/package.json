@@ -1,6 +1,6 @@
 {
   "name": "@lilac-wysiwyg/vanilla",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Vanilla JS adapter for Lilac WYSIWYG editor - Pure JavaScript/TypeScript without framework dependencies",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
