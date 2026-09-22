@@ -29,13 +29,22 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # Stamp the release version and npm metadata in at publish time so the
+      # repo carries no per-release edits. The root package keeps its own README.
+      - name: Prepare package
+        run: |
+          VERSION="${TAG#v}"
+          pnpm build:scripts
+          node dist-scripts/script/prepare-package.js . "$VERSION"
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+
       - name: Publish core
         run: npm publish --access=public --no-git-checks --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ORG }}
 
   loitering:
-    # need to accept version from release later on
     needs: publish-core
     runs-on: ubuntu-latest
     permissions:
@@ -111,6 +120,16 @@ jobs:
       - name: Build
         working-directory: ${{ matrix.package }}
         run: pnpm build
+
+      # Generate the per-package README + LICENSE and stamp the release version
+      # and metadata (runs from the repo root so the root LICENSE resolves).
+      - name: Prepare package
+        run: |
+          VERSION="${TAG#v}"
+          pnpm build:scripts
+          node dist-scripts/script/prepare-package.js "${{ matrix.package }}" "$VERSION"
+        env:
+          TAG: ${{ github.event.release.tag_name }}
 
       - name: Verify entry point exists before publishing
         working-directory: ${{ matrix.package }}
