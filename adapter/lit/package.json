@@ -1,0 +1,52 @@
+{
+  "name": "@lilac-wysiwyg/lit",
+  "version": "0.5.0",
+  "description": "Lit adapter for Lilac WYSIWYG editor - a <lilac-editor> Web Component",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "access": "public",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json -w",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "wysiwyg",
+    "editor",
+    "lit",
+    "web-components",
+    "custom-elements",
+    "lilac"
+  ],
+  "packageManager": "pnpm@10.25.0",
+  "author": "Maifee Ul Asad<maifeeulasad@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maifeeulasad/lilac.git"
+  },
+  "peerDependencies": {
+    "lit": ">=2.0.0"
+  },
+  "dependencies": {
+    "@lilac-wysiwyg/core": "latest"
+  },
+  "devDependencies": {
+    "lit": "^3.1.0",
+    "typescript": "^5.0.2"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+}
