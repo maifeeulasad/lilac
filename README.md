@@ -66,43 +66,24 @@ yarn add @lilac-wysiwyg/core
 
 ### Framework Adapters
 
-```bash
-# React
-npm install @lilac-wysiwyg/react
+Every adapter is a thin wrapper over the same core, published under the `@lilac-wysiwyg/*` scope and built with plain `tsc`. Install one with your package manager of choice (`npm install`, `pnpm add`, or `yarn add`).
 
-# Preact
-npm install @lilac-wysiwyg/preact
+| Framework | Package | Supported versions | Integration | Docs |
+| --- | --- | --- | --- | --- |
+| React | `@lilac-wysiwyg/react` | React &ge; 16.8 (hooks) | `<LilacEditor>` component + imperative ref | [react.html](https://maifeeulasad.github.io/lilac/react.html) |
+| Preact | `@lilac-wysiwyg/preact` | Preact &ge; 10 | `<LilacEditor>` component + imperative ref | [preact.html](https://maifeeulasad.github.io/lilac/preact.html) |
+| Vue | `@lilac-wysiwyg/vue` | Vue &ge; 3 | `<LilacEditor>` component with `v-model` | [vue.html](https://maifeeulasad.github.io/lilac/vue.html) |
+| Svelte | `@lilac-wysiwyg/svelte` | Svelte &ge; 4 (works in 4 & 5) | `use:lilac` action | [svelte.html](https://maifeeulasad.github.io/lilac/svelte.html) |
+| Solid | `@lilac-wysiwyg/solid` | solid-js &ge; 1.6 | `<LilacEditor>` component + `use:lilac` directive | [solid.html](https://maifeeulasad.github.io/lilac/solid.html) |
+| Angular | `@lilac-wysiwyg/angular` | @angular/core &ge; 14 | Component + directive (module) | [angular.html](https://maifeeulasad.github.io/lilac/angular.html) |
+| Lit | `@lilac-wysiwyg/lit` | lit &ge; 2 | `<lilac-editor>` custom element | [lit.html](https://maifeeulasad.github.io/lilac/lit.html) |
+| Qwik | `@lilac-wysiwyg/qwik` | @builder.io/qwik &ge; 1.5 | `<LilacEditor>` `component$` (QRL handlers) | [qwik.html](https://maifeeulasad.github.io/lilac/qwik.html) |
+| Alpine.js | `@lilac-wysiwyg/alpine` | alpinejs &ge; 3 | `x-lilac` directive (plugin) | [alpine.html](https://maifeeulasad.github.io/lilac/alpine.html) |
+| Ember | `@lilac-wysiwyg/ember` | ember-source &ge; 4, ember-modifier &ge; 4 | `{{lilac}}` element modifier | [ember.html](https://maifeeulasad.github.io/lilac/ember.html) |
+| Astro | `@lilac-wysiwyg/astro` | astro &ge; 3 (optional peer) | `mountLilacEditor()` + `lilac()` integration | [astro.html](https://maifeeulasad.github.io/lilac/astro.html) |
+| Vanilla JS | `@lilac-wysiwyg/vanilla` | — (no framework) | `new LilacEditor()` / factory | [vanilla.html](https://maifeeulasad.github.io/lilac/vanilla.html) |
 
-# Vue
-npm install @lilac-wysiwyg/vue
-
-# Svelte
-npm install @lilac-wysiwyg/svelte
-
-# SolidJS
-npm install @lilac-wysiwyg/solid
-
-# Angular
-npm install @lilac-wysiwyg/angular
-
-# Lit (Web Components)
-npm install @lilac-wysiwyg/lit
-
-# Qwik
-npm install @lilac-wysiwyg/qwik
-
-# Alpine.js
-npm install @lilac-wysiwyg/alpine
-
-# Ember
-npm install @lilac-wysiwyg/ember
-
-# Astro
-npm install @lilac-wysiwyg/astro
-
-# Vanilla JS
-npm install @lilac-wysiwyg/vanilla
-```
+> All version ranges are declared as peer dependencies, so the adapter uses the copy of the framework already in your app. React also peers on `react-dom` (&ge; 16.8).
 
 ## Quick Start
 
