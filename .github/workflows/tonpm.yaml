@@ -29,9 +29,9 @@ jobs:
       - name: Build
         run: pnpm build
 
-      # Also emit the UMD/global build (window.Lilac) for <script> tag / PHP use.
-      - name: Build UMD bundle
-        run: pnpm build:umd
+      # Note: the UMD/global build (dist/lilac.umd.js, window.Lilac) is produced
+      # by the package's prepublishOnly hook at `npm publish` time, so it isn't
+      # wiped by the tsc rebuild that hook runs.
 
       # Guard against a release whose tag does not match the committed version.
       - name: Validate version matches release

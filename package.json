@@ -14,7 +14,7 @@
     "build": "rm -rf dist && tsc",
     "build:umd": "npx --yes esbuild@0.24.0 dist/index.js --bundle --format=iife --global-name=Lilac --minify --outfile=dist/lilac.umd.js",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build",
+    "prepublishOnly": "pnpm run build && pnpm run build:umd",
     "build:scripts": "tsc -p tsconfig.scripts.json",
     "build:adapters": "pnpm run build:scripts && node dist-scripts/script/build-adapters.js",
     "verify:packaging": "pnpm run build:scripts && node dist-scripts/script/verify-packaging.js",
