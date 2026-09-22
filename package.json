@@ -16,7 +16,12 @@
     "build:adapters": "pnpm run build:scripts && node dist-scripts/script/build-adapters.js",
     "verify:packaging": "pnpm run build:scripts && node dist-scripts/script/verify-packaging.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:novisual": "playwright test --grep-invert @visual",
+    "test:e2e:docker": "docker run --rm --ipc=host -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.59.0-noble sh -lc 'npm i -g pnpm && pnpm i && pnpm exec playwright test'",
+    "test:e2e:update": "docker run --rm --ipc=host -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.59.0-noble sh -lc 'npm i -g pnpm && pnpm i && pnpm exec playwright test --update-snapshots'",
+    "test:all": "pnpm run test && pnpm run typecheck && pnpm run test:e2e"
   },
   "keywords": [
     "wysiwyg",
@@ -44,6 +49,7 @@
     "node": ">=20"
   },
   "devDependencies": {
+    "@playwright/test": "1.59.0",
     "@types/node": "^24.1.0",
     "jsdom": "^29.1.1",
     "playwright": "^1.59.0",

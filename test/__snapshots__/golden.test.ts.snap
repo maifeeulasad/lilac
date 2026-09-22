@@ -1,0 +1,82 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`golden fixtures > has at least one canonical fixture > fixture inventory 1`] = `
+[
+  "basic",
+  "lists",
+  "quote-code-table",
+  "typography",
+  "untrusted",
+]
+`;
+
+exports[`golden fixtures > renders basic to the canonical form > basic 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <h1>Editorial headline</h1>
+  <p>A lead paragraph with <strong>strong</strong> and <em>emphasis</em>,
+then a <a href="https://example.com">link</a> and some
+<code>inline code</code>.</p>
+  <h2>Section</h2>
+  <p>Trailing content with a <br> line break.</p>
+</div>"
+`;
+
+exports[`golden fixtures > renders lists to the canonical form > lists 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <ul>
+    <li>alpha</li>
+    <li>
+      beta
+      <ul>
+        <li>nested gamma</li>
+      </ul>
+    </li>
+  </ul>
+  <ol start="5">
+    <li>five</li>
+    <li>six</li>
+  </ol>
+</div>"
+`;
+
+exports[`golden fixtures > renders quote-code-table to the canonical form > quote-code-table 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <blockquote>
+    <p>Something worth quoting.</p>
+  </blockquote>
+  <pre>const x = 1;
+if (x) console.log(x);</pre>
+  <hr>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>apples</td>
+        <td>3</td>
+      </tr>
+    </tbody>
+  </table>
+</div>"
+`;
+
+exports[`golden fixtures > renders typography to the canonical form > typography 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <h1>Typography</h1>
+  <p><strong>Bold</strong> <em>Italic</em> <u>Underline</u> <s>Strikethrough</s>
+<code>constant</code> and <a href="https://openai.com" rel="noopener noreferrer" target="_blank">new-tab link</a>.</p>
+</div>"
+`;
+
+exports[`golden fixtures > renders untrusted to the canonical form > untrusted 1`] = `
+"<div aria-label="Text editor" aria-multiline="true" class="lilac-editor__content" data-testid="lilac-editor-content" role="textbox">
+  <p>Keep the text, drop the danger.</p>
+  <img src="x">
+  <a>click me</a>
+  <div>styled</div>
+</div>"
+`;
