@@ -1,0 +1,55 @@
+{
+  "name": "@lilac-wysiwyg/astro",
+  "version": "0.5.0",
+  "description": "Astro adapter for Lilac WYSIWYG editor - a client mount helper and an Astro integration",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "access": "public",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json -w",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "wysiwyg",
+    "editor",
+    "astro",
+    "astro-integration",
+    "lilac"
+  ],
+  "packageManager": "pnpm@10.25.0",
+  "author": "Maifee Ul Asad<maifeeulasad@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maifeeulasad/lilac.git"
+  },
+  "peerDependencies": {
+    "astro": ">=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "astro": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@lilac-wysiwyg/core": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+}
