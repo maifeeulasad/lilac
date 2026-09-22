@@ -115,6 +115,7 @@ editor.setContent('<p>Hello World!</p>');
 ### React
 
 ```tsx
+import { useState } from 'react';
 import { LilacEditor } from '@lilac-wysiwyg/react';
 
 function App() {
@@ -163,6 +164,38 @@ Svelte 4 and 5 without a compiler step:
 </script>
 
 <div use:lilac={{ value: content, onChange: (c) => (content = c), toolbar: true }} />
+```
+
+### Solid
+
+The Solid adapter offers both a component and a `use:lilac` directive:
+
+```tsx
+import { createSignal } from 'solid-js';
+import { LilacEditor } from '@lilac-wysiwyg/solid';
+
+function App() {
+  const [content, setContent] = createSignal('<p>Hello!</p>');
+
+  return <LilacEditor value={content()} onChange={setContent} toolbar />;
+}
+```
+
+### Lit / Web Components
+
+Importing the package registers a `<lilac-editor>` custom element, usable in plain HTML or any framework:
+
+```html
+<script type="module">
+  import '@lilac-wysiwyg/lit';
+</script>
+
+<lilac-editor value="<p>Hello!</p>" toolbar></lilac-editor>
+<script>
+  document
+    .querySelector('lilac-editor')
+    .addEventListener('change', (e) => console.log(e.detail));
+</script>
 ```
 
 ## Using Built-in Plugins
@@ -401,7 +434,7 @@ pnpm typecheck
 
 ## Documentation
 
-Visit our [GitHub Pages](https://maifeeulasad.github.io/lilac/) for complete documentation and live demos for each framework adapter.
+Visit our [GitHub Pages](https://maifeeulasad.github.io/lilac/) for per-framework documentation, with a live interactive demo on the [Vanilla JS page](https://maifeeulasad.github.io/lilac/vanilla.html).
 
 ## Roadmap
 
