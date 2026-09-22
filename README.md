@@ -59,30 +59,31 @@ lilac/
 
 A packaging- and integration-focused comparison with other open-source editors. ✅ = built in / first-party, 🟡 = partial or different scope, ❌ = not provided by the core team.
 
-| Feature | Lilac | [TipTap](https://tiptap.dev) | [Lexical](https://lexical.dev) | [ProseMirror](https://prosemirror.net) | [Quill](https://quilljs.com) | [Slate](https://docs.slatejs.org) |
-| --- | :---: | :---: | :---: | :---: | :---: | :---: |
-| TypeScript core | ✅ | ✅ | ✅ | ✅<sup>1</sup> | ✅ | ✅ |
-| Framework-agnostic core | ✅ | ✅ | ✅ | ✅ | ✅ | ❌<sup>2</sup> |
-| Zero runtime dependencies | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ |
-| Vanilla JS (no framework) | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ |
-| Official React adapter | ✅ | ✅ | ✅ | ❌ | ❌<sup>3</sup> | ✅ |
-| Official Vue adapter | ✅ | ✅ | ❌<sup>4</sup> | ❌ | ❌<sup>3</sup> | ❌ |
-| Official Angular adapter | ✅ | ❌ | ❌ | ❌ | ❌<sup>3</sup> | ❌ |
-| Official Svelte adapter | ✅ | ❌<sup>3</sup> | ❌ | ❌ | ❌ | ❌ |
-| Other official adapters<sup>5</sup> | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Web Component (custom element) | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| UMD / CDN script-tag build | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ |
-| PHP / Laravel package | ✅ | 🟡<sup>6</sup> | ❌ | ❌ | ❌ | ❌ |
-| Custom plugin / extension system | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Feature | Lilac | [TipTap](https://tiptap.dev) | [Lexical](https://lexical.dev) | [ProseMirror](https://prosemirror.net) | [Quill](https://quilljs.com) | [Slate](https://docs.slatejs.org) | [TinyMCE](https://www.tiny.cloud) | [CKEditor 5](https://ckeditor.com) |
+| --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| TypeScript core | ✅ | ✅ | ✅ | ✅<sup>1</sup> | ✅ | ✅ | ✅ | ✅ |
+| Framework-agnostic core | ✅ | ✅ | ✅ | ✅ | ✅ | ❌<sup>2</sup> | ✅ | ✅ |
+| Zero runtime dependencies | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Vanilla JS (no framework) | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
+| Official React adapter | ✅ | ✅ | ✅ | ❌ | ❌<sup>3</sup> | ✅ | ✅ | ✅ |
+| Official Vue adapter | ✅ | ✅ | ❌<sup>4</sup> | ❌ | ❌<sup>3</sup> | ❌ | ✅ | ✅ |
+| Official Angular adapter | ✅ | ❌ | ❌ | ❌ | ❌<sup>3</sup> | ❌ | ✅ | ✅ |
+| Official Svelte adapter | ✅ | ❌<sup>3</sup> | ❌ | ❌ | ❌ | ❌ | ✅ | ❌<sup>7</sup> |
+| Other official adapters<sup>5</sup> | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Web Component (custom element) | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
+| UMD / CDN script-tag build | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ✅ |
+| PHP / Laravel package | ✅ | 🟡<sup>6</sup> | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
+| Custom plugin / extension system | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 <sup>1</sup> ProseMirror is JavaScript shipped with bundled type declarations. &nbsp;
 <sup>2</sup> Slate is built for React; it has no framework-agnostic core. &nbsp;
 <sup>3</sup> Community wrappers exist (e.g. `react-quill`, `vue-quill`, `ngx-quill`, `svelte-tiptap`) but are not maintained by the core team. &nbsp;
 <sup>4</sup> Lexical's Vue binding (`lexical-vue`) is community-maintained. &nbsp;
 <sup>5</sup> Lilac also ships official adapters for Preact, Solid, Lit, Qwik, Alpine.js, Ember, and Astro. &nbsp;
-<sup>6</sup> TipTap offers a PHP package for JSON↔HTML conversion; Lilac's renders the editor via a Blade component / plain PHP.
+<sup>6</sup> TipTap offers a PHP package for JSON↔HTML conversion; Lilac's renders the editor via a Blade component / plain PHP. &nbsp;
+<sup>7</sup> CKEditor 5 documents a Svelte setup but ships no dedicated Svelte component.
 
-> **In fairness:** this table is about integration breadth and packaging, not maturity. TipTap, Lexical, and ProseMirror are mature, widely adopted projects with large ecosystems, many more built-in features, and years of production hardening at scale (Lexical powers Meta's apps); Quill is a long-established, batteries-included editor. Lilac is a younger project — its focus is a zero-dependency TypeScript core with first-party adapters for many frameworks plus a UMD/PHP path, and it does not claim feature parity with those ecosystems. Lilac's core is ~18&nbsp;KB gzipped; other projects' sizes vary widely by configuration.
+> **In fairness:** this table is about integration breadth and packaging, not maturity or features. TipTap, Lexical, and ProseMirror are mature, widely adopted headless projects with large ecosystems and years of production hardening at scale (Lexical powers Meta's apps); Quill is a long-established batteries-included editor; **TinyMCE and CKEditor are full-featured enterprise editors with the broadest official framework support of the group** (TinyMCE notably ships official React, Vue, Angular, Svelte, Web Component and Laravel integrations). CKEditor 5 self-hosted is dual-licensed (GPL / commercial). Lilac is a younger, MIT-licensed project whose focus is a zero-dependency TypeScript core (~18&nbsp;KB gzipped) with first-party adapters for many frameworks plus a UMD/PHP path — it does not claim feature parity with these ecosystems. Sizes and feature sets vary widely by configuration.
 
 ## Installation
 
