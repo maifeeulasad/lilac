@@ -26,6 +26,13 @@ jobs:
         run: pnpm build
       - name: "Copy documentation pages alongside the build"
         run: cp -r docs/* dist/
+      # The live playgrounds load the published adapters from a CDN at the
+      # version stamped here, so they always match the current package version.
+      - name: "Stamp docs with the package version"
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          echo "stamping docs playgrounds with $VERSION"
+          find dist -name '*.html' -exec sed -i "s/__LILAC_VERSION__/$VERSION/g" {} +
       - name: "Deploy"
         uses: peaceiris/actions-gh-pages@v4
         with:
