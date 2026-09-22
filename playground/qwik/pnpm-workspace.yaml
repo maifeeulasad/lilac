@@ -1,0 +1,5 @@
+# Allow esbuild (a Vite dependency) to run its install script — newer pnpm
+# hard-errors otherwise (ERR_PNPM_IGNORED_BUILDS) and reads this list here
+# rather than from package.json.
+onlyBuiltDependencies:
+  - esbuild
