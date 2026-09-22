@@ -1,6 +1,6 @@
 # Lilac Editor
 
-> A smooth, modern WYSIWYG text editor built with TypeScript. Framework-agnostic core with adapters for React, Svelte, Angular, Vue, and Vanilla JS.
+> A smooth, modern WYSIWYG text editor built with TypeScript. Framework-agnostic core with adapters for React, Preact, Vue, Svelte, Solid, Angular, Lit, Qwik, Alpine.js, Ember, Astro, and Vanilla JS.
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-brightgreen?style=for-the-badge)]()
@@ -20,9 +20,16 @@ lilac/
 │   └── index.ts              # Core exports
 ├── adapter/                  # Framework-specific adapters
 │   ├── react/                # React component wrapper
-│   ├── svelte/               # Svelte component
-│   ├── angular/              # Angular component/directive
+│   ├── preact/               # Preact component wrapper
 │   ├── vue/                  # Vue component
+│   ├── svelte/               # Svelte action
+│   ├── solid/                # SolidJS component + use:lilac directive
+│   ├── angular/              # Angular component/directive
+│   ├── lit/                  # <lilac-editor> Web Component
+│   ├── qwik/                 # Qwik component
+│   ├── alpine/               # Alpine.js x-lilac directive
+│   ├── ember/                # Ember {{lilac}} modifier
+│   ├── astro/                # Astro mount helper + integration
 │   └── vanilla/              # Vanilla JS wrapper
 └── docs/                     # Documentation & demos
 ```
@@ -63,14 +70,38 @@ yarn add @lilac-wysiwyg/core
 # React
 npm install @lilac-wysiwyg/react
 
+# Preact
+npm install @lilac-wysiwyg/preact
+
+# Vue
+npm install @lilac-wysiwyg/vue
+
 # Svelte
 npm install @lilac-wysiwyg/svelte
+
+# SolidJS
+npm install @lilac-wysiwyg/solid
 
 # Angular
 npm install @lilac-wysiwyg/angular
 
-# Vue
-npm install @lilac-wysiwyg/vue
+# Lit (Web Components)
+npm install @lilac-wysiwyg/lit
+
+# Qwik
+npm install @lilac-wysiwyg/qwik
+
+# Alpine.js
+npm install @lilac-wysiwyg/alpine
+
+# Ember
+npm install @lilac-wysiwyg/ember
+
+# Astro
+npm install @lilac-wysiwyg/astro
+
+# Vanilla JS
+npm install @lilac-wysiwyg/vanilla
 ```
 
 ## Quick Start
@@ -399,9 +430,17 @@ Visit our [GitHub Pages](https://maifeeulasad.github.io/lilac/) for complete doc
 - [x] Table inserter
 - [x] Word count plugin
 - [x] React adapter
+- [x] Preact adapter
 - [x] Svelte adapter
+- [x] Solid adapter
 - [x] Angular adapter
 - [x] Vue adapter
+- [x] Lit adapter
+- [x] Qwik adapter
+- [x] Alpine.js adapter
+- [x] Ember adapter
+- [x] Astro adapter
+- [x] Vanilla JS adapter
 - [x] Markdown export/import
 - [x] Image upload and embedding
 - [x] Find and replace
