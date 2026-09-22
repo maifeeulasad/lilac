@@ -61,7 +61,7 @@ test.describe('mounting', () => {
     expect((await shellAria(page)).replace(/\n+/g, '\n')).toContain('- textbox');
   });
 
-  test('visual baseline of an empty editor', async ({ page }) => {
+  test('visual baseline of an empty editor @visual', async ({ page }) => {
     await openEditor(page);
     await expect(root(page)).toHaveScreenshot('empty-editor.png');
   });
@@ -129,7 +129,7 @@ test.describe('toolbar formatting', () => {
     expect(await contentHtml(page)).toMatchSnapshot('link-insert.txt');
   });
 
-  test('visual baseline after formatting (bold selection)', async ({ page }) => {
+  test('visual baseline after formatting (bold selection) @visual', async ({ page }) => {
     await openEditor(page);
     await content(page).click();
     await page.keyboard.type('Hello world');
