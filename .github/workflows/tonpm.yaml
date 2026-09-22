@@ -182,3 +182,25 @@ jobs:
         run: npm publish --access=public --no-git-checks --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ORG }}
+
+  # PHP / Composer: the package lives in this same repo (root composer.json),
+  # so publishing is just telling Packagist to fetch the new git tag. Requires
+  # the package to have been submitted once at packagist.org. Non-fatal: a
+  # Packagist misconfig must not fail the npm release.
+  publish-php:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Packagist of the new release
+        continue-on-error: true
+        env:
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
+          PACKAGIST_USERNAME: ${{ vars.PACKAGIST_USERNAME || 'maifeeulasad' }}
+        run: |
+          echo "Nudging Packagist to fetch the new tag as $PACKAGIST_USERNAME…"
+          code=$(curl -s -o /tmp/pk.out -w '%{http_code}' -XPOST -H 'content-type:application/json' \
+            "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_TOKEN}" \
+            -d '{"repository":{"url":"https://github.com/maifeeulasad/lilac"}}')
+          echo "HTTP $code"; cat /tmp/pk.out || true; echo
+          if [ "$code" != "202" ] && [ "$code" != "200" ]; then
+            echo "::warning::Packagist update returned HTTP $code. Submit lilac-wysiwyg/lilac at packagist.org once, and confirm PACKAGIST_USERNAME (repo variable) and PACKAGIST_TOKEN (secret)."
+          fi
