@@ -25,8 +25,15 @@ interface NpmPackResult {
 
 const PACKAGES = [
   '.',
+  'adapter/alpine',
   'adapter/angular',
+  'adapter/astro',
+  'adapter/ember',
+  'adapter/lit',
+  'adapter/preact',
+  'adapter/qwik',
   'adapter/react',
+  'adapter/solid',
   'adapter/svelte',
   'adapter/vanilla',
   'adapter/vue',

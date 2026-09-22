@@ -7,7 +7,10 @@
 import { execSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 
-const ADAPTERS = ['angular', 'react', 'svelte', 'vanilla', 'vue'] as const;
+const ADAPTERS = [
+  'alpine', 'angular', 'astro', 'ember', 'lit', 'preact',
+  'qwik', 'react', 'solid', 'svelte', 'vanilla', 'vue',
+] as const;
 
 if (!existsSync('dist/index.d.ts')) {
   console.error('core is not built — run `pnpm build` first (adapters resolve its types from dist/)');
