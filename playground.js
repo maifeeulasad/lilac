@@ -13,11 +13,30 @@
 
 const FALLBACK_VERSION = '0.6.0';
 
-function lilacVersion() {
+function metaVersion() {
   const meta = document.querySelector('meta[name="lilac-version"]');
   const v = meta && meta.getAttribute('content');
-  // Unreplaced placeholder (local viewing) → fall back.
-  return v && !v.includes('__') ? v : FALLBACK_VERSION;
+  // Ignore an unreplaced CI placeholder (e.g. local viewing).
+  return v && !v.includes('__') ? v : null;
+}
+
+// The version shown (and loaded) comes from the live npm registry, so the docs
+// always reflect the latest published release without a redeploy. If the API
+// call fails (offline/blocked), fall back to the CI-stamped meta tag, then to a
+// hardcoded default.
+async function resolveVersion() {
+  try {
+    const res = await fetch('https://registry.npmjs.org/@lilac-wysiwyg/core/latest', {
+      headers: { accept: 'application/json' },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && typeof data.version === 'string') return data.version;
+    }
+  } catch (_) {
+    /* fall through to the offline fallbacks */
+  }
+  return metaVersion() || FALLBACK_VERSION;
 }
 
 const sample = (fw) => `<p>Hello from <strong>${fw}</strong>! Edit me — this editor is the published <code>@lilac-wysiwyg</code> adapter, loaded from npm.</p>`;
@@ -111,7 +130,7 @@ function fail(el, framework, err) {
 }
 
 async function boot() {
-  const V = lilacVersion();
+  const V = await resolveVersion();
   document.querySelectorAll('[data-lilac-version]').forEach((n) => (n.textContent = V));
 
   for (const el of document.querySelectorAll('.lilac-playground')) {
