@@ -29,6 +29,10 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # Also emit the UMD/global build (window.Lilac) for <script> tag / PHP use.
+      - name: Build UMD bundle
+        run: pnpm build:umd
+
       # Guard against a release whose tag does not match the committed version.
       - name: Validate version matches release
         run: |
