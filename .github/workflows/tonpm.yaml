@@ -29,7 +29,20 @@ jobs:
       - name: Build
         run: pnpm build
 
-      # Stamp the release version and npm metadata in at publish time so the
+      # Guard against a release whose tag does not match the committed version.
+      - name: Validate version matches release
+        run: |
+          VERSION="${TAG#v}"
+          PKG="$(node -p "require('./package.json').version")"
+          if [ "$PKG" != "$VERSION" ]; then
+            echo "::error::package.json version ($PKG) does not match release tag ($VERSION)"
+            exit 1
+          fi
+          echo "version $PKG matches release $VERSION"
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+
+      # Generate the README + LICENSE and npm metadata at publish time so the
       # repo carries no per-release edits. The root package keeps its own README.
       - name: Prepare package
         run: |
@@ -120,6 +133,20 @@ jobs:
       - name: Build
         working-directory: ${{ matrix.package }}
         run: pnpm build
+
+      # Guard against a release whose tag does not match the committed version.
+      - name: Validate version matches release
+        working-directory: ${{ matrix.package }}
+        run: |
+          VERSION="${TAG#v}"
+          PKG="$(node -p "require('./package.json').version")"
+          if [ "$PKG" != "$VERSION" ]; then
+            echo "::error::${{ matrix.package }} version ($PKG) does not match release tag ($VERSION)"
+            exit 1
+          fi
+          echo "version $PKG matches release $VERSION"
+        env:
+          TAG: ${{ github.event.release.tag_name }}
 
       # Generate the per-package README + LICENSE and stamp the release version
       # and metadata (runs from the repo root so the root LICENSE resolves).
