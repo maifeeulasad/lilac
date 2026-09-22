@@ -105,11 +105,41 @@ const MOUNTERS = {
     const { mountLilacEditor } = await import(`https://esm.sh/@lilac-wysiwyg/astro@${V}`);
     mountLilacEditor(el, { toolbar: true, value: sample('Astro') });
   },
+  // Angular has no build-free component entry, so we JIT-compile a real
+  // standalone Angular component in the browser (compiler + zone.js) and mount
+  // the core editor inside it. Heavier than the others; the first load pulls
+  // Angular from the CDN.
+  async angular(el, V) {
+    const NG = '18.2.0';
+    await import('https://esm.sh/reflect-metadata@0.2.2');
+    await import('https://esm.sh/zone.js@0.15.0');
+    await import(`https://esm.sh/@angular/compiler@${NG}`);
+    const core = await import(`https://esm.sh/@angular/core@${NG}?deps=zone.js@0.15.0`);
+    const { bootstrapApplication } = await import(`https://esm.sh/@angular/platform-browser@${NG}?deps=@angular/core@${NG},zone.js@0.15.0`);
+    const { LilacEditor } = await import(`https://esm.sh/@lilac-wysiwyg/core@${V}`);
+
+    class LilacAngularDemo {
+      el = core.inject(core.ElementRef);
+      ngAfterViewInit() {
+        new LilacEditor({
+          container: this.el.nativeElement,
+          toolbar: { show: true },
+          initialContent: sample('Angular'),
+        });
+      }
+    }
+    core.Component({ selector: 'lilac-angular-demo', standalone: true, template: '' })(LilacAngularDemo);
+
+    const mount = document.createElement('lilac-angular-demo');
+    el.appendChild(mount);
+    await bootstrapApplication(LilacAngularDemo);
+  },
 };
 
-// Needs a build step / toolchain — no honest in-browser demo.
+// Needs a build step / toolchain that a CDN import can't reproduce — no honest
+// in-browser demo. (Qwik needs its resumability optimizer; Ember needs ember-cli
+// / the Glimmer compiler and a booted app + resolver.)
 const BUILD_ONLY = {
-  angular: 'Angular',
   qwik: 'Qwik',
   ember: 'Ember',
 };
