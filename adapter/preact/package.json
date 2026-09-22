@@ -1,0 +1,50 @@
+{
+  "name": "@lilac-wysiwyg/preact",
+  "version": "0.5.0",
+  "description": "Preact adapter for Lilac WYSIWYG editor - lightweight React-compatible component wrapper",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "access": "public",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json -w",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "wysiwyg",
+    "editor",
+    "preact",
+    "lilac"
+  ],
+  "packageManager": "pnpm@10.25.0",
+  "author": "Maifee Ul Asad<maifeeulasad@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maifeeulasad/lilac.git"
+  },
+  "peerDependencies": {
+    "preact": ">=10.0.0"
+  },
+  "dependencies": {
+    "@lilac-wysiwyg/core": "latest"
+  },
+  "devDependencies": {
+    "preact": "^10.19.0",
+    "typescript": "^5.0.2"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+}
