@@ -1,6 +1,6 @@
 {
 	"version": "1",
-	"manifestHash": "kahf7a",
+	"manifestHash": "r0y7y2",
 	"options": {
 		"target": "client",
 		"buildMode": "production",
@@ -8,15 +8,15 @@
 			"type": "smart"
 		}
 	},
-	"core": "../assets/index-Dk2lvlCx.js",
+	"core": "../assets/index-k4MsJlFO.js",
 	"preloader": "../assets/preloader-C-Y9QxqI.js",
 	"bundleGraphAsset": "assets/bundle-graph-BqrDAOEV.json",
 	"injections": [],
 	"mapping": {},
 	"bundles": {
-		"../assets/index-Dk2lvlCx.js": {
-			"size": 114500,
-			"total": 114500,
+		"../assets/index-k4MsJlFO.js": {
+			"size": 114297,
+			"total": 114297,
 			"origins": [
 				"@builder.io/qwik/build",
 				"index.html",
@@ -71,6 +71,6 @@
 		"rollup": "4.63.4",
 		"env": "node",
 		"os": "linux",
-		"node": "24.20.0"
+		"node": "24.21.0"
 	}
 }
